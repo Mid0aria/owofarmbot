@@ -1,0 +1,15 @@
+{
+    "main":{
+        "token":"",
+        "userid":"",
+        "channelid":"",
+        "owodmchannelid":""
+    },
+    "extra":{
+        "extra": "no",
+        "token":"",
+        "userid":"",
+        "channelid":"",
+        "owodmchannelid":""
+    }
+}

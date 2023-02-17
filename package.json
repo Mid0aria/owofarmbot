@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "run": "node bot.js",
+    "setup":"npm i && node bot.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "request": "^2.88.2"
+  }
+}
