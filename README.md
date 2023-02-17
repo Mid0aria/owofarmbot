@@ -11,7 +11,7 @@
 - Auto Battle
 - Auto Sell All
 - Auto Pray
-- Captcha Protection
+- Captcha(Ban) Protection v0.0.2
 -   **Extra Token**
     -   All Main Token Features
     -   Auto Pray for Main Token 
