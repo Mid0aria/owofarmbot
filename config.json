@@ -2,9 +2,9 @@
 	"settings":{
         "huntandbattle":"true",
         "banbypass":"true",
-		"discordrpc":"true",
-		"sell":"true",
-		"pray":"true",
+	"discordrpc":"true",
+	"sell":"true",
+	"pray":"true",
         "extratoken": "false"
 	},
     "main":{
