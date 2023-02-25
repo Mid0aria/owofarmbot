@@ -1,4 +1,12 @@
-{
+{	
+	"settings":{
+        "huntandbattle":"true",
+        "banbypass":"true",
+		"discordrpc":"true",
+		"sell":"true",
+		"pray":"true",
+        "extratoken": "false"
+	},
     "main":{
         "token":"",
         "userid":"",
@@ -6,7 +14,6 @@
         "owodmchannelid":""
     },
     "extra":{
-        "extra": "no",
         "token":"",
         "userid":"",
         "channelid":"",
