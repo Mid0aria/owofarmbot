@@ -21,7 +21,15 @@
 
 ## ⚙・config.json example
 ```
-{
+{	
+	"settings":{
+        "huntandbattle":"", true or false
+        "banbypass":"", true or false
+		"discordrpc":"", true or false
+		"sell":"", true or false
+		"pray":"", true or false
+        "extratoken": "" true or false
+	},
     "main":{
         "token":"", main token
         "userid":"", token user id
@@ -29,13 +37,13 @@
         "owodmchannelid":"" owo bot dm channel id
     },
     "extra":{
-        "extra": "no", no or yes
         "token":"", extra token
         "userid":"", extra token user id
         "channelid":"", channel id for extra token
         "owodmchannelid":"" extra token owo bot dm channel id
     }
 }
+
 ```
 
 ## 📍・OwO DM channel id
