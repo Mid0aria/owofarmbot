@@ -41,7 +41,7 @@
 ## 📍・OwO DM channel id
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/owochannelid.jpg)
 
-## 📍・Discord RPC
+## 📚・Discord RPC
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/rpc.jpg)
 
 ## 🔗・Required Links
