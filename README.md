@@ -12,7 +12,7 @@
 - Auto Battle
 - Auto Sell All
 - Auto Pray
-- Captcha(Ban) Protection v0.0.5 beta
+- Captcha(Ban) Protection v0.0.6 beta
 - Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
