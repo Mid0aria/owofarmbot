@@ -22,7 +22,7 @@
 ## ⚙・config.json example
 ```
 {	
-"settings":{
+    "settings":{
         "huntandbattle":"", true or false
         "banbypass":"", true or false
 	"discordrpc":"", true or false
@@ -50,7 +50,7 @@
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/owochannelid.jpg)
 
 ## 📚・Discord RPC
-![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/rpc.jpg)
+![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/newrpc.jpg)
 
 ## 🔗・Required Links
 [NodeJS](https://nodejs.org/en/)<br>
