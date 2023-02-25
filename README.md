@@ -2,6 +2,7 @@
 [👑・Features](#features)<br>
 [⚙・Config.json example](#configjson-example)<br>
 [📍・OwO DM channel id](#owo-dm-channel-id)<br>
+[📚・Discord RPC](#discord-rpc)<br>
 [🔗・Required Links](#required-links)<br>
 [🎈・Usage](#usage)<br>
 [⭐・Give A Star](#give-a-star)<br>
@@ -12,6 +13,7 @@
 - Auto Sell All
 - Auto Pray
 - Captcha(Ban) Protection v0.0.3 beta
+- Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
     -   Auto Pray for Main Token 
@@ -39,6 +41,8 @@
 ## 📍・OwO DM channel id
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/owochannelid.jpg)
 
+## 📍・Discord RPC
+![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/rpc.jpg)
 
 ## 🔗・Required Links
 [NodeJS](https://nodejs.org/en/)<br>
