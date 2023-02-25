@@ -22,12 +22,12 @@
 ## ⚙・config.json example
 ```
 {	
-	"settings":{
+"settings":{
         "huntandbattle":"", true or false
         "banbypass":"", true or false
-		"discordrpc":"", true or false
-		"sell":"", true or false
-		"pray":"", true or false
+	"discordrpc":"", true or false
+	"sell":"", true or false
+	"pray":"", true or false
         "extratoken": "" true or false
 	},
     "main":{
