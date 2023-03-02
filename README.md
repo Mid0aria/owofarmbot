@@ -1,5 +1,5 @@
 # OwO Farm Bot
-[![views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?label=Repo%20Views&color=770ca1&labelColor=007ec6)](https://hits.sh/github.com/Mid0aria/owofarmbot/)
+[![views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?label=Repo%20Views&color=770ca1&labelColor=007ec6)](https://hits.sh/github.com/Mid0aria/owofarmbot/)<br>
 [👑・Features](#features)<br>
 [⚙・Config.json example](#configjson-example)<br>
 [📍・OwO DM channel id](#owo-dm-channel-id)<br>
