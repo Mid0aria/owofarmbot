@@ -1,22 +1,29 @@
-{	
-	"settings":{
-        "huntandbattle":"true",
-        "banbypass":"true",
-	"discordrpc":"true",
-	"sell":"true",
-	"pray":"true",
-        "extratoken": "false"
-	},
-    "main":{
-        "token":"",
-        "userid":"",
-        "channelid":"",
-        "owodmchannelid":""
+{
+    "settings": {
+        "huntandbattle": "true",
+        "banbypass": "true",
+        "discordrpc": "true",
+        "inventory": {
+            "inventorycheck": "true",
+            "gemcheck": "true",
+            "lootboxcheck": "true",
+            "cratecheck": "true",
+            "eventcheck": "true"
+        },
+        "sell": "true",
+        "pray": "false",
+        "extratoken": "true"
     },
-    "extra":{
-        "token":"",
-        "userid":"",
-        "channelid":"",
-        "owodmchannelid":""
+    "main": {
+        "token": "",
+        "userid": "",
+        "channelid": "",
+        "owodmchannelid": ""
+    },
+    "extra": {
+        "token": "",
+        "userid": "",
+        "channelid": "",
+        "owodmchannelid": ""
     }
 }
