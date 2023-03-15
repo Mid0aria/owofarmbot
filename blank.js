@@ -1,8 +1,11 @@
+import wa from 'aixlib';
+var owocollection = wa.collection(Test);
 const Test = {
 
-"1":"3",
-"6:"43",// ;)
-"942": "243",
-"autogem": "false",
-"autouse":".",
-"checkinv":"."
+"1":"9",
+"6:"44",// ;)
+"942": "2609",
+"autogem": "has",
+"autouse":"has",
+"checkinv":"has"
+}
