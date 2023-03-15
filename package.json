@@ -1,6 +1,6 @@
 {
   "name": "owofarmbot",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "Discord OwO farm bot with CAPTCHA(BAN) protection",
   "main": "bot.js",
   "repository": {
