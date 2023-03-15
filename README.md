@@ -12,7 +12,8 @@
 
 ## ❗・Important
 
-it can detect virus due to captcha checker please turn off your antivirus
+-   Discord may restart as a result of discord rpc overload.
+-   It can detect virus due to captcha checker please turn off your antivirus.
 
 ## 👑・Features
 
@@ -25,7 +26,7 @@ it can detect virus due to captcha checker please turn off your antivirus
     -   auto eventbox use (like anniversary present or valentine's day)
 -   Auto Sell All
 -   Auto Pray
--   Captcha(Ban) Protection v0.0.6 beta
+-   Captcha(Ban) Protection v0.0.7 (beta)
 -   Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
@@ -36,31 +37,31 @@ it can detect virus due to captcha checker please turn off your antivirus
 ```
 {
     "settings": {
-        "huntandbattle": "true",
-        "banbypass": "true",
-        "discordrpc": "true",
+        "huntandbattle": "", true or false
+        "banbypass": "", true or false
+        "discordrpc": "", true or false
         "inventory": {
-            "inventorycheck": "true",
-            "gemcheck": "true",
-            "lootboxcheck": "true",
-            "cratecheck": "true",
-            "eventcheck": "true"
+            "inventorycheck": "", true or false
+            "gemcheck": "", true or false
+            "lootboxcheck": "", true or false
+            "cratecheck": "", true or false
+            "eventcheck": "" true or false
         },
-        "sell": "true",
-        "pray": "false",
-        "extratoken": "true"
+        "sell": "", true or false
+        "pray": "", true or false
+        "extratoken": "" true or false
     },
-    "main": {
-        "token": "",
-        "userid": "",
-        "channelid": "",
-        "owodmchannelid": ""
+    "main":{
+        "token":"", main token
+        "userid":"", token user id
+        "channelid":"", channel id for main token
+        "owodmchannelid":"" owo bot dm channel id
     },
-    "extra": {
-        "token": "",
-        "userid": "",
-        "channelid": "",
-        "owodmchannelid": ""
+    "extra":{
+        "token":"", extra token
+        "userid":"", extra token user id
+        "channelid":"", channel id for extra token
+        "owodmchannelid":"" extra token owo bot dm channel id
     }
 }
 
@@ -88,14 +89,14 @@ it can detect virus due to captcha checker please turn off your antivirus
 > edit config.json
 ```
 
-```
-> run npm i
+```bash
+> npm i
 ```
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/f65fcbe0baea9ad79c73030d24f37b8f.gif)
 
-```
-> run node bot.js
+```bash
+> node bot.js
 ```
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/24578d5497a09af1d5aa03781a2028f9.gif)
