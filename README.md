@@ -1,4 +1,3 @@
-<div align="center">
 <img src="https://i.ibb.co/ThgHqGQ/976d5c4f4522e5a1ae782516b58518f6.jpg" width="150" height="150" border="0" alt="PFP">
 # OwO Farm Bot
 
