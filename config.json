@@ -10,8 +10,11 @@
             "cratecheck": "true",
             "eventcheck": "true"
         },
-        "sell": "true",
-        "pray": "false",
+        "animals": {
+            "enable": "true",
+            "type": "sell"
+        },
+        "pray": "true",
         "extratoken": "true"
     },
     "main": {
