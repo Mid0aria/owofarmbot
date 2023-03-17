@@ -26,7 +26,7 @@
     -   auto eventbox use (like anniversary present or valentine's day)
 -   Auto Sell All
 -   Auto Pray
--   Captcha(Ban) Protection v0.0.7 (beta)
+-   Captcha(Ban) Protection v0.1.0 (beta)
 -   Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
