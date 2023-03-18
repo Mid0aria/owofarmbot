@@ -1,6 +1,10 @@
 # OwO Farm Bot
 
-[![views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?label=Repo%20Views&color=770ca1&labelColor=007ec6)](https://hits.sh/github.com/Mid0aria/owofarmbot/)<br>
+## ⭐・Give A Star
+
+You can also give this repository a star to show more people and they can use this repository
+
+[![views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6)](https://github.com/Mid0aria/owofarmbot/)<br>
 [❗・Important](#important)<br>
 [👑・Features](#features)<br>
 [⚙・Config.json example](#configjson-example)<br>
@@ -8,7 +12,6 @@
 [📚・Discord RPC](#discord-rpc)<br>
 [🔗・Required Links](#required-links)<br>
 [🎈・Usage](#usage)<br>
-[⭐・Give A Star](#give-a-star)<br>
 
 ## ❗・Important
 
@@ -103,7 +106,3 @@
 ```
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/24578d5497a09af1d5aa03781a2028f9.gif)
-
-## ⭐・Give A Star
-
-You can also give this repository a star to show more people and they can use this repository
