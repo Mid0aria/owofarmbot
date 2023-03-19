@@ -25,7 +25,10 @@
     -   auto lootbox use
     -   auto crate use
     -   auto eventbox use (like anniversary present or valentine's day)
--   Auto Sell All
+-   Auto Gamble
+    -   auto coinflip
+    -   auto slots
+-   Auto animals sell or sacrifice all
 -   Auto Pray
 -   Captcha(Ban) Protection v0.1.1 (beta)
 -   Discord-RPC
@@ -41,6 +44,8 @@
         "huntandbattle": "", true or false
         "banbypass": "", true or false
         "discordrpc": "", true or false
+        "pray": "", true or false
+        "extratoken": "", true or false
         "inventory": {
             "inventorycheck": "", true or false
             "gemcheck": "", true or false
@@ -52,8 +57,16 @@
             "enable": "", true or false
             "type": "" sell or sacrifice
         },
-        "pray": "", true or false
-        "extratoken": "" true or false
+        "gamble": {
+            "coinflip": {
+                "enable": "", true or false
+                "amount": "1"
+            },
+            "slots": {
+                "enable": "", true or false
+                "amount": "1"
+            }
+        }
     },
     "main":{
         "token":"", main token

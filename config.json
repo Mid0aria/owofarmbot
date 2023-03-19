@@ -3,6 +3,8 @@
         "huntandbattle": "true",
         "banbypass": "true",
         "discordrpc": "true",
+        "pray": "false",
+        "extratoken": "true",
         "inventory": {
             "inventorycheck": "true",
             "gemcheck": "true",
@@ -12,10 +14,18 @@
         },
         "animals": {
             "enable": "true",
-            "type": "sell"
+            "type": "sacrifice"
         },
-        "pray": "true",
-        "extratoken": "true"
+        "gamble": {
+            "coinflip": {
+                "enable": "false",
+                "amount": "1"
+            },
+            "slots": {
+                "enable": "false",
+                "amount": "1"
+            }
+        }
     },
     "main": {
         "token": "",
