@@ -1,7 +1,6 @@
 # OwO Farm Bot
 
-⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository 
-
+⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository
 
 [![views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6)](https://github.com/Mid0aria/owofarmbot/)<br>
 [❗・Important](#important)<br>
@@ -15,7 +14,7 @@
 ## ❗・Important
 
 -   Discord may restart as a result of discord rpc overload.
--   It can detect virus due to captcha checker please turn off your antivirus.
+-   It can detect virus due to captcha(ban) bypasser please turn off your antivirus.
 
 ## 👑・Features
 
@@ -28,7 +27,7 @@
     -   auto eventbox use (like anniversary present or valentine's day)
 -   Auto Sell All
 -   Auto Pray
--   Captcha(Ban) Protection v0.1.0 (beta)
+-   Captcha(Ban) Protection v0.1.1 (beta)
 -   Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
