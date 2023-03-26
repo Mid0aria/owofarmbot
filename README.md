@@ -1,6 +1,7 @@
 # OwO Farm Bot
 
-⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository
+⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
+⭐⭐⭐ If this repo gets 100 stars the open source of the code will be shared
 
 [![views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6)](https://github.com/Mid0aria/owofarmbot/)<br>
 [❗・Important](#important)<br>
@@ -23,12 +24,14 @@
 -   Inventory Check
     -   auto gem use (beta)
     -   auto lootbox use
+    -   auto fabled lootbox use
     -   auto crate use
     -   auto eventbox use (like anniversary present or valentine's day)
 -   Auto Gamble
     -   auto coinflip
     -   auto slots
--   Auto animals sell or sacrifice all
+-   Auto animals sell or sacrifice all,
+-   Auto upgrade autohunt
 -   Auto Pray
 -   Captcha(Ban) Protection v0.1.1 (beta)
 -   Discord-RPC
@@ -50,12 +53,17 @@
             "inventorycheck": "", true or false
             "gemcheck": "", true or false
             "lootboxcheck": "", true or false
+            "fabledlootboxcheck": "", true or false
             "cratecheck": "", true or false
             "eventcheck": "" true or false
         },
         "animals": {
             "enable": "", true or false
             "type": "" sell or sacrifice
+        },
+        "upgradeautohunt": {
+            "enable": "", true or false
+            "type": "" efficiency, duration, cost, gain, exp or radar
         },
         "gamble": {
             "coinflip": {
@@ -96,6 +104,7 @@
 ## 🔗・Required Links
 
 [NodeJS](https://nodejs.org/en/)<br>
+[Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)<br>
 [Zip File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
 
 ## 🎈・Usage
