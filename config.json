@@ -4,11 +4,12 @@
         "banbypass": "true",
         "discordrpc": "true",
         "pray": "false",
-        "extratoken": "true",
+        "extratoken": "false",
         "inventory": {
             "inventorycheck": "true",
             "gemcheck": "true",
             "lootboxcheck": "true",
+            "fabledlootboxcheck": "true",            
             "cratecheck": "true",
             "eventcheck": "true"
         },
@@ -16,6 +17,10 @@
             "enable": "true",
             "type": "sacrifice"
         },
+        "upgradeautohunt": {
+            "enable": "true",
+            "type": "radar"
+        },        
         "gamble": {
             "coinflip": {
                 "enable": "false",
