@@ -1,4 +1,4 @@
-# OwO Farm Bot
+# OwO Farm Bot V0.3.0
 
 ⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
 ⭐⭐⭐ If this repo gets 100 stars the open source of the code will be shared
@@ -33,7 +33,7 @@
 -   Auto animals sell or sacrifice all,
 -   Auto upgrade autohunt
 -   Auto Pray
--   Captcha(Ban) Protection v0.1.1 (beta)
+-   Captcha(Ban) Protection v0.1.2 (beta)
 -   Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
@@ -105,7 +105,7 @@
 
 [NodeJS](https://nodejs.org/en/)<br>
 [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)<br>
-[Zip File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
+[Farm Bot Zip File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
 
 ## 🎈・Usage
 
