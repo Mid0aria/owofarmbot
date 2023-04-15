@@ -3,7 +3,7 @@
 <h1 align="center">OwO Farm Bot V1.0.0 (NO LONGER SUPPORT THIS VERSION)</h1>
 <p align="center">
 ⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
-⭐⭐⭐ If this repo gets 100 stars the open source of the code will be shared<br>
+⭐⭐⭐ If this repo gets 50 stars the open source of the code will be shared<br>
     <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6"/></a>
     <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a>
 <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a>
