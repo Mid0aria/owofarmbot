@@ -132,7 +132,7 @@ m)
 
 [NodeJS](https://nodejs.org/en/)<br>
 [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)<br>
-[Farm Bot Zip File](https://github.com/Mid0aria/owofarmbotv2/archive/refs/heads/main.zip)
+[Farm Bot Zip File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
 
 ## 🎈・Usage
 
