@@ -4,23 +4,25 @@
         "banbypass": "true",
         "discordrpc": "true",
         "pray": "false",
+        "curse": "false",
+        "autoquest": "true",
         "extratoken": "false",
         "inventory": {
             "inventorycheck": "true",
             "gemcheck": "true",
             "lootboxcheck": "true",
-            "fabledlootboxcheck": "true",            
+            "fabledlootboxcheck": "true",
             "cratecheck": "true",
             "eventcheck": "true"
         },
         "animals": {
-            "enable": "true",
+            "enable": "false",
             "type": "sacrifice"
         },
         "upgradeautohunt": {
-            "enable": "true",
-            "type": "radar"
-        },        
+            "enable": "false",
+            "type": "duration"
+        },
         "gamble": {
             "coinflip": {
                 "enable": "false",
@@ -36,12 +38,14 @@
         "token": "",
         "userid": "",
         "channelid": "",
-        "owodmchannelid": ""
+        "owodmchannelid": "",
+        "autoquestchannelid": ""
     },
     "extra": {
         "token": "",
         "userid": "",
         "channelid": "",
-        "owodmchannelid": ""
+        "owodmchannelid": "",
+        "autoquestchannelid": ""
     }
 }
