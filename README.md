@@ -1,6 +1,6 @@
 [Version 2.0.0](https://github.com/mid0aria/owofarmbotv2)<br>
 
-<h1 align="center">OwO Farm Bot V1.0.0 (NO LONGER SUPPORT THIS VERSION)</h1>
+<h1 align="center">OwO Farm Bot V1.0.2 (NO LONGER SUPPORT THIS VERSION)</h1>
 <p align="center">
 ⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
 ⭐⭐⭐ If this repo gets 50 stars the open source of the code will be shared<br>
@@ -13,6 +13,7 @@
 [❗・Important](#important)<br>
 [👑・Features](#features)<br>
 [⚙・Config.json example](#configjson-example)<br>
+[💎・Get Token](#get-token)<br>
 [📍・OwO DM channel id](#owo-dm-channel-id)<br>
 [📚・Discord RPC](#discord-rpc)<br>
 [🔗・Required Links](#required-links)<br>
@@ -39,6 +40,7 @@
 -   Auto animals sell or sacrifice all,
 -   Auto upgrade autohunt
 -   Auto Pray
+-   Auto quest   
 -   Captcha(Ban) Protection v0.1.2 (beta)
 -   Discord-RPC
 -   **Extra Token**
@@ -55,6 +57,7 @@
         "discordrpc": "", true or false
         "pray": "", true or false
         "extratoken": "", true or false
+        "autoquest": "", true or false
         "inventory": {
             "inventorycheck": "", true or false
             "gemcheck": "", true or false
@@ -87,6 +90,7 @@
         "userid":"", token user id
         "channelid":"", channel id for main token
         "owodmchannelid":"" owo bot dm channel id
+        "autoquestchannelid":"" auto quest channel id
     },
     "extra":{
         "token":"", extra token
@@ -97,6 +101,23 @@
 }
 
 
+```
+
+
+## 💎・Get Token
+
+```js
+(webpackChunkdiscord_app.push([
+    [""],
+    {},
+    (e) => {
+        m = [];
+        for (let c in e.c) m.push(e.c[c]);
+    },
+]),
+m)
+    .find((m) => m?.exports?.default?.getToken !== void 0)
+    .exports.default.getToken();
 ```
 
 ## 📍・OwO DM channel id
@@ -111,24 +132,20 @@
 
 [NodeJS](https://nodejs.org/en/)<br>
 [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)<br>
-[Farm Bot Zip File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
+[Farm Bot Zip File](https://github.com/Mid0aria/owofarmbotv2/archive/refs/heads/main.zip)
 
 ## 🎈・Usage
 
 ```
 > YOU NEED LATEST NODEJS !
-> download zip file or run git clone https://github.com/Mid0aria/owofarmbot.git
+> download zip file or run git clone https://github.com/Mid0aria/owofarmbotv2.git
 > edit config.json
 ```
 
 ```bash
-> npm i
+> run install.bat
 ```
-
-![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/f65fcbe0baea9ad79c73030d24f37b8f.gif)
 
 ```bash
-> node bot.js
+> run run.bat
 ```
-
-![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/24578d5497a09af1d5aa03781a2028f9.gif)
