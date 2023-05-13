@@ -378,7 +378,7 @@ if (global.etoken) {
                     hunt(extratoken, timehunt, "Extra Token", extrachannelid);
                     if (settings.inventory.inventorycheck == "true") {
                         setTimeout(() => {
-                            check(extratoken, extrachannelid, "Extra Token");
+                            checkinv(extratoken, extrachannelid, "Extra Token");
                         }, 2500);
                     } //E <3
                 }, timehunt);
