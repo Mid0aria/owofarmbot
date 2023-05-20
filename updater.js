@@ -9,7 +9,7 @@ var versi = path.join(__dirname, "/version.json");
 console.log("updating ...");
 
 const boti = https.get(
-    "https://raw.githubusercontent.com/Mid0aria/owofarmbotv2/main/bot.js",
+    "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/bot.js",
     function (response) {
         var buotstream = fs.createWriteStream(buot);
         response.pipe(buotstream);
@@ -21,7 +21,7 @@ const boti = https.get(
 );
 
 const confi = https.get(
-    "https://raw.githubusercontent.com/Mid0aria/owofarmbotv2/main/config.json",
+    "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/config.json",
     function (response) {
         var cunfigstream = fs.createWriteStream(cunfig);
         response.pipe(cunfigstream);
@@ -33,7 +33,7 @@ const confi = https.get(
 );
 
 const versiun = https.get(
-    "https://raw.githubusercontent.com/Mid0aria/owofarmbotv2/main/version.json",
+    "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/version.json",
     function (response) {
         var versistream = fs.createWriteStream(versi);
         response.pipe(versistream);
