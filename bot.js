@@ -1141,14 +1141,12 @@ function dmextrabancheck(token, channelid) {
     );
 }
 
-
-
 function dmprotectprouwu(token, channelid, tokentype) {
     request.post(
         {
             headers: {
                 authorization: token,
-                super-x: autoseed(token),
+                "super-x": autoseed(token),
             },
             url:
                 "https://discord.com/api/v9/channels/" +
