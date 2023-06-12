@@ -35,7 +35,8 @@
         "delay": "^5.0.0",
         "discord-rpc": "^4.0.1",
         "follow-redirects": "^1.15.2",
-        "request": "^2.88.2"
+        "request": "^2.88.2",
+        "seedrandom": "^3.0.5"
     },
     "bugs": {
         "url": "https://github.com/Mid0aria/owofarmbot/issues"
