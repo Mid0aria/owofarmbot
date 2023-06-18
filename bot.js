@@ -70,8 +70,6 @@ const delay = require("delay");
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
-const phrases = require("./phrases/phrases.json")
-var phrases_text = phrases.phrases;
 var settings = config.settings;
 var maintoken = config.main.token;
 var maintokenuserid = config.main.userid;
@@ -1175,23 +1173,44 @@ function dmprotectprouwu(token, channelid, tokentype) {
     );
 }
 
-function elaina2(token, channelid, phrases_text) {
-    
-    let result = Math.floor(Math.random() * phrases_text.length);
 
-    var ilu = rand[result];
-    //E <3
-    request.post({
-        headers: {
-            authorization: token,
-        },
-        url: "https://discord.com/api/v9/channels/" + channelid + "/messages",
-        json: {
-            content: ilu,
-            nonce: nonce(),
-            tts: false,
-            flags: 0,
-        },
+function elaina2(token, channelid, phrasesFilePath) {
+    // Read the JSON 
+    fs.readFile("./phrases/phrases.json", 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading JSON file:', err);
+            return;
+        }
+
+        // Parse the JSON data
+        try {
+            const phrasesObject = JSON.parse(data);
+            const phrases = phrasesObject.phrases;
+
+            if (!phrases || !phrases.length) {
+                console.log('Phrases array is undefined or empty.');
+                return;
+            }
+
+            let result = Math.floor(Math.random() * phrases.length);
+
+            var ilu = phrases[result];
+            //E <3
+            request.post({
+                headers: {
+                    authorization: token,
+                },
+                url: "https://discord.com/api/v9/channels/" + channelid + "/messages",
+                json: {
+                    content: ilu,
+                    nonce: nonce(),
+                    tts: false,
+                    flags: 0,
+                },
+            });
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+        }
     });
 }
 
