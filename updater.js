@@ -3,9 +3,6 @@ const { http, https } = require("follow-redirects");
 const path = require("path");
 const request = require("request");
 const os = require("os");
-var buot = path.join(__dirname, "/bot.js");
-var cunfig = path.join(__dirname, "/config.json");
-var versi = path.join(__dirname, "/version.json");
 console.log("updating ...");
 
 request.get(
