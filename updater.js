@@ -8,40 +8,34 @@ var cunfig = path.join(__dirname, "/config.json");
 var versi = path.join(__dirname, "/version.json");
 console.log("updating ...");
 
-const boti = https.get(
-    "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/bot.js",
-    function (response) {
-        var buotstream = fs.createWriteStream(buot);
-        response.pipe(buotstream);
-        buotstream.on("finish", () => {
-            buotstream.close();
-            console.log("bot.js updated");
+request.get(
+    {
+        url: "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/changes.json",
+    },
+    function (err, res, body) {
+        let bod = JSON.parse(body);
+
+        bod.c.forEach((a) => {
+            if (a.includes("/")) {
+                var i = a.indexOf("/");
+                var v = a.slice(0, i);
+                if (!fs.existsSync(path.join(__dirname, `/${v}`))) {
+                    fs.mkdirSync(path.join(__dirname, `/${v}`));
+                }
+            }
+            const newupdater = https.get(
+                `https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/${a}`,
+                function (response) {
+                    var updaterstream = fs.createWriteStream(
+                        path.join(__dirname, `/${a}`)
+                    );
+                    response.pipe(updaterstream);
+                    updaterstream.on("finish", () => {
+                        updaterstream.close();
+                        console.log(`${a} updated`);
+                    });
+                }
+            );
         });
     }
 );
-
-const confi = https.get(
-    "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/config.json",
-    function (response) {
-        var cunfigstream = fs.createWriteStream(cunfig);
-        response.pipe(cunfigstream);
-        cunfigstream.on("finish", () => {
-            cunfigstream.close();
-            console.log("config.json updated. please edit config file");
-        });
-    }
-);
-
-const versiun = https.get(
-    "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/version.json",
-    function (response) {
-        var versistream = fs.createWriteStream(versi);
-        response.pipe(versistream);
-        versistream.on("finish", () => {
-            versistream.close();
-            console.log("version.json updated.");
-        });
-    }
-);
-
-
