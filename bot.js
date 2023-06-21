@@ -67,6 +67,15 @@ try {
 }
 const delay = require("delay");
 
+//------------
+try {
+    require.resolve("node-notifier");
+} catch (e) {
+    console.log(chalk.red("Please run: npm install node-notifier"));
+    process.exit(0);
+}
+const notifier = require('node-notifier');
+
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
@@ -985,7 +994,17 @@ function bancheck(token, channelid) {
                         chalk.magenta(" [Main Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                process.exit(0);
+                notifier.notify({
+                    title: 'Capatcha Detected!',
+                    message: 'Pls slove the captcha and restart the bot',
+                    icon: './images/captcha.png',
+                });
+
+                // Handle notification click event
+                notifier.on('click', function () {
+                    console.log('Notification clicked.');
+                });
+                process.stdin.pause()
             } else {
                 global.mainbanc = true;
                 elaina2(token, channelid);
@@ -1028,7 +1047,17 @@ function extrabancheck(token, channelid) {
                         chalk.magenta(" [Extra Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                process.exit(0);
+                notifier.notify({
+                    title: 'Capatcha Detected!',
+                    message: 'Pls slove the captcha and restart the bot',
+                    icon: './images/captcha.png',
+                });
+
+                // Handle notification click event
+                notifier.on('click', function () {
+                    console.log('Notification clicked.');
+                });
+                process.stdin.pause()
             } else {
                 global.extrabanc = true;
                 elaina2(token, channelid);
