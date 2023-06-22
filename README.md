@@ -16,6 +16,7 @@
 [💎・Get Token](#get-token)<br>
 [📍・OwO DM channel id](#owo-dm-channel-id)<br>
 [📚・Discord RPC](#discord-rpc)<br>
+[⚠️・Captcha Alert](#captcha-alert)<br>
 [🔗・Required Links](#required-links)<br>
 [🎈・Usage](#usage)<br>
 
@@ -128,6 +129,10 @@ m)
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/rpc.jpg)
 
+## ⚠️・Captcha Alert
+
+![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
+
 ## 🔗・Required Links
 
 [NodeJS](https://nodejs.org/en/)<br>
@@ -138,7 +143,7 @@ m)
 
 ```
 > YOU NEED LATEST NODEJS !
-> download zip file or run git clone https://github.com/Mid0aria/owofarmbotv2.git
+> download zip file or run git clone https://github.com/Mid0aria/owofarmbot.git
 > edit config.json
 ```
 
