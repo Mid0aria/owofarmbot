@@ -1,2 +1,2 @@
-@ECHO OFF
-node socket.js
+@ECHO OFf
+node "utilfiles\socket.js"

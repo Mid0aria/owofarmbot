@@ -39,7 +39,7 @@
         "request": "^2.88.2",
         "seedrandom": "^3.0.5",
         "socket.io": "^4.6.2",
-        "socket.io-client": "^4.6.2"
+        "socket.io-client": "^4.7.0"
     },
     "bugs": {
         "url": "https://github.com/Mid0aria/owofarmbot/issues"

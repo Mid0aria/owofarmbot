@@ -1028,7 +1028,7 @@ function bancheck(token, channelid) {
                 notifier.notify({
                     title: "Captcha Detected!",
                     message: "Solve the captcha and restart the bot!",
-                    icon: "./utilfiles/captcha.png",
+                    icon: "./images/captcha.png",
                     sound: true,
                     wait: true,
                 });
@@ -1083,7 +1083,7 @@ function extrabancheck(token, channelid) {
                 notifier.notify({
                     title: "Captcha Detected!",
                     message: "Solve the captcha and restart the bot!",
-                    icon: "./utilfiles/captcha.png",
+                    icon: "./images/captcha.png",
                     sound: true,
                     wait: true,
                 });
@@ -1142,7 +1142,7 @@ function dmbancheck(token, channelid) {
                     notifier.notify({
                         title: "Captcha Detected!",
                         message: "Solve the captcha and restart the bot!",
-                        icon: "./utilfiles/captcha.png",
+                        icon: "./images/captcha.png",
                         sound: true,
                         wait: true,
                     });
@@ -1201,7 +1201,7 @@ function dmextrabancheck(token, channelid) {
                     notifier.notify({
                         title: "Captcha Detected!",
                         message: "Solve the captcha and restart the bot!",
-                        icon: "./utilfiles/captcha.png",
+                        icon: "./images/captcha.png",
                         sound: true,
                         wait: true,
                     });
