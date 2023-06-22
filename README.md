@@ -1,3 +1,4 @@
+6 28 15 26 15
 <h1 align="center">OWO FARM BOT IS NOW OPEN SOURCE</h1>
 <h2 align="center">Please star the repository if you want the UI version to come.</h2>
 <h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 50</h2>
