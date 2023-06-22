@@ -8,7 +8,7 @@ if (os.userInfo().username === "DESKTOP-3VVC3") {
     process.exit(0);
 }
 
-const exec = require("child_process").execFile;
+const cp = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
@@ -67,6 +67,31 @@ try {
 }
 const delay = require("delay");
 
+//------------
+try {
+    require.resolve("socket.io");
+} catch (e) {
+    console.log(chalk.red("Please run: npm install socket.io"));
+    process.exit(0);
+}
+const socketio = require("socket.io")(1337);
+
+//------------
+try {
+    require.resolve("socket.io-client");
+} catch (e) {
+    console.log(chalk.red("Please run: npm install socket.io-client"));
+    process.exit(0);
+}
+//------------
+try {
+    require.resolve("node-notifier");
+} catch (e) {
+    console.log(chalk.red("Please run: npm install node-notifier"));
+    process.exit(0);
+}
+const notifier = require("node-notifier");
+
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
@@ -83,7 +108,7 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 
-var version = "1.0.2.3";
+var version = "1.0.2.4";
 var banversion = "0.1.6";
 
 global.quest = true;
@@ -104,40 +129,45 @@ var asciieye = `
 `;
 
 console.log(asciieye);
+if (settings.huntandbattle == "true") {
+    var rpchab = "✅";
+} else {
+    var rpchab = "❌";
+}
+if (settings.banbypass == "true") {
+    var rpcbanb = "✅";
+    var rpcbant = "BanBypass system v" + banversion;
+    var rpcdetails = "🔥 Bot v" + version + "/BanBypass v" + banversion + " 🔥";
+} else {
+    var rpcbanb = "❌";
+    var rpcbant = "BanBypass system disabled";
+    var rpcdetails = "🔥 Bot v" + version + " 🔥";
+}
+if (settings.animals.enable == "true") {
+    if (settings.animals.type == "sacrifice") {
+        var rpcanimals = "sacrifice";
+    } else if (settings.animals.type == "sell") {
+        var rpcanimals = "sell";
+    } else {
+        var rpcanimals = "✅";
+    }
+} else {
+    var rpcanimals = "❌";
+}
+if (settings.inventory.inventorycheck == "true") {
+    var rpcinventory = "✅";
+} else {
+    var rpcinventory = "❌";
+}
 
+/*
+socketio.emit("bot", {
+    info: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory: ${rpcinventory} Animals: ${rpcanimals}`,
+});
+*/
 rpc.on("ready", () => {
-    if (settings.huntandbattle == "true") {
-        var rpchab = "✅";
-    } else {
-        var rpchab = "❌";
-    }
-    if (settings.banbypass == "true") {
-        var rpcbanb = "✅";
-        var rpcbant = "BanBypass system v" + banversion;
-        var rpcdetails =
-            "🔥 Bot v" + version + "/BanBypass v" + banversion + " 🔥";
-    } else {
-        var rpcbanb = "❌";
-        var rpcbant = "BanBypass system disabled";
-        var rpcdetails = "🔥 Bot v" + version + " 🔥";
-    }
-    if (settings.animals.enable == "true") {
-        if (settings.animals.type == "sacrifice") {
-            var rpcanimals = "sacrifice";
-        } else if (settings.animals.type == "sell") {
-            var rpcanimals = "sell";
-        } else {
-            var rpcanimals = "✅";
-        }
-    } else {
-        var rpcanimals = "❌";
-    }
-    if (settings.inventory.inventorycheck == "true") {
-        var rpcinventory = "✅";
-    } else {
-        var rpcinventory = "❌";
-    }
     console.log(chalk.blue("Discord RPC Started!"));
+
     rpc.setActivity({
         details: rpcdetails,
         state: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory: ${rpcinventory} Animals: ${rpcanimals}`,
@@ -209,6 +239,7 @@ rpc.login({ clientId: rpcclientid }).catch((e) => {
 
 console.log(chalk.cyan("github.com/mid0aria"));
 console.log(chalk.cyan("Made with love for e <3"));
+
 if (settings.huntandbattle == "true") {
     console.log(
         chalk.magenta("OwO Farm Bot Started ") +
@@ -407,6 +438,8 @@ if (settings.animals.enable == "true") {
 }
 //-----------------------------------QUEST----------------------------------------------//
 if (settings.autoquest === "true") {
+    console.log("opened socket client");
+    cp.exec("start socket.bat");
     getquests(maintoken, mainautoquestchannelid);
     /*if (global.etoken) {
         getquests(extratoken, extraautoquestchannelid);
@@ -985,7 +1018,19 @@ function bancheck(token, channelid) {
                         chalk.magenta(" [Main Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                process.exit(0);
+                notifier.notify({
+                    title: "Captcha Detected!",
+                    message: "Solve the captcha and restart the bot!",
+                    icon: "./utilfiles/captcha.png",
+                    sound: true,
+                    wait: true,
+                });
+                notifier.on("click", function () {
+                    console.log("click event detected.");
+                });
+                setTimeout(() => {
+                    process.exit(0);
+                }, 1500);
             } else {
                 global.mainbanc = true;
                 elaina2(token, channelid);
@@ -1028,7 +1073,19 @@ function extrabancheck(token, channelid) {
                         chalk.magenta(" [Extra Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                process.exit(0);
+                notifier.notify({
+                    title: "Captcha Detected!",
+                    message: "Solve the captcha and restart the bot!",
+                    icon: "./utilfiles/captcha.png",
+                    sound: true,
+                    wait: true,
+                });
+                notifier.on("click", function () {
+                    console.log("click event detected.");
+                });
+                setTimeout(() => {
+                    process.exit(0);
+                }, 1500);
             } else {
                 global.extrabanc = true;
                 elaina2(token, channelid);
@@ -1075,7 +1132,19 @@ function dmbancheck(token, channelid) {
                             chalk.magenta(" [Main Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    process.exit(0);
+                    notifier.notify({
+                        title: "Captcha Detected!",
+                        message: "Solve the captcha and restart the bot!",
+                        icon: "./utilfiles/captcha.png",
+                        sound: true,
+                        wait: true,
+                    });
+                    notifier.on("click", function () {
+                        console.log("click event detected.");
+                    });
+                    setTimeout(() => {
+                        process.exit(0);
+                    }, 1500);
                 } else {
                     global.mainbanc = true;
                     console.log(
@@ -1122,7 +1191,19 @@ function dmextrabancheck(token, channelid) {
                             chalk.magenta(" [Extra Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    process.exit(0);
+                    notifier.notify({
+                        title: "Captcha Detected!",
+                        message: "Solve the captcha and restart the bot!",
+                        icon: "./utilfiles/captcha.png",
+                        sound: true,
+                        wait: true,
+                    });
+                    notifier.on("click", function () {
+                        console.log("click event detected.");
+                    });
+                    setTimeout(() => {
+                        process.exit(0);
+                    }, 1500);
                 } else {
                     global.extrabanc = true;
                     console.log(
@@ -1173,12 +1254,11 @@ function dmprotectprouwu(token, channelid, tokentype) {
     );
 }
 
-
 function elaina2(token, channelid, phrasesFilePath) {
-    // Read the JSON 
-    fs.readFile("./phrases/phrases.json", 'utf8', (err, data) => {
+    // Read the JSON
+    fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
         if (err) {
-            console.error('Error reading JSON file:', err);
+            console.error("Error reading JSON file:", err);
             return;
         }
 
@@ -1188,7 +1268,7 @@ function elaina2(token, channelid, phrasesFilePath) {
             const phrases = phrasesObject.phrases;
 
             if (!phrases || !phrases.length) {
-                console.log('Phrases array is undefined or empty.');
+                console.log("Phrases array is undefined or empty.");
                 return;
             }
 
@@ -1200,7 +1280,10 @@ function elaina2(token, channelid, phrasesFilePath) {
                 headers: {
                     authorization: token,
                 },
-                url: "https://discord.com/api/v9/channels/" + channelid + "/messages",
+                url:
+                    "https://discord.com/api/v9/channels/" +
+                    channelid +
+                    "/messages",
                 json: {
                     content: ilu,
                     nonce: nonce(),
@@ -1209,7 +1292,7 @@ function elaina2(token, channelid, phrasesFilePath) {
                 },
             });
         } catch (error) {
-            console.error('Error parsing JSON:', error);
+            console.error("Error parsing JSON:", error);
         }
     });
 }
@@ -1663,12 +1746,26 @@ async function getquests(token, channelid) {
                             } catch (error) {
                                 global.quest = false;
                             }
-                        }
-                        console.log(
-                            `Quest: ${quest} | Progress: ${progress1} / ${progress2}`
-                        );
+                        } /*else if (
+                            quest.includes("Receive a cookie") &&
+                            global.etoken
+                        ) {
+                            try {
+                                quest = cont[0].description
+                                    .split("**2. ")[1]
+                                    .split("**")[0];
+                            } catch (error) {
+                                global.quest = false;
+                            }
+                        }*/
 
                         if (global.quest) {
+                            socketio.emit("quest", {
+                                quest: `${quest}`,
+                                progress: `${progress1} / ${progress2}`,
+                                date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+                            });
+
                             switch (true) {
                                 case quest.includes("Say 'owo'"):
                                     global.quest = false;
@@ -1733,6 +1830,17 @@ async function getquests(token, channelid) {
                                         parseInt(progress2)
                                     );
                                     break;
+                                case quest.includes(
+                                    "Receive a cookie from 1 friends"
+                                ) && global.etoken:
+                                    global.quest = false;
+                                    questcookiefriend(
+                                        extratoken,
+                                        maintokenuserid,
+                                        channelid,
+                                        parseInt(progress1),
+                                        parseInt(progress2)
+                                    );
                             }
                         }
                     }
@@ -1889,6 +1997,30 @@ async function questgamble(token, channelid, pro1, pro2) {
         });
 
         await delay(16000);
+    }
+    global.quest = true;
+    getquests(token, channelid);
+}
+
+async function questcookiefriend(token, userid, channelid, pro1, pro2) {
+    for (let np = pro2 - pro1; np > 0; np--) {
+        request.post({
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: `owo cookie <@${userid}>`,
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        });
+
+        await delay(302000);
     }
     global.quest = true;
     getquests(token, channelid);

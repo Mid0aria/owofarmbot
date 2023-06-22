@@ -1,3 +1,11 @@
 {
-    "c": ["bot.js", "version.json", "phrases/phrases.json"]
+    "c": [
+        "bot.js",
+        "version.json",
+        "package.json",
+        "phrases/phrases.json",
+        "utilfiles/captcha.png",
+        "socket.js",
+        "socket.bat"
+    ]
 }
