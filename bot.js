@@ -116,6 +116,13 @@ global.quest = true;
 console.clear();
 process.title = `OwO Farm Bot 💗 Bot Version ${version} / BanBypass Version ${banversion} 💗`;
 
+process.on("SIGINT", function () {
+    console.log(chalk.yellow("CTRL + C detected..."));
+    console.log(chalk.red("killing socket client"));
+    cp.exec("taskkill /f /im cmd.exe");
+    cp.exec("taskkill /f /im windowsterminal.exe");
+});
+
 var asciieye = `
                         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣤⣶⣶⣶⣤⣤⣄⣀⡀
                         ⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠀⠀
