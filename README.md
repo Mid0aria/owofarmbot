@@ -18,6 +18,7 @@
 [📍・OwO DM channel id](#owo-dm-channel-id)<br>
 [📚・Discord RPC](#discord-rpc)<br>
 [⚠️・Captcha Alert](#captcha-alert)<br>
+[📡・Socket Client](#socket-client)<br>
 [🔗・Required Links](#required-links)<br>
 [🎈・Usage](#usage)<br>
 
@@ -133,6 +134,9 @@ m)
 ## ⚠️・Captcha Alert
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
+
+## 📡・Socket Client
+![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/socketclient.png)
 
 ## 🔗・Required Links
 
