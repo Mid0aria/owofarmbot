@@ -1,13 +1,13 @@
 6 28 15 26 15
-<h1 align="center">OWO FARM BOT IS NOW OPEN SOURCE</h1>
-<h2 align="center">Please star the repository if you want the UI version to come.</h2>
-<h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 50</h2>
 <h1 align="center">OwO Farm Bot V1.0.2 </h1>
+<h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 50</h2>
+
 <p align="center">
 ⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6"/></a>
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a>
 
+Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/24">Click Me</a>
 
 </p>
 
