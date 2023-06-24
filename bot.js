@@ -1410,10 +1410,12 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
             function (error, response, body) {
                 var bod = JSON.parse(body);
                 var cont = bod[0].content;
+                console.log(cont);
                 if (gemc == "gemvar") {
                     var empgem = "";
                     var luckgem = "";
                     var huntgem = "";
+                    var specialgem = "";
                     if (collectc.contains("huntgem")) {
                         switch (true) {
                             case cont.includes("`057`"):
@@ -1495,7 +1497,35 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                                 break;
                         }
                     }
-                    if (huntgem == "" && empgem == "" && luckgem == "") {
+                    if (collectc.contains("specialgem")) {
+                        switch (true) {
+                            case cont.include("`085`"):
+                                specialgem = "85";
+                                break;
+                            case cont.include("`084`"):
+                                specialgem = "84";
+                                break;
+                            case cont.include("`083`"):
+                                specialgem = "83";
+                                break;
+                            case cont.include("`082`"):
+                                specialgem = "82";
+                                break;
+                            case cont.include("`081`"):
+                                specialgem = "81";
+                                break;
+                            case cont.include("`080`"):
+                                specialgem = "80";
+                                break;
+                            case cont.include("``079"):
+                                specialgem = "79";
+                                break;
+                            default:
+                                break;                    
+                        }
+                    }
+
+                    if (huntgem == "" && empgem == "" && luckgem == "" && specialgem == "") {
                         return 0;
                     } else {
                         if (
@@ -1503,13 +1533,13 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                             collectc.contains("empgem") &&
                             collectc.contains("luckgem")
                         ) {
-                            var gem = huntgem + " " + empgem + " " + luckgem;
+                            var gem = huntgem + " " + empgem + " " + luckgem + "" + specialgem;
                         } else if (
                             collectc.contains("huntgem") == false &&
                             collectc.contains("empgem") &&
-                            collectc.contains("luckgem")
+                            collectc.contains("luckgem") 
                         ) {
-                            var gem = empgem + " " + luckgem;
+                            var gem = empgem + " " + luckgem + "" + specialgem;
                         } else if (
                             collectc.contains("huntgem") &&
                             collectc.contains("empgem") == false &&
@@ -1518,7 +1548,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                             var gem = huntgem + " " + luckgem;
                         } else if (
                             collectc.contains("huntgem") == true &&
-                            collectc.contains("empgem") == true &&
+                            collectc.contains("empgem") &&
                             collectc.contains("luckgem") == false
                         ) {
                             var gem = huntgem + " " + empgem;
@@ -1537,7 +1567,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         } else if (
                             collectc.contains("huntgem") == false &&
                             collectc.contains("empgem") == false &&
-                            collectc.contains("luckgem") == true
+                            collectc.contains("uckgem") == truel
                         ) {
                             var gem = luckgem;
                         }
