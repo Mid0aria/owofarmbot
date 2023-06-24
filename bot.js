@@ -108,7 +108,7 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 
-var version = "1.0.2.4";
+var version = "1.0.2.5";
 var banversion = "0.1.6";
 
 global.quest = true;
@@ -136,6 +136,9 @@ var asciieye = `
 `;
 
 console.log(asciieye);
+console.log("opened socket client");
+cp.exec("cd utils && start socket.bat");
+
 if (settings.huntandbattle == "true") {
     var rpchab = "✅";
 } else {
@@ -166,12 +169,12 @@ if (settings.inventory.inventorycheck == "true") {
 } else {
     var rpcinventory = "❌";
 }
+setTimeout(() => {
+    socketio.emit("bot", {
+        info: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory: ${rpcinventory} Animals: ${rpcanimals}`,
+    });
+}, 2500);
 
-/*
-socketio.emit("bot", {
-    info: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory: ${rpcinventory} Animals: ${rpcanimals}`,
-});
-*/
 rpc.on("ready", () => {
     console.log(chalk.blue("Discord RPC Started!"));
 
@@ -445,8 +448,6 @@ if (settings.animals.enable == "true") {
 }
 //-----------------------------------QUEST----------------------------------------------//
 if (settings.autoquest === "true") {
-    console.log("opened socket client");
-    cp.exec("start socket.bat");
     getquests(maintoken, mainautoquestchannelid);
     /*if (global.etoken) {
         getquests(extratoken, extraautoquestchannelid);
@@ -1412,32 +1413,48 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 var cont = bod[0].content;
                 if (gemc == "gemvar") {
                     var empgem = "";
+                    var empgemstatus = false;
                     var luckgem = "";
+                    var luckgemstatus = false;
                     var huntgem = "";
+                    var huntgemstatus = false;
+                    var specialgem = "";
+                    var specialgemstatus = false;
+                    var gem = "";
+                    var gemusebro = false;
+
                     if (collectc.contains("huntgem")) {
                         switch (true) {
                             case cont.includes("`057`"):
                                 huntgem = "57";
+                                huntgemstatus = true;
                                 break;
                             case cont.includes("`056`"):
                                 huntgem = "56";
+                                huntgemstatus = true;
                                 break;
                             case cont.includes("`055`"):
                                 huntgem = "55";
+                                huntgemstatus = true;
                                 break;
                             case cont.includes("`054`"):
                                 huntgem = "54";
+                                huntgemstatus = true;
                                 break;
                             case cont.includes("`053`"):
                                 huntgem = "53";
+                                huntgemstatus = true;
                                 break;
                             case cont.includes("`052`"):
                                 huntgem = "52";
+                                huntgemstatus = true;
                                 break;
                             case cont.includes("`051`"):
                                 huntgem = "51";
+                                huntgemstatus = true;
                                 break;
                             default:
+                                huntgemstatus = false;
                                 break;
                         }
                     }
@@ -1445,26 +1462,34 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         switch (true) {
                             case cont.includes("`071`"):
                                 empgem = "71";
+                                empgemstatus = true;
                                 break;
                             case cont.includes("`070`"):
                                 empgem = "70";
+                                empgemstatus = true;
                                 break;
                             case cont.includes("`069`"):
                                 empgem = "69";
+                                empgemstatus = true;
                                 break;
                             case cont.includes("`068`"):
                                 empgem = "68";
+                                empgemstatus = true;
                                 break;
                             case cont.includes("`067`"):
                                 empgem = "67";
+                                empgemstatus = true;
                                 break;
                             case cont.includes("`066`"):
                                 empgem = "66";
+                                empgemstatus = true;
                                 break;
                             case cont.includes("`065`"):
                                 empgem = "65";
+                                empgemstatus = true;
                                 break;
                             default:
+                                empgemstatus = false;
                                 break;
                         }
                     }
@@ -1472,75 +1497,91 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         switch (true) {
                             case cont.includes("`078`"):
                                 luckgem = "78";
+                                luckgemstatus = true;
                                 break;
                             case cont.includes("`077`"):
                                 luckgem = "77";
+                                luckgemstatus = true;
                                 break;
                             case cont.includes("`076`"):
                                 luckgem = "76";
+                                luckgemstatus = true;
                                 break;
                             case cont.includes("`075`"):
                                 luckgem = "75";
+                                luckgemstatus = true;
                                 break;
                             case cont.includes("`074`"):
                                 luckgem = "74";
+                                luckgemstatus = true;
                                 break;
                             case cont.includes("`073`"):
                                 luckgem = "73";
+                                luckgemstatus = true;
                                 break;
                             case cont.includes("`072`"):
                                 luckgem = "72";
+                                luckgemstatus = true;
                                 break;
                             default:
+                                luckgemstatus = false;
                                 break;
                         }
                     }
-                    if (huntgem == "" && empgem == "" && luckgem == "") {
-                        return 0;
-                    } else {
-                        if (
-                            collectc.contains("huntgem") &&
-                            collectc.contains("empgem") &&
-                            collectc.contains("luckgem")
-                        ) {
-                            var gem = huntgem + " " + empgem + " " + luckgem;
-                        } else if (
-                            collectc.contains("huntgem") == false &&
-                            collectc.contains("empgem") &&
-                            collectc.contains("luckgem")
-                        ) {
-                            var gem = empgem + " " + luckgem;
-                        } else if (
-                            collectc.contains("huntgem") &&
-                            collectc.contains("empgem") == false &&
-                            collectc.contains("luckgem")
-                        ) {
-                            var gem = huntgem + " " + luckgem;
-                        } else if (
-                            collectc.contains("huntgem") == true &&
-                            collectc.contains("empgem") == true &&
-                            collectc.contains("luckgem") == false
-                        ) {
-                            var gem = huntgem + " " + empgem;
-                        } else if (
-                            collectc.contains("huntgem") == true &&
-                            collectc.contains("empgem") == false &&
-                            collectc.contains("luckgem") == false
-                        ) {
-                            var gem = huntgem;
-                        } else if (
-                            collectc.contains("huntgem") == false &&
-                            collectc.contains("empgem") == true &&
-                            collectc.contains("luckgem") == false
-                        ) {
-                            var gem = empgem;
-                        } else if (
-                            collectc.contains("huntgem") == false &&
-                            collectc.contains("empgem") == false &&
-                            collectc.contains("luckgem") == true
-                        ) {
-                            var gem = luckgem;
+
+                    if (collectc.contains("specialgem")) {
+                        switch (true) {
+                            case cont.includes("`085`"):
+                                specialgem = "85";
+                                specialgemstatus = true;
+                                break;
+                            case cont.includes("`084`"):
+                                specialgem = "84";
+                                specialgemstatus = true;
+                                break;
+                            case cont.includes("`083`"):
+                                specialgem = "83";
+                                specialgemstatus = true;
+                                break;
+                            case cont.includes("`082`"):
+                                specialgem = "82";
+                                specialgemstatus = true;
+                                break;
+                            case cont.includes("`081`"):
+                                specialgem = "81";
+                                specialgemstatus = true;
+                                break;
+                            case cont.includes("`080`"):
+                                specialgem = "80";
+                                specialgemstatus = true;
+                                break;
+                            case cont.includes("`079`"):
+                                specialgem = "79";
+                                specialgemstatus = true;
+                                break;
+                            default:
+                                specialgemstatus = false;
+                                break;
                         }
+                    }
+
+                    if (huntgemstatus) {
+                        var gem = gem + ` ${huntgem}`;
+                        gemusebro = true;
+                    }
+                    if (empgemstatus) {
+                        var gem = gem + ` ${empgem}`;
+                        gemusebro = true;
+                    }
+                    if (luckgemstatus) {
+                        var gem = gem + ` ${luckgem}`;
+                        gemusebro = true;
+                    }
+                    if (specialgemstatus) {
+                        var gem = gem + ` ${specialgem}`;
+                        gemusebro = true;
+                    }
+                    if (gemusebro) {
                         gemuse(token, gem, channelid, tokentype);
                     }
                 }

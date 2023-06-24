@@ -4,8 +4,8 @@
         "version.json",
         "package.json",
         "phrases/phrases.json",
-        "utilfiles/captcha.png",
-        "socket.js",
-        "socket.bat"
+        "utils/captcha.png",
+        "utils/socket.js",
+        "utils/socket.bat"
     ]
 }
