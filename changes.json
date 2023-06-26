@@ -1,12 +1,5 @@
 {
     "c": [
-        "bot.js",
-        ".gitignore",
-        "socket.bat",
-        "package.json",
-        "images/captcha.png",
-        "utilfiles/socket.js",
-        ".github/FUNDING.yml",
-        "blank.js"
+        
     ]
 }
