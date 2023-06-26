@@ -441,7 +441,7 @@ if (settings.animals.enable == "true") {
                 settings.animals.type
             );
         }
-    }, 1200000);
+    }, 600000);
 }
 //-----------------------------------QUEST----------------------------------------------//
 if (settings.autoquest === "true") {
@@ -650,6 +650,7 @@ function battle(token, timebattle, tokentype, channelid) {
 }
 
 function animals(token, tokentype, channelid, type) {
+
     switch (true) {
         case type == "sacrifice":
             var animalcheck = true;
@@ -661,6 +662,10 @@ function animals(token, tokentype, channelid, type) {
             var animalcheck = false;
             break;
     }
+    if (type == "sacrifice") {
+        var sac = " common uncommon rare epic"
+    }
+
     if (animalcheck) {
         request.post(
             {
@@ -672,7 +677,7 @@ function animals(token, tokentype, channelid, type) {
                     channelid +
                     "/messages",
                 json: {
-                    content: "owo " + type + " all",
+                    content: "owo " + type + sac,
                     nonce: nonce(),
                     tts: false,
                     flags: 0,
@@ -683,8 +688,8 @@ function animals(token, tokentype, channelid, type) {
                     chalk.red(
                         `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                     ) +
-                        chalk.magenta(" [" + tokentype + "]") +
-                        chalk.yellow(" Animals ✅ / Type: " + type)
+                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.yellow(" Animals ✅ / Type: " + type)
                 );
             }
         );
@@ -693,8 +698,8 @@ function animals(token, tokentype, channelid, type) {
             chalk.red(
                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
             ) +
-                chalk.magenta(" [" + tokentype + "]") +
-                chalk.yellow(" Animals ❌ / Error: Incorrect Type")
+            chalk.magenta(" [" + tokentype + "]") +
+            chalk.yellow(" Animals ❌ / Error: Incorrect Type")
         );
     }
 }
