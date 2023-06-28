@@ -72,6 +72,22 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         "animals": {
             "enable": "", true or false
             "type": "" sell or sacrifice
+            "ifsacrifice": {
+                "common": "", true or false
+                "uncommon": "", true or false
+                "rare": "", true or false
+                "epic": "", true or false
+                "mythical": "", true or false
+                "patreon": "", true or false
+                "cpatreon": "", true or false
+                "legendary": "", true or false
+                "gem": "", true or false
+                "bot": "", true or false
+                "distorted": "", true or false
+                "fabled": "", true or false
+                "special": "", true or false
+                "hidden": "" true or false
+            }            
         },
         "upgradeautohunt": {
             "enable": "", true or false
