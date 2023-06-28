@@ -4,7 +4,10 @@ const chalk = require("chalk");
 
 console.clear();
 process.title = `Socket Client`;
-// global.state = "";
+global.state = "";
+global.quest = "";
+global.questpr = "";
+global.questdate = "";
 
 io.on("connect", () => {
     console.clear();
@@ -12,7 +15,7 @@ io.on("connect", () => {
 });
 
 io.on("bot", (i) => {
-    console.log(i.info);
+    global.state = i.info;
 });
 /*
 io.on("efa", (data) => {
@@ -22,12 +25,21 @@ io.on("efa", (data) => {
 //6 28 15 26 15
 
 io.on("quest", (data) => {
+    global.quest = data.quest;
+    global.questpr = data.progress;
+    global.questdate = data.date;
+});
+
+setInterval(() => {
+    console.clear();
+    console.log(global.state);
     console.log(
-        chalk.red(data.date) +
+        chalk.blue("Start time: ") +
+            chalk.red(global.questdate) +
             chalk.blue(" Quest: ") +
-            chalk.magenta(`${data.quest}`) +
+            chalk.magenta(`${global.quest}`) +
             " | " +
             chalk.blue("Progress: ") +
-            chalk.yellow(data.progress)
+            chalk.yellow(global.questpr)
     );
-});
+}, 5000);
