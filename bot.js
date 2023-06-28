@@ -128,7 +128,7 @@ var asciieye = `
                         ⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠀⠀
                         ⠀⠀⠀⣠⣶⣿⣿⡿⣿⣿⣿⡿⠋⠉⠀⠀⠉⠙⢿⣿⣿⡿⣿⣿⣷⣦⡀⠀⠀⠀
                         ⠀⢀⣼⣿⣿⠟⠁⢠⣿⣿⠏⠀⠀⢠⣤⣤⡀⠀⠀⢻⣿⣿⡀⠙⢿⣿⣿⣦⠀⠀
-                        ⣰⣿⣿⡟⠁i⠀⢸⣿⣿w⠀ ⢿⣿⣿⡟ a⠈⣿⣿⡇n⠀⠙⣿⣿⣷⡄
+                        ⣰⣿⣿⡟⠁i⠀⢸⣿⣿w⠀ ⢿⣿⣿⡟ a⠈⣿⣿⡇n⠀  ⠙⣿⣿⣷⡄
                         ⠈⠻⣿⣿⣦⣄⠀⠸⣿⣿⣆⠀t⠀⠉⠉⠀ ⠀⣸⣿⣿⠃⢀⣤⣾⣿⣿⠟⠁
                         ⠀⠀⠈⠻⣿⣿⣿⣶⣿⣿⣿⣦⣄⠀⠀u⢀⣠⣾⣿⣿⣿⣾⣿⣿⡿⠋⠁⠀⠀
                         ⠀⠀⠀⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠁⠀⠀⠀⠀⠀
@@ -171,7 +171,7 @@ if (settings.inventory.inventorycheck == "true") {
 }
 setTimeout(() => {
     socketio.emit("bot", {
-        info: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory: ${rpcinventory} Animals: ${rpcanimals}`,
+        info: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory Check: ${rpcinventory} Animals: ${rpcanimals}`,
     });
 }, 2500);
 
@@ -654,6 +654,31 @@ function animals(token, tokentype, channelid, type) {
     switch (true) {
         case type == "sacrifice":
             var animalcheck = true;
+            var sac = "";
+            var ranks = [
+                "common",
+                "uncommon",
+                "rare",
+                "epic",
+                "mythical",
+                "patreon",
+                "cpatreon",
+                "legendary",
+                "gem",
+                "bot",
+                "distorted",
+                "fabled",
+                "special",
+                "hidden",
+            ];
+            for (a in ranks) {
+                var e = ranks[a];
+
+                if (config.settings.animals.ifsacrifice[e] === "true") {
+                    var sac = sac + `${e} `;
+                }
+            }
+
             break;
         case type == "sell":
             var animalcheck = true;
@@ -673,7 +698,7 @@ function animals(token, tokentype, channelid, type) {
                     channelid +
                     "/messages",
                 json: {
-                    content: "owo " + type + " all",
+                    content: `owo ${type} ${sac}`,
                     nonce: nonce(),
                     tts: false,
                     flags: 0,
