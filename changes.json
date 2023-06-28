@@ -2,10 +2,6 @@
     "c": [
         "bot.js",
         "version.json",
-        "package.json",
-        "phrases/phrases.json",
-        "utils/captcha.png",
-        "utils/socket.js",
-        "utils/socket.bat"
+        "config.json"
     ]
 }
