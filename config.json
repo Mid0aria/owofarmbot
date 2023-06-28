@@ -17,7 +17,23 @@
         },
         "animals": {
             "enable": "false",
-            "type": "sacrifice"
+            "type": "sacrifice",
+            "ifsacrifice": {
+                "common": "true",
+                "uncommon": "true",
+                "rare": "true",
+                "epic": "true",
+                "mythical": "false",
+                "patreon": "false",
+                "cpatreon": "false",
+                "legendary": "false",
+                "gem": "false",
+                "bot": "false",
+                "distorted": "false",
+                "fabled": "false",
+                "special": "false",
+                "hidden": "false"
+            }
         },
         "upgradeautohunt": {
             "enable": "false",
