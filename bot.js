@@ -108,7 +108,7 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 
-var version = "1.0.2.5";
+var version = "1.0.2.6";
 var banversion = "0.1.6";
 
 global.quest = true;
