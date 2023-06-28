@@ -2,6 +2,7 @@
     "c": [
         "bot.js",
         "version.json",
-        "config.json"
+        "config.json",
+        "utils/socket.js"
     ]
 }
