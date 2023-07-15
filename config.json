@@ -18,7 +18,7 @@
         "animals": {
             "enable": "false",
             "type": "sacrifice",
-            "ifsacrifice": {
+            "animaltype": {
                 "common": "true",
                 "uncommon": "true",
                 "rare": "true",
