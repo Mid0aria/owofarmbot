@@ -108,10 +108,11 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 
-var version = "1.0.2.6";
-var banversion = "0.1.6";
+var version = "1.0.2.7";
+var banversion = "0.1.7";
 
 global.quest = true;
+global.questtitle = "";
 
 console.clear();
 process.title = `OwO Farm Bot 💗 Bot Version ${version} / BanBypass Version ${banversion} 💗`;
@@ -674,7 +675,7 @@ function animals(token, tokentype, channelid, type) {
             for (a in ranks) {
                 var e = ranks[a];
 
-                if (config.settings.animals.ifsacrifice[e] === "true") {
+                if (config.settings.animals.animaltype[e] === "true") {
                     var sac = sac + `${e} `;
                 }
             }
@@ -1052,7 +1053,7 @@ function bancheck(token, channelid) {
                         chalk.red(" Chat Captcha! ❌")
                 );
                 notifier.notify({
-                    title: "Captcha Detected!",
+                    title: "(Main Token) Captcha Detected!",
                     message: "Solve the captcha and restart the bot!",
                     icon: "./utilfiles/captcha.png",
                     sound: true,
@@ -1107,7 +1108,7 @@ function extrabancheck(token, channelid) {
                         chalk.red(" Chat Captcha! ❌")
                 );
                 notifier.notify({
-                    title: "Captcha Detected!",
+                    title: "(Extra Token) Captcha Detected!",
                     message: "Solve the captcha and restart the bot!",
                     icon: "./utilfiles/captcha.png",
                     sound: true,
@@ -1166,7 +1167,7 @@ function dmbancheck(token, channelid) {
                             chalk.red(" DM Captcha! ❌")
                     );
                     notifier.notify({
-                        title: "Captcha Detected!",
+                        title: "(Main Token) Captcha Detected!",
                         message: "Solve the captcha and restart the bot!",
                         icon: "./utilfiles/captcha.png",
                         sound: true,
@@ -1225,7 +1226,7 @@ function dmextrabancheck(token, channelid) {
                             chalk.red(" DM Captcha! ❌")
                     );
                     notifier.notify({
-                        title: "Captcha Detected!",
+                        title: "(Extra Token) Captcha Detected!",
                         message: "Solve the captcha and restart the bot!",
                         icon: "./utilfiles/captcha.png",
                         sound: true,
@@ -1804,6 +1805,7 @@ async function getquests(token, channelid) {
                         var quest = cont[0].description
                             .split("**1. ")[1]
                             .split("**")[0];
+                        global.questtitle = `${quest}`;
                         var progress1 = cont[0].description
                             .split("Progress: [")[1]
                             .split("/")[0];
@@ -1819,22 +1821,11 @@ async function getquests(token, channelid) {
                             } catch (error) {
                                 global.quest = false;
                             }
-                        } /*else if (
-                            quest.includes("Receive a cookie") &&
-                            global.etoken
-                        ) {
-                            try {
-                                quest = cont[0].description
-                                    .split("**2. ")[1]
-                                    .split("**")[0];
-                            } catch (error) {
-                                global.quest = false;
-                            }
-                        }*/
+                        }
 
                         if (global.quest) {
                             socketio.emit("quest", {
-                                quest: `${quest}`,
+                                quest: `${global.questtitle}`,
                                 progress: `${progress1} / ${progress2}`,
                                 date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
                             });
@@ -1923,6 +1914,14 @@ async function getquests(token, channelid) {
     );
 }
 
+async function updatequestssocket(p1, p2) {
+    socketio.emit("quest", {
+        quest: `${global.questtitle}`,
+        progress: `${p1} / ${p2}`,
+        date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+    });
+}
+
 async function questsayowo(token, channelid, pro1, pro2) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
@@ -1940,7 +1939,9 @@ async function questsayowo(token, channelid, pro1, pro2) {
                 flags: 0,
             },
         });
-
+        var socketp = pro1;
+        var socketpro1 = socketp++;
+        updatequestssocket(socketpro1, pro2);
         await delay(32500);
         for (let sayowoelaina = 0; sayowoelaina < 4; sayowoelaina++) {
             elaina2(token, channelid);
@@ -1974,7 +1975,9 @@ async function questcurseme(token, userid, channelid, pro1, pro2) {
                 flags: 0,
             },
         });
-
+        var socketp = pro1;
+        var socketpro1 = socketp++;
+        updatequestssocket(socketpro1, pro2);
         await delay(302000);
     }
     global.quest = true;
@@ -1998,7 +2001,9 @@ async function questprayme(token, userid, channelid, pro1, pro2) {
                 flags: 0,
             },
         });
-
+        var socketp = pro1;
+        var socketpro1 = socketp++;
+        updatequestssocket(socketpro1, pro2);
         await delay(302000);
     }
     global.quest = true;
@@ -2045,6 +2050,9 @@ async function questbattlefriend(
                 flags: 0,
             },
         });
+        var socketp = pro1;
+        var socketpro1 = socketp++;
+        updatequestssocket(socketpro1, pro2);
         await delay(15000);
     }
     global.quest = true;
@@ -2068,7 +2076,9 @@ async function questgamble(token, channelid, pro1, pro2) {
                 flags: 0,
             },
         });
-
+        var socketp = pro1;
+        var socketpro1 = socketp++;
+        updatequestssocket(socketpro1, pro2);
         await delay(16000);
     }
     global.quest = true;
@@ -2092,7 +2102,9 @@ async function questcookiefriend(token, userid, channelid, pro1, pro2) {
                 flags: 0,
             },
         });
-
+        var socketp = pro1;
+        var socketpro1 = socketp++;
+        updatequestssocket(socketpro1, pro2);
         await delay(302000);
     }
     global.quest = true;

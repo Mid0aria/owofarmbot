@@ -32,6 +32,11 @@ io.on("quest", (data) => {
 
 setInterval(() => {
     console.clear();
+    console.log(
+        chalk.red(
+            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+        )
+    );
     console.log(global.state);
     console.log(
         chalk.blue("Start time: ") +
