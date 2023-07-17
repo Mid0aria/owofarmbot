@@ -1655,6 +1655,13 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         }, 2000);
                     }
                 }
+                if (settings.inventory.cratecheck == "true") {
+                    if (cont.includes("`100`")) {
+                        setTimeout(() => {
+                            boxuse(token, "crate all", channelid, tokentype);
+                        }, 2000);
+                    }
+                }
                 if (settings.inventory.eventcheck == "true") {
                     if (cont.includes("`018`")) {
                         // valentines day
@@ -1672,6 +1679,11 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         // fakelootbox
                         setTimeout(() => {
                             eventuse(token, "20", channelid, tokentype);
+                        }, 2000);
+                    }
+                    if (cont.includes("`23`")) {
+                        setTimeout(() => {
+                            eventuse(token, "23", channelid, tokentype);
                         }, 2000);
                     }
                 }
