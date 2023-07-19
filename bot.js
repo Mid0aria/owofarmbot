@@ -652,52 +652,69 @@ function battle(token, timebattle, tokentype, channelid) {
 }
 
 function animals(token, tokentype, channelid, type) {
-    switch (true) {
-        case type == "sacrifice":
-            var animalcheck = true;
-            var sac = "";
-            var ranks = [
-                "common",
-                "uncommon",
-                "rare",
-                "epic",
-                "mythical",
-                "patreon",
-                "cpatreon",
-                "legendary",
-                "gem",
-                "bot",
-                "distorted",
-                "fabled",
-                "special",
-                "hidden",
-            ];
-            for (a in ranks) {
-                var e = ranks[a];
+    let animalcheck = false;
+    let sac = "";
+    const ranks = [
+        "common",
+        "uncommon",
+        "rare",
+        "epic",
+        "mythical",
+        "patreon",
+        "cpatreon",
+        "legendary",
+        "gem",
+        "bot",
+        "distorted",
+        "fabled",
+        "special",
+        "hidden",
+    ];
 
-                if (config.settings.animals.animaltype[e] === "true") {
-                    var sac = sac + `${e} `;
+    // Placeholder for the config object
+    const config = {
+        settings: {
+            animals: {
+                animaltype: {
+                    common: true,
+                    uncommon: true,
+                    rare: true,
+                    epic: true,
+                    mythical: true,
+                    patreon: true,
+                    cpatreon: true,
+                    legendary: true,
+                    gem: true,
+                    bot: true,
+                    distorted: true,
+                    fabled: true,
+                    special: true,
+                    hidden: true,
                 }
             }
+        }
+    };
 
-            break;
-        case type == "sell":
-            var animalcheck = true;
-            break;
-        default:
-            var animalcheck = false;
-            break;
+    if (type === "sacrifice") {
+        for (let i = 0; i < ranks.length; i++) {
+            const rank = ranks[i];
+            if (config.settings.animals.animaltype[rank] === true) {
+                sac += `${rank} `;
+            }
+        }
+        animalcheck = true;
+    } else if (type === "sell") {
+        animalcheck = true;
     }
+
     if (animalcheck) {
+        const request = require('request');
         request.post(
             {
                 headers: {
                     authorization: token,
                 },
-                url:
-                    "https://discord.com/api/v9/channels/" +
-                    channelid +
-                    "/messages",
+                url: `https://discord.com/api/v9/channels/${channelid}/messages`,
                 json: {
                     content: `owo ${type} ${sac}`,
                     nonce: nonce(),
@@ -707,24 +724,22 @@ function animals(token, tokentype, channelid, type) {
             },
             function (error, response, body) {
                 console.log(
-                    chalk.red(
-                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    ) +
-                        chalk.magenta(" [" + tokentype + "]") +
-                        chalk.yellow(" Animals ✅ / Type: " + type)
+                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+                    ` [${tokentype}]` +
+                    ` Animals ✅ / Type: ${type}`
                 );
             }
         );
     } else {
         console.log(
-            chalk.red(
-                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-            ) +
-                chalk.magenta(" [" + tokentype + "]") +
-                chalk.yellow(" Animals ❌ / Error: Incorrect Type")
+            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+            ` [${tokentype}]` +
+            ` Animals ❌ / Error: Incorrect Type`
         );
     }
 }
+
+
 
 function pray(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
@@ -1640,6 +1655,13 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         }, 2000);
                     }
                 }
+                if (settings.inventory.cratecheck == "true") {
+                    if (cont.includes("`100`")) {
+                        setTimeout(() => {
+                            boxuse(token, "crate all", channelid, tokentype);
+                        }, 2000);
+                    }
+                }
                 if (settings.inventory.eventcheck == "true") {
                     if (cont.includes("`018`")) {
                         // valentines day
@@ -1657,6 +1679,11 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         // fakelootbox
                         setTimeout(() => {
                             eventuse(token, "20", channelid, tokentype);
+                        }, 2000);
+                    }
+                    if (cont.includes("`23`")) {
+                        setTimeout(() => {
+                            eventuse(token, "23", channelid, tokentype);
                         }, 2000);
                     }
                 }
