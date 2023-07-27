@@ -671,29 +671,7 @@ function animals(token, tokentype, channelid, type) {
         "hidden",
     ];
 
-    // Placeholder for the config object
-    const config = {
-        settings: {
-            animals: {
-                animaltype: {
-                    common: true,
-                    uncommon: true,
-                    rare: true,
-                    epic: true,
-                    mythical: true,
-                    patreon: true,
-                    cpatreon: true,
-                    legendary: true,
-                    gem: true,
-                    bot: true,
-                    distorted: true,
-                    fabled: true,
-                    special: true,
-                    hidden: true,
-                }
-            }
-        }
-    };
+
 
     if (type === "sacrifice") {
         for (let i = 0; i < ranks.length; i++) {
