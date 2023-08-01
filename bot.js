@@ -1768,156 +1768,136 @@ function eventuse(token, eventbox, channelid, tokentype) {
 }
 
 async function getquests(token, channelid) {
-    request.post(
-        {
+    request.post({
+        headers: {
+            authorization: token,
+        },
+        url: "https://discord.com/api/v9/channels/" + channelid + "/messages",
+        json: {
+            content: "owo quest",
+            nonce: nonce(),
+            tts: false,
+            flags: 0,
+        },
+    },
+    async function (error, response, body) {
+        await delay(3500);
+        request.get({
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
-            json: {
-                content: "owo quest",
-                nonce: nonce(),
-                tts: false,
-                flags: 0,
-            },
+            url: "https://discord.com/api/v9/channels/" + channelid + "/messages?limit=1",
         },
         async function (error, response, body) {
-            await delay(3500);
-            request.get(
-                {
-                    headers: {
-                        authorization: token,
-                    },
-                    url:
-                        "https://discord.com/api/v9/channels/" +
-                        channelid +
-                        "/messages?limit=1",
-                },
-                async function (error, response, body) {
-                    var bod = JSON.parse(body);
-                    var cont = bod[0].embeds;
-                    await delay(2500);
-                    if (
-                        cont[0].description.includes(
-                            "You finished all of your quests!"
-                        )
-                    ) {
-                        global.quest = false;
-                    } else {
-                        var quest = cont[0].description
-                            .split("**1. ")[1]
-                            .split("**")[0];
-                        global.questtitle = `${quest}`;
-                        var progress1 = cont[0].description
-                            .split("Progress: [")[1]
-                            .split("/")[0];
-                        var progress2 = cont[0].description
-                            .split("/")[1]
-                            .split("]")[0];
+            var bod = JSON.parse(body);
+            var cont = bod[0].embeds;
+            await delay(2500);
 
-                        if (quest.includes("Battle")) {
-                            try {
-                                quest = cont[0].description
-                                    .split("**2. ")[1]
-                                    .split("**")[0];
-                            } catch (error) {
-                                global.quest = false;
-                            }
+            // Check if the array cont and its first element are defined and have the required property
+            if (Array.isArray(cont) && cont.length > 0 && cont[0].description) {
+                if (cont[0].description.includes("You finished all of your quests!")) {
+                    global.quest = false;
+                } else {
+                    var quest = cont[0].description.split("**1. ")[1].split("**")[0];
+                    global.questtitle = `${quest}`;
+                    var progress1 = cont[0].description.split("Progress: [")[1].split("/")[0];
+                    var progress2 = cont[0].description.split("/")[1].split("]")[0];
+
+                    if (quest.includes("Battle")) {
+                        try {
+                            quest = cont[0].description.split("**2. ")[1].split("**")[0];
+                        } catch (error) {
+                            global.quest = false;
                         }
+                    }
 
-                        if (global.quest) {
-                            socketio.emit("quest", {
-                                quest: `${global.questtitle}`,
-                                progress: `${progress1} / ${progress2}`,
-                                date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-                            });
+                    if (global.quest) {
+                        socketio.emit("quest", {
+                            quest: `${global.questtitle}`,
+                            progress: `${progress1} / ${progress2}`,
+                            date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+                        });
 
-                            switch (true) {
-                                case quest.includes("Say 'owo'"):
-                                    global.quest = false;
-                                    questsayowo(
-                                        token,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break; //E <3
-                                case quest.includes(
-                                    "xp from hunting and battling"
-                                ):
-                                    global.quest = false;
-                                    xpquests(token, channelid);
+                        switch (true) {
+                            case quest.includes("Say 'owo'"):
+                                global.quest = false;
+                                questsayowo(
+                                    token,
+                                    channelid,
+                                    parseInt(progress1),
+                                    parseInt(progress2)
+                                );
+                                break;
 
-                                case quest.includes("Gamble"):
-                                    global.quest = false;
-                                    questgamble(
-                                        token,
-                                        channelid,
-                                        parseInt(progress1), //coded by @mid0aria on github
-                                        parseInt(progress2)
-                                    );
-                                    break;
+                            case quest.includes("xp from hunting and battling"):
+                                global.quest = false;
+                                xpquests(token, channelid);
+                                break;
 
-                                case quest.includes(
-                                    "Have a friend curse you"
-                                ) && global.etoken:
-                                    global.quest = false;
-                                    questcurseme(
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break;
+                            case quest.includes("Gamble"):
+                                global.quest = false;
+                                questgamble(
+                                    token,
+                                    channelid,
+                                    parseInt(progress1),
+                                    parseInt(progress2)
+                                );
+                                break;
 
-                                case quest.includes(
-                                    "Have a friend pray to you"
-                                ) && global.etoken:
-                                    global.quest = false; //coded by @mid0aria on github
-                                    questprayme(
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break;
+                            case quest.includes("Have a friend curse you") && global.etoken:
+                                global.quest = false;
+                                questcurseme(
+                                    extratoken,
+                                    maintokenuserid,
+                                    channelid,
+                                    parseInt(progress1),
+                                    parseInt(progress2)
+                                );
+                                break;
 
-                                case quest.includes("Battle with a friend") &&
-                                    global.etoken:
-                                    global.quest = false;
-                                    questbattlefriend(
-                                        token,
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break;
-                                case quest.includes(
-                                    "Receive a cookie from 1 friends"
-                                ) && global.etoken:
-                                    global.quest = false;
-                                    questcookiefriend(
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                            }
+                            case quest.includes("Have a friend pray to you") && global.etoken:
+                                global.quest = false;
+                                questprayme(
+                                    extratoken,
+                                    maintokenuserid,
+                                    channelid,
+                                    parseInt(progress1),
+                                    parseInt(progress2)
+                                );
+                                break;
+
+                            case quest.includes("Battle with a friend") && global.etoken:
+                                global.quest = false;
+                                questbattlefriend(
+                                    token,
+                                    extratoken,
+                                    maintokenuserid,
+                                    channelid,
+                                    parseInt(progress1),
+                                    parseInt(progress2)
+                                );
+                                break;
+
+                            case quest.includes("Receive a cookie from 1 friends") && global.etoken:
+                                global.quest = false;
+                                questcookiefriend(
+                                    extratoken,
+                                    maintokenuserid,
+                                    channelid,
+                                    parseInt(progress1),
+                                    parseInt(progress2)
+                                );
+                                break;
                         }
                     }
                 }
-            );
-        }
-    );
+            } else {
+                console.log("Quest data is missing or in an unexpected format.");
+            }
+        });
+    });
 }
+
 
 async function updatequestssocket(p1, p2) {
     socketio.emit("quest", {
