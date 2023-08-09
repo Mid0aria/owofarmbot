@@ -1,13 +1,10 @@
 //coded by @mid0aria on github
 const os = require("os");
-if (os.type() !== "Windows_NT") {
-    console.log("Only Windows !!!");
-    process.exit(0);
-}
 if (os.userInfo().username === "DESKTOP-3VVC3") {
+    console.log(".l.");
     process.exit(0);
 }
-
+//who is aix ?
 const cp = require("child_process");
 const fs = require("fs");
 const path = require("path");
@@ -108,7 +105,7 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 
-var version = "1.0.2.7";
+var version = "1.0.2.8";
 var banversion = "0.1.7";
 
 global.quest = true;
@@ -125,15 +122,30 @@ process.on("SIGINT", function () {
 });
 
 var asciieye = `
-                        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣤⣶⣶⣶⣤⣤⣄⣀⡀
-                        ⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠀⠀
-                        ⠀⠀⠀⣠⣶⣿⣿⡿⣿⣿⣿⡿⠋⠉⠀⠀⠉⠙⢿⣿⣿⡿⣿⣿⣷⣦⡀⠀⠀⠀
-                        ⠀⢀⣼⣿⣿⠟⠁⢠⣿⣿⠏⠀⠀⢠⣤⣤⡀⠀⠀⢻⣿⣿⡀⠙⢿⣿⣿⣦⠀⠀
-                        ⣰⣿⣿⡟⠁i⠀⢸⣿⣿w⠀ ⢿⣿⣿⡟ a⠈⣿⣿⡇n⠀  ⠙⣿⣿⣷⡄
-                        ⠈⠻⣿⣿⣦⣄⠀⠸⣿⣿⣆⠀t⠀⠉⠉⠀ ⠀⣸⣿⣿⠃⢀⣤⣾⣿⣿⠟⠁
-                        ⠀⠀⠈⠻⣿⣿⣿⣶⣿⣿⣿⣦⣄⠀⠀u⢀⣠⣾⣿⣿⣿⣾⣿⣿⡿⠋⠁⠀⠀
-                        ⠀⠀⠀⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠁⠀⠀⠀⠀⠀
-                        ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠛⠿⠿⠿⠿⠿⠿⠛⠋⠉⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣤⣤⣤⣤⣤⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠻⠿⢿⣿⣿⣿⣿⣿⣶⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣿⣿⣿⣿⣿⣿⣶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣷⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣀⣙⢿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠻⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⡟⠹⠿⠟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡿⠋⡬⢿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⡇⢸⡇⢸⣿⣿⣿⠟⠁⢀⣬⢽⣿⣿⣿⣿⣿⣿⠋⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣧⣈⣛⣿⣿⣿⡇⠀⠀⣾⠁⢀⢻⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣧⣄⣀⠙⠷⢋⣼⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇
+⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇
+⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁
+⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀
+⠸⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀
+⠀⢹⣿⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀
+⠀⠀⠹⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀
+⠀⠀⠀⠙⣿⣿⣿⣿⣿⣶⣤⣀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠀⠀⠀⠀
+⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠛⠛⠛⠛⠛⠛⠛⠋⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 `;
 
 console.log(asciieye);
@@ -273,10 +285,77 @@ if (settings.banbypass == "true") {
         chalk.yellow("Captcha (ban) Bypass System by Aix ") +
             chalk.blue("version " + banversion)
     );
+    console.log(`{/__/}\n( ^ . ^)\n/ > ` + chalk.red("Captcha Bypass"));
+} else {
+    global.mainbanc = true;
+    global.extrabanc = true;
+    console.log(chalk.red(`{/__/}\n( • . •)\n/ > 🥒`));
 }
 
-checkmaintoken(maintoken);
+//----------------------------------------------------Check Main Token----------------------------------------------------//
+request.get(
+    {
+        headers: {
+            authorization: maintoken,
+        },
+        url: "https://canary.discord.com/api/v9/users/@me",
+    },
+    function (error, response, body) {
+        var bod = JSON.parse(body);
 
+        if (String(bod.message) === "401: Unauthorized") {
+            console.log(chalk.red(`Main Token / ${String(bod.message)}`));
+            setTimeout(() => {
+                process.exit(0);
+            }, 5000);
+        } else {
+            console.log(
+                `[Main Token] User: ${bod.username}#${bod.discriminator}`
+            );
+            setTimeout(() => {
+                //daily(maintoken, "Main Token", mainchannelid);
+            }, 3500);
+
+            console.log(chalk.green("Main Token ✅"));
+            if (settings.huntandbattle == "true") {
+                setTimeout(() => {
+                    hunt(maintoken, "StartUp", "Main Token", mainchannelid);
+                }, 5000);
+
+                setTimeout(() => {
+                    battle(maintoken, "StartUp", "Main Token", mainchannelid);
+                }, 7500);
+            }
+            if (settings.animals.enable == "true") {
+                setTimeout(() => {
+                    animals(
+                        maintoken,
+                        "Main Token",
+                        mainchannelid,
+                        settings.animals.type
+                    );
+                }, 9500);
+            }
+            if (settings.pray == "true") {
+                setTimeout(() => {
+                    pray(maintoken, "Main Token", mainchannelid);
+                }, 11000);
+            }
+            if (settings.curse == "true") {
+                setTimeout(() => {
+                    curse(maintoken, "Main Token", mainchannelid);
+                }, 14000);
+            }
+            if (settings.upgradeautohunt.enable == "true") {
+                setTimeout(() => {
+                    upgradeall(maintoken, "Main Token", mainchannelid);
+                }, 17000);
+            }
+        }
+    }
+);
+
+//----------------------------------------------------Check Extra Token----------------------------------------------------//
 if (extratokencheck == "true") {
     global.etoken = true;
     request.get(
@@ -301,8 +380,7 @@ if (extratokencheck == "true") {
                 );
 
                 if (global.etoken) {
-                    level(extratoken, "Extra Token", extrachannelid);
-                    daily(extratoken, "Extra Token", extrachannelid);
+                    //daily(extratoken, "Extra Token", extrachannelid);
                     if (settings.huntandbattle == "true") {
                         setTimeout(() => {
                             hunt(
@@ -449,9 +527,9 @@ if (settings.animals.enable == "true") {
 }
 //-----------------------------------QUEST----------------------------------------------//
 if (settings.autoquest === "true") {
-    getquests(maintoken, mainautoquestchannelid);
+    getquests(maintoken, mainautoquestchannelid, "Main Token");
     /*if (global.etoken) {
-        getquests(extratoken, extraautoquestchannelid);
+        getquests(extratoken, extraautoquestchannelid, "Extra Token");
     }*/
 }
 //--------------------------------PRAY-------------------------------------------------//
@@ -501,7 +579,7 @@ if (settings.gamble.slots.enable == "true") {
     }, 23000);
 }
 
-//-----------------------------FUNCTIONS----------------------------------------------------//
+//----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
 function checkversion() {
     var versi = path.join(__dirname, "/version.json");
@@ -593,6 +671,24 @@ function autoseed(token) {
     return rng();
 }
 
+function sleepy(t) {
+    console.log(
+        chalk.red(
+            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+        ) +
+            chalk.magenta(` [${t} Token] `) +
+            chalk.red("Waiting ...")
+    );
+}
+
+async function updatequestssocket(p1, p2) {
+    socketio.emit("quest", {
+        quest: `${global.questtitle}`,
+        progress: `${p1} / ${p2}`,
+        date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+    });
+}
+//----------------------------------------------------Main Features----------------------------------------------------//
 function hunt(token, timehunt, tokentype, channelid) {
     request.post(
         {
@@ -653,8 +749,8 @@ function battle(token, timebattle, tokentype, channelid) {
 
 function animals(token, tokentype, channelid, type) {
     let animalcheck = false;
-    let sac = "";
-    const ranks = [
+    var animaltypes = "";
+    var ranks = [
         "common",
         "uncommon",
         "rare",
@@ -670,23 +766,20 @@ function animals(token, tokentype, channelid, type) {
         "special",
         "hidden",
     ];
+    for (a in ranks) {
+        var e = ranks[a];
 
-
-
-    if (type === "sacrifice") {
-        for (let i = 0; i < ranks.length; i++) {
-            const rank = ranks[i];
-            if (config.settings.animals.animaltype[rank] === true) {
-                sac += `${rank} `;
-            }
+        if (config.settings.animals.animaltype[e] === "true") {
+            var animaltypes = animaltypes + `${e} `;
         }
-        animalcheck = true;
-    } else if (type === "sell") {
+    }
+
+    if (type === "sacrifice" || type === "sell") {
         animalcheck = true;
     }
 
     if (animalcheck) {
-        const request = require('request');
+        const request = require("request");
         request.post(
             {
                 headers: {
@@ -694,7 +787,7 @@ function animals(token, tokentype, channelid, type) {
                 },
                 url: `https://discord.com/api/v9/channels/${channelid}/messages`,
                 json: {
-                    content: `owo ${type} ${sac}`,
+                    content: `owo ${type} ${animaltypes}`,
                     nonce: nonce(),
                     tts: false,
                     flags: 0,
@@ -703,21 +796,19 @@ function animals(token, tokentype, channelid, type) {
             function (error, response, body) {
                 console.log(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                    ` [${tokentype}]` +
-                    ` Animals ✅ / Type: ${type}`
+                        ` [${tokentype}]` +
+                        ` Animals ✅ / Type: ${type}`
                 );
             }
         );
     } else {
         console.log(
             `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-            ` [${tokentype}]` +
-            ` Animals ❌ / Error: Incorrect Type`
+                ` [${tokentype}]` +
+                ` Animals ❌ / Error: Incorrect Type`
         );
     }
 }
-
-
 
 function pray(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
@@ -786,35 +877,44 @@ function curse(token, tokentype, channelid) {
         }
     );
 }
+/*
+function checklist(token, tokentype, channelid) {
+        request.post(
+            {
+                headers: {
+                    authorization: token,
+                },
+                url:
+                    "https://discord.com/api/v9/channels/" +
+                    channelid +
+                    "/messages",
+                json: {
+                    content: "owo cl",
+                    nonce: nonce(),
+                    tts: false,
+                    flags: 0,
+                },
+            },
+            function (error, response, body) {
+          request.get(
+              {
+                  headers: {
+                      authorization: token,
+                  },
+                  url:
+                      "https://discord.com/api/v9/channels/" +
+                      channelid +
+                      "/messages?limit=1",
+              },
+              function (error, response, body) {
+                  var bod = JSON.parse(body);
+                  var cont = bod[0].content;
+              }
+          );
+            }
+        );
 
-function level(token, tokentype, channelid) {
-    request.post(
-        {
-            headers: {
-                authorization: token,
-            },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
-            json: {
-                content: "owo level",
-                nonce: nonce(),
-                tts: false,
-                flags: 0,
-            },
-        },
-        function (error, response, body) {
-            console.log(
-                chalk.red(
-                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                ) +
-                    chalk.magenta(" [" + tokentype + "]") +
-                    chalk.yellow(" Level ✅")
-            );
-        }
-    );
-}
+}*/
 
 function daily(token, tokentype, channelid) {
     request.post(
@@ -939,86 +1039,7 @@ function upgradeall(token, tokentype, channelid) {
         }
     );
 }
-
-function checkmaintoken(token) {
-    request.get(
-        {
-            headers: {
-                authorization: token,
-            },
-            url: "https://canary.discord.com/api/v9/users/@me",
-        },
-        function (error, response, body) {
-            var bod = JSON.parse(body);
-
-            if (String(bod.message) === "401: Unauthorized") {
-                console.log(chalk.red(`Main Token / ${String(bod.message)}`));
-                setTimeout(() => {
-                    process.exit(0);
-                }, 5000);
-            } else {
-                console.log(
-                    `[Main Token] User: ${bod.username}#${bod.discriminator}`
-                );
-                setTimeout(() => {
-                    level(maintoken, "Main Token", mainchannelid);
-                    daily(maintoken, "Main Token", mainchannelid);
-                }, 3500);
-
-                console.log(chalk.green("Main Token ✅"));
-                if (settings.huntandbattle == "true") {
-                    setTimeout(() => {
-                        hunt(maintoken, "StartUp", "Main Token", mainchannelid);
-                    }, 5000);
-
-                    setTimeout(() => {
-                        battle(
-                            maintoken,
-                            "StartUp",
-                            "Main Token",
-                            mainchannelid
-                        );
-                    }, 7500);
-                }
-                if (settings.animals.enable == "true") {
-                    setTimeout(() => {
-                        animals(
-                            maintoken,
-                            "Main Token",
-                            mainchannelid,
-                            settings.animals.type
-                        );
-                    }, 9500);
-                }
-                if (settings.pray == "true") {
-                    setTimeout(() => {
-                        pray(maintoken, "Main Token", mainchannelid);
-                    }, 11000);
-                }
-                if (settings.curse == "true") {
-                    setTimeout(() => {
-                        curse(maintoken, "Main Token", mainchannelid);
-                    }, 14000);
-                }
-                if (settings.upgradeautohunt.enable == "true") {
-                    setTimeout(() => {
-                        upgradeall(maintoken, "Main Token", mainchannelid);
-                    }, 17000);
-                }
-            }
-        }
-    );
-}
-
-function sleepy(t) {
-    console.log(
-        chalk.red(
-            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-        ) +
-            chalk.magenta(` [${t} Token] `) +
-            chalk.red("Waiting ...")
-    );
-}
+//----------------------------------------------------BanCheck + Similar Bypass----------------------------------------------------//
 
 function bancheck(token, channelid) {
     request.get(
@@ -1190,7 +1211,7 @@ function dmbancheck(token, channelid) {
         }
     );
 }
-
+//wheres my mind :(
 function dmextrabancheck(token, channelid) {
     request.get(
         {
@@ -1323,6 +1344,8 @@ function elaina2(token, channelid, phrasesFilePath) {
         }
     });
 }
+
+//----------------------------------------------------Inventory----------------------------------------------------//
 
 function checkinv(token, channelid, tokentype) {
     if (settings.inventory.gemcheck == "true") {
@@ -1633,13 +1656,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         }, 2000);
                     }
                 }
-                if (settings.inventory.cratecheck == "true") {
-                    if (cont.includes("`100`")) {
-                        setTimeout(() => {
-                            boxuse(token, "crate all", channelid, tokentype);
-                        }, 2000);
-                    }
-                }
+
                 if (settings.inventory.eventcheck == "true") {
                     if (cont.includes("`018`")) {
                         // valentines day
@@ -1766,8 +1783,9 @@ function eventuse(token, eventbox, channelid, tokentype) {
         }
     );
 }
-
-async function getquests(token, channelid) {
+//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. ... __ .
+//----------------------------------------------------Quest----------------------------------------------------//
+async function getquests(token, channelid, tokentype) {
     request.post(
         {
             headers: {
@@ -1800,6 +1818,13 @@ async function getquests(token, channelid) {
                     var bod = JSON.parse(body);
                     var cont = bod[0].embeds;
                     await delay(2500);
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(` ${tokentype}`) +
+                            chalk.yellow("Checking quest 🔎")
+                    );
                     if (
                         cont[0].description.includes(
                             "You finished all of your quests!"
@@ -1917,14 +1942,6 @@ async function getquests(token, channelid) {
             );
         }
     );
-}
-
-async function updatequestssocket(p1, p2) {
-    socketio.emit("quest", {
-        quest: `${global.questtitle}`,
-        progress: `${p1} / ${p2}`,
-        date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-    });
 }
 
 async function questsayowo(token, channelid, pro1, pro2) {
