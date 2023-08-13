@@ -33,19 +33,22 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 -   Auto Hunt
 -   Auto Battle
 -   Inventory Check
-    -   auto gem use (beta)
-    -   auto lootbox use
-    -   auto fabled lootbox use
-    -   auto crate use
-    -   auto eventbox use (like anniversary present or valentine's day)
+    -   Auto Gem Use (beta)
+    -   Auto Lootbox Use
+    -   Auto Fabled Lootbox Use
+    -   Auto Crate Use
+    -   Auto Eventbox Use (like anniversary present or valentine's day)
 -   Auto Gamble
-    -   auto coinflip
-    -   auto slots
--   Auto animals sell or sacrifice all,
--   Auto upgrade autohunt
+    -   Auto Coinflip
+    -   Auto Slots
+-   Auto Animals Sell OR Sacrifice,
+-   Auto Upgrade Autohunt
 -   Auto Pray
--   Auto quest   
--   Captcha(Ban) Protection v0.1.2 (beta)
+-   Auto CheckList (beta)
+    -   Auto Quest
+    -   Auto Daily
+    -   Auto Cookie
+-   Captcha(Ban) Protection v0.1.7 (beta)
 -   Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
