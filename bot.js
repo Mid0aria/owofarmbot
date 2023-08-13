@@ -105,7 +105,7 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 
-var version = "1.0.2.8";
+var version = "1.0.2.9";
 var banversion = "0.1.7";
 
 global.quest = true;
@@ -253,12 +253,12 @@ if (extratokencheck == "true") {
 
 checkversion();
 //E <3
-
+/*
 DiscordRPC.register(rpcclientid);
 
 rpc.login({ clientId: rpcclientid }).catch((e) => {
     console.log(",..,");
-});
+});*/
 
 console.log(chalk.cyan("github.com/mid0aria"));
 console.log(chalk.cyan("Made with love for e <3"));
@@ -309,48 +309,55 @@ request.get(
                 process.exit(0);
             }, 5000);
         } else {
+            console.log(chalk.green("Main Token ✅"));
             console.log(
                 `[Main Token] User: ${bod.username}#${bod.discriminator}`
             );
+
+            checklist(maintoken, "Main Token", mainchannelid);
+            sleepy("Main", "CheckList");
+
             setTimeout(() => {
-                //daily(maintoken, "Main Token", mainchannelid);
-            }, 3500);
+                if (settings.huntandbattle == "true") {
+                    setTimeout(() => {
+                        hunt(maintoken, "StartUp", "Main Token", mainchannelid);
+                    }, 5000);
 
-            console.log(chalk.green("Main Token ✅"));
-            if (settings.huntandbattle == "true") {
-                setTimeout(() => {
-                    hunt(maintoken, "StartUp", "Main Token", mainchannelid);
-                }, 5000);
-
-                setTimeout(() => {
-                    battle(maintoken, "StartUp", "Main Token", mainchannelid);
-                }, 7500);
-            }
-            if (settings.animals.enable == "true") {
-                setTimeout(() => {
-                    animals(
-                        maintoken,
-                        "Main Token",
-                        mainchannelid,
-                        settings.animals.type
-                    );
-                }, 9500);
-            }
-            if (settings.pray == "true") {
-                setTimeout(() => {
-                    pray(maintoken, "Main Token", mainchannelid);
-                }, 11000);
-            }
-            if (settings.curse == "true") {
-                setTimeout(() => {
-                    curse(maintoken, "Main Token", mainchannelid);
-                }, 14000);
-            }
-            if (settings.upgradeautohunt.enable == "true") {
-                setTimeout(() => {
-                    upgradeall(maintoken, "Main Token", mainchannelid);
-                }, 17000);
-            }
+                    setTimeout(() => {
+                        battle(
+                            maintoken,
+                            "StartUp",
+                            "Main Token",
+                            mainchannelid
+                        );
+                    }, 7500);
+                }
+                if (settings.animals.enable == "true") {
+                    setTimeout(() => {
+                        animals(
+                            maintoken,
+                            "Main Token",
+                            mainchannelid,
+                            settings.animals.type
+                        );
+                    }, 9500);
+                }
+                if (settings.pray == "true") {
+                    setTimeout(() => {
+                        pray(maintoken, "Main Token", mainchannelid);
+                    }, 11000);
+                }
+                if (settings.curse == "true") {
+                    setTimeout(() => {
+                        curse(maintoken, "Main Token", mainchannelid);
+                    }, 14000);
+                }
+                if (settings.upgradeautohunt.enable == "true") {
+                    setTimeout(() => {
+                        upgradeall(maintoken, "Main Token", mainchannelid);
+                    }, 17000);
+                }
+            }, 5000);
         }
     }
 );
@@ -380,7 +387,12 @@ if (extratokencheck == "true") {
                 );
 
                 if (global.etoken) {
-                    //daily(extratoken, "Extra Token", extrachannelid);
+                    setTimeout(() => {
+                        checklist(extratoken, "Extra Token", extrachannelid);
+                        setTimeout(() => {
+                            sleepy("Extra", "CheckList");
+                        }, 5000);
+                    }, 3500);
                     if (settings.huntandbattle == "true") {
                         setTimeout(() => {
                             hunt(
@@ -480,6 +492,12 @@ if (global.etoken) {
             timehunt = parseInt(rantime());
         } else if (timehunt == 2000) {
             timehunt = parseInt(rantime());
+        } else if (timehunt == 3000) {
+            // Limit 2
+            timehunt = parseInt(rantime());
+        } else if (timehunt == 4000) {
+            // name":"cL","value":"1645642107576%7C164564205696088084%7C164564205657077316%7C%7C4%7Cnull"}
+            timehunt = parseInt(rantime());
         }
 
         var timebattle = timehunt + 5000;
@@ -525,13 +543,7 @@ if (settings.animals.enable == "true") {
         }
     }, 1200000);
 }
-//-----------------------------------QUEST----------------------------------------------//
-if (settings.autoquest === "true") {
-    getquests(maintoken, mainautoquestchannelid, "Main Token");
-    /*if (global.etoken) {
-        getquests(extratoken, extraautoquestchannelid, "Extra Token");
-    }*/
-}
+
 //--------------------------------PRAY-------------------------------------------------//
 if (settings.pray == "true") {
     setInterval(() => {
@@ -671,13 +683,13 @@ function autoseed(token) {
     return rng();
 }
 
-function sleepy(t) {
+function sleepy(t, e) {
     console.log(
         chalk.red(
             `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
         ) +
             chalk.magenta(` [${t} Token] `) +
-            chalk.red("Waiting ...")
+            chalk.red(e + " Waiting ...")
     );
 }
 
@@ -687,6 +699,16 @@ async function updatequestssocket(p1, p2) {
         progress: `${p1} / ${p2}`,
         date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
     });
+}
+
+async function updatechecklistsocket(i, e) {
+    setTimeout(() => {
+        //console.log(`${i}  +++  ${e}`);
+        socketio.emit("checklist", {
+            name: i,
+            status: e,
+        });
+    }, 3000);
 }
 //----------------------------------------------------Main Features----------------------------------------------------//
 function hunt(token, timehunt, tokentype, channelid) {
@@ -877,44 +899,90 @@ function curse(token, tokentype, channelid) {
         }
     );
 }
-/*
-function checklist(token, tokentype, channelid) {
-        request.post(
-            {
-                headers: {
-                    authorization: token,
-                },
-                url:
-                    "https://discord.com/api/v9/channels/" +
-                    channelid +
-                    "/messages",
-                json: {
-                    content: "owo cl",
-                    nonce: nonce(),
-                    tts: false,
-                    flags: 0,
-                },
-            },
-            function (error, response, body) {
-          request.get(
-              {
-                  headers: {
-                      authorization: token,
-                  },
-                  url:
-                      "https://discord.com/api/v9/channels/" +
-                      channelid +
-                      "/messages?limit=1",
-              },
-              function (error, response, body) {
-                  var bod = JSON.parse(body);
-                  var cont = bod[0].content;
-              }
-          );
-            }
-        );
 
-}*/
+function checklist(token, tokentype, channelid) {
+    request.post(
+        {
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: "owo cl",
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        },
+        function (error, response, body) {
+            chalk.magenta(` ${tokentype} `) +
+                chalk.yellow("Sending Checklist📜 ...");
+            setTimeout(() => {
+                request.get(
+                    {
+                        headers: {
+                            authorization: token,
+                        },
+                        url:
+                            "https://discord.com/api/v9/channels/" +
+                            channelid +
+                            "/messages?limit=1",
+                    },
+                    function (error, response, body) {
+                        var bod = JSON.parse(body);
+                        var cont = bod[0].embeds;
+                        var des = cont[0].description;
+                        chalk.magenta(` ${tokentype} `) +
+                            chalk.yellow("Getting Checklist 🔎");
+                        if (des.includes("☑️ 🎉")) {
+                            updatechecklistsocket("all", "✅");
+                            return "checklist completed";
+                        }
+                        if (des.includes("☑️ 💎")) {
+                            updatechecklistsocket("lb", "✅");
+                        }
+                        if (des.includes("☑️ ⚔")) {
+                            updatechecklistsocket("crate", "✅");
+                        }
+
+                        if (des.includes("⬛ 🎁")) {
+                            daily(token, tokentype, channelid);
+                        } else {
+                            updatechecklistsocket("daily", "✅");
+                        }
+                        if (des.includes("⬛ 🍪")) {
+                            cookie(token, tokentype, channelid);
+                        } else {
+                            updatechecklistsocket("cookie", "✅");
+                        }
+                        if (des.includes("⬛ 📝")) {
+                            console.log(
+                                chalk.magenta(`[${tokentype}] `) +
+                                    chalk.red("YOUR DAILY VOTE IS AVAILABLE!")
+                            );
+                        } else {
+                            updatechecklistsocket("vote", "✅");
+                        }
+                        if (des.includes("⬛ 📜")) {
+                            if (settings.autoquest === "true") {
+                                getquests(
+                                    maintoken,
+                                    mainautoquestchannelid,
+                                    "Main Token"
+                                );
+                            }
+                        } else {
+                            updatechecklistsocket("quest", "✅");
+                        }
+                    }
+                );
+            }, 2000);
+        }
+    );
+}
 
 function daily(token, tokentype, channelid) {
     request.post(
@@ -934,12 +1002,43 @@ function daily(token, tokentype, channelid) {
             },
         },
         function (error, response, body) {
+            updatechecklistsocket("daily", "✅");
             console.log(
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
                     chalk.magenta(" [" + tokentype + "]") +
                     chalk.yellow(" Daily ✅")
+            );
+        }
+    );
+}
+
+function cookie(token, tokentype, channelid) {
+    request.post(
+        {
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: "owo cookie <@408785106942164992>",
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        },
+        function (error, response, body) {
+            updatechecklistsocket("cookie", "✅");
+            console.log(
+                chalk.red(
+                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                ) +
+                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.yellow(" Cookie ✅")
             );
         }
     );
@@ -1090,7 +1189,7 @@ function bancheck(token, channelid) {
                         chalk.green(" Chat Captcha Checked ✅")
                 );
                 setTimeout(() => {
-                    sleepy("Main");
+                    sleepy("Main", "Chat Captcha");
                 }, 5000);
             }
         }
@@ -1145,7 +1244,7 @@ function extrabancheck(token, channelid) {
                         chalk.green(" Chat Captcha Checked ✅")
                 );
                 setTimeout(() => {
-                    sleepy("Extra");
+                    sleepy("Extra", "Chat Captcha");
                 }, 5000);
             }
         }
@@ -1204,7 +1303,7 @@ function dmbancheck(token, channelid) {
                     );
 
                     setTimeout(() => {
-                        sleepy("Main");
+                        sleepy("Main", "Dm Captcha");
                     }, 2000);
                 }
             }
@@ -1262,7 +1361,7 @@ function dmextrabancheck(token, channelid) {
                             chalk.green(" DM Captcha Checked ✅")
                     );
                     setTimeout(() => {
-                        sleepy("Extra");
+                        sleepy("Extra", "DM Captcha");
                     }, 2000);
                 }
             }
@@ -1822,7 +1921,7 @@ async function getquests(token, channelid, tokentype) {
                         chalk.red(
                             `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                         ) +
-                            chalk.magenta(` ${tokentype}`) +
+                            chalk.magenta(` ${tokentype} `) +
                             chalk.yellow("Checking quest 🔎")
                     );
                     if (

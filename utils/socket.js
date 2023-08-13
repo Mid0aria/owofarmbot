@@ -9,6 +9,13 @@ global.quest = "";
 global.questpr = "";
 global.questdate = "";
 
+global.checklistdaily = `❌`;
+global.checklistvote = `❌`;
+global.checklistcookie = `❌`;
+global.checklistquest = `❌`;
+global.checklistlb = `❌`;
+global.checklistcrate = `❌`;
+
 io.on("connect", () => {
     console.clear();
     console.log(chalk.green("Connected Farm Bot!"));
@@ -30,6 +37,64 @@ io.on("quest", (data) => {
     global.questdate = data.date;
 });
 
+io.on("checklist", (e) => {
+    if (e.name === "all") {
+        global.checklistdaily = "✅";
+        global.checklistvote = "✅";
+        global.checklistcookie = "✅";
+        global.checklistlb = "✅";
+        global.checklistcrate = "✅";
+        global.checklistquest = "✅";
+    } else if (e.name === "daily") {
+        global.checklistdaily = "✅";
+    } else if (e.name === "cookie") {
+        global.checklistcookie = "✅";
+    } else if (e.name === "vote") {
+        global.checklistvote = "✅";
+    } else if (e.name === "quest") {
+        global.checklistquest = "✅";
+    } else if (e.name === "lb") {
+    } else if (e.name === "crate") {
+    }
+});
+setInterval(() => {
+    console.clear();
+    var currenttime = chalk.red(
+        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+    );
+    var state = global.state;
+    var cd = global.checklistdaily;
+    var cv = global.checklistvote;
+    var cc = global.checklistcookie;
+    var cq = global.checklistquest;
+    var cl = global.checklistlb;
+    var gc = global.checklistcrate;
+    var qst = chalk.blue("Start time: ") + chalk.red(global.questdate);
+    var qq = chalk.yellow("Quest: ") + chalk.magenta(`${global.quest}`);
+    var qpr = chalk.green("Progress: ") + chalk.yellow(global.questpr);
+    console.log(
+        `
+╔═══════════════════════════════════════════════════════════════════════════
+║ ${currenttime}                                                              
+║ ${state} 
+║
+╠════════════════════════╦══════════════════════════════════════════════════
+║                        ║                                          
+║ > Checklist            ║ > Quest
+║                        ║   
+╠════╦═══════════════════╬══════════════════════════════════════════════════
+║ ${cd} ║ Daily             ║ ${qst} 
+║ ${cv} ║ Vote              ║ 
+║ ${cc} ║ Cookie            ║ ${qq}
+║ ${cq} ║ Quest             ║
+║ ${cl} ║ LootBox           ║ ${qpr}
+║ ${gc} ║ Crate             ║
+╚════╩═══════════════════╩══════════════════════════════════════════════════
+
+`
+    );
+}, 5000);
+/*
 setInterval(() => {
     console.clear();
     console.log(
@@ -47,4 +112,4 @@ setInterval(() => {
             chalk.blue("Progress: ") +
             chalk.yellow(global.questpr)
     );
-}, 5000);
+}, 5000);*/
