@@ -253,12 +253,12 @@ if (extratokencheck == "true") {
 
 checkversion();
 //E <3
-/*
+
 DiscordRPC.register(rpcclientid);
 
 rpc.login({ clientId: rpcclientid }).catch((e) => {
     console.log(",..,");
-});*/
+});
 
 console.log(chalk.cyan("github.com/mid0aria"));
 console.log(chalk.cyan("Made with love for e <3"));
