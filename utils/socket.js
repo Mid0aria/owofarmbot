@@ -3,7 +3,7 @@ var io = socket.connect("http://localhost:1337");
 const chalk = require("chalk");
 
 console.clear();
-process.title = `Socket Client`;
+process.title = `Socket Client V0.0.2`;
 global.state = "";
 global.quest = "";
 global.questpr = "";
@@ -54,7 +54,9 @@ io.on("checklist", (e) => {
     } else if (e.name === "quest") {
         global.checklistquest = "✅";
     } else if (e.name === "lb") {
+        global.checklistlb = "✅";
     } else if (e.name === "crate") {
+        global.checklistcrate = "✅";
     }
 });
 setInterval(() => {
