@@ -152,8 +152,11 @@ m)
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/rpc.jpg)
 
 ## ⚠️・Captcha Alert
+!!! If you want the captcha alert to work properly, turn off do not disturb
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
+
+
 
 ## 📡・Socket Client
 
