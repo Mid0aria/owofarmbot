@@ -16,6 +16,8 @@ global.checklistquest = `❌`;
 global.checklistlb = `❌`;
 global.checklistcrate = `❌`;
 
+global.eyl = "Everything okay";
+
 io.on("connect", () => {
     console.clear();
     console.log(chalk.green("Connected Farm Bot!"));
@@ -59,6 +61,14 @@ io.on("checklist", (e) => {
         global.checklistcrate = "✅";
     }
 });
+
+io.on("errors", (e) => {
+    if (global.eyl === "Everything okay") {
+        global.eyl = e.error;
+    } else {
+        global.eyl = `${global.eyl}\n${e.error}`;
+    }
+});
 setInterval(() => {
     console.clear();
     var currenttime = chalk.red(
@@ -74,15 +84,17 @@ setInterval(() => {
     var qst = chalk.blue("Start time: ") + chalk.red(global.questdate);
     var qq = chalk.yellow("Quest: ") + chalk.magenta(`${global.quest}`);
     var qpr = chalk.green("Progress: ") + chalk.yellow(global.questpr);
+    var eyl = chalk.yellow(global.eyl);
+
     console.log(
         `
 ╔═══════════════════════════════════════════════════════════════════════════
-║ ${currenttime}                                                              
-║ ${state} 
+║ > Clock: ${currenttime}                                                              
+║ > State: ${state} 
 ║
 ╠════════════════════════╦══════════════════════════════════════════════════
 ║                        ║                                          
-║ > Checklist            ║ > Quest
+║ > Checklist📜          ║ > Quest🔎
 ║                        ║   
 ╠════╦═══════════════════╬══════════════════════════════════════════════════
 ║ ${cd} ║ Daily             ║ ${qst} 
@@ -91,27 +103,14 @@ setInterval(() => {
 ║ ${cq} ║ Quest             ║
 ║ ${cl} ║ LootBox           ║ ${qpr}
 ║ ${gc} ║ Crate             ║
-╚════╩═══════════════════╩══════════════════════════════════════════════════
+╠════════════════════════╩══════════════════════════════════════════════════
+║ > Errors❗
+║ ${eyl}
+║
+║
+║
+╚═══════════════════════════════════════════════════════════════════════════
 
 `
     );
 }, 5000);
-/*
-setInterval(() => {
-    console.clear();
-    console.log(
-        chalk.red(
-            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-        )
-    );
-    console.log(global.state);
-    console.log(
-        chalk.blue("Start time: ") +
-            chalk.red(global.questdate) +
-            chalk.blue(" Quest: ") +
-            chalk.magenta(`${global.quest}`) +
-            " | " +
-            chalk.blue("Progress: ") +
-            chalk.yellow(global.questpr)
-    );
-}, 5000);*/

@@ -1,3 +1,4 @@
+global.love = "e<3";
 //coded by @mid0aria on github
 const os = require("os");
 if (os.userInfo().username === "DESKTOP-3VVC3") {
@@ -105,8 +106,8 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 
-var version = "1.0.2.9";
-var banversion = "0.1.7";
+var version = "1.0.3";
+var banversion = "0.1.8";
 
 global.quest = true;
 global.questtitle = "";
@@ -452,15 +453,11 @@ if (extratokencheck == "true") {
 //--------------------------HUNT BATTLE-------------------------------------------------------//
 setInterval(() => {
     var timehunt = parseInt(rantime());
-    if (timehunt == 0) {
-        timehunt = timehunt + 2000;
-    } else if (timehunt == 1000) {
-        timehunt = timehunt + 2000;
-    } else if (timehunt == 2000) {
+    if (timehunt <= 5000) {
         timehunt = timehunt + 2000;
     }
 
-    var timebattle = timehunt + 5000;
+    var timebattle = timehunt + 1000;
     if (settings.banbypass == "true") {
         bancheck(maintoken, mainchannelid);
         dmbancheck(maintoken, owodmmainchannelid);
@@ -486,21 +483,11 @@ setInterval(() => {
 if (global.etoken) {
     setInterval(() => {
         var timehunt = parseInt(rantime());
-        if (timehunt == 0) {
-            timehunt = parseInt(rantime());
-        } else if (timehunt == 1000) {
-            timehunt = parseInt(rantime());
-        } else if (timehunt == 2000) {
-            timehunt = parseInt(rantime());
-        } else if (timehunt == 3000) {
-            // Limit 2
-            timehunt = parseInt(rantime());
-        } else if (timehunt == 4000) {
-            // name":"cL","value":"1645642107576%7C164564205696088084%7C164564205657077316%7C%7C4%7Cnull"}
-            timehunt = parseInt(rantime());
+        if (timehunt <= 5000) {
+            timehunt = timehunt + 2000;
         }
 
-        var timebattle = timehunt + 5000;
+        var timebattle = timehunt + 1000;
         if (settings.banbypass == "true") {
             extrabancheck(extratoken, extrachannelid);
             dmextrabancheck(extratoken, owodmextrachannelid);
@@ -710,6 +697,14 @@ async function updatechecklistsocket(i, e) {
         });
     }, 3000);
 }
+
+async function updateerrorsocket(eyl) {
+    setTimeout(() => {
+        socketio.emit("errors", {
+            error: eyl,
+        });
+    }, 3100);
+}
 //----------------------------------------------------Main Features----------------------------------------------------//
 function hunt(token, timehunt, tokentype, channelid) {
     request.post(
@@ -918,8 +913,13 @@ function checklist(token, tokentype, channelid) {
             },
         },
         function (error, response, body) {
-            chalk.magenta(` ${tokentype} `) +
-                chalk.yellow("Sending Checklist📜 ...");
+            console.log(
+                chalk.red(
+                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                ) +
+                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.yellow("Sending Checklist📜 ...")
+            );
             setTimeout(() => {
                 request.get(
                     {
@@ -932,50 +932,64 @@ function checklist(token, tokentype, channelid) {
                             "/messages?limit=1",
                     },
                     function (error, response, body) {
-                        var bod = JSON.parse(body);
-                        var cont = bod[0].embeds;
-                        var des = cont[0].description;
-                        chalk.magenta(` ${tokentype} `) +
-                            chalk.yellow("Getting Checklist 🔎");
-                        if (des.includes("☑️ 🎉")) {
-                            updatechecklistsocket("all", "✅");
-                            return "checklist completed";
-                        }
-                        if (des.includes("☑️ 💎")) {
-                            updatechecklistsocket("lb", "✅");
-                        }
-                        if (des.includes("☑️ ⚔")) {
-                            updatechecklistsocket("crate", "✅");
-                        }
+                        try {
+                            var bod = JSON.parse(body);
+                            var cont = bod[0].embeds;
+                            var des = cont[0].description;
 
-                        if (des.includes("⬛ 🎁")) {
-                            daily(token, tokentype, channelid);
-                        } else {
-                            updatechecklistsocket("daily", "✅");
-                        }
-                        if (des.includes("⬛ 🍪")) {
-                            cookie(token, tokentype, channelid);
-                        } else {
-                            updatechecklistsocket("cookie", "✅");
-                        }
-                        if (des.includes("⬛ 📝")) {
-                            console.log(
-                                chalk.magenta(`[${tokentype}] `) +
-                                    chalk.red("YOUR DAILY VOTE IS AVAILABLE!")
-                            );
-                        } else {
-                            updatechecklistsocket("vote", "✅");
-                        }
-                        if (des.includes("⬛ 📜")) {
-                            if (settings.autoquest === "true") {
-                                getquests(
-                                    maintoken,
-                                    mainautoquestchannelid,
-                                    "Main Token"
-                                );
+                            chalk.magenta(" [" + tokentype + "]") +
+                                chalk.yellow("Getting Checklist 🔎");
+                            if (des.includes("☑️ 🎉")) {
+                                updatechecklistsocket("all", "✅");
+                                return "checklist completed";
                             }
-                        } else {
-                            updatechecklistsocket("quest", "✅");
+                            if (des.includes("☑️ 💎")) {
+                                updatechecklistsocket("lb", "✅");
+                            }
+                            if (des.includes("☑️ ⚔")) {
+                                updatechecklistsocket("crate", "✅");
+                            }
+
+                            if (des.includes("⬛ 🎁")) {
+                                daily(token, tokentype, channelid);
+                            } else {
+                                updatechecklistsocket("daily", "✅");
+                            }
+                            if (des.includes("⬛ 🍪")) {
+                                cookie(token, tokentype, channelid);
+                            } else {
+                                updatechecklistsocket("cookie", "✅");
+                            }
+                            if (des.includes("⬛ 📝")) {
+                                console.log(
+                                    chalk.magenta(`[${tokentype}] `) +
+                                        chalk.red(
+                                            "YOUR DAILY VOTE IS AVAILABLE!"
+                                        )
+                                );
+                            } else {
+                                updatechecklistsocket("vote", "✅");
+                            }
+                            if (des.includes("⬛ 📜")) {
+                                if (settings.autoquest === "true") {
+                                    getquests(
+                                        maintoken,
+                                        mainautoquestchannelid,
+                                        "Main Token"
+                                    );
+                                }
+                            } else {
+                                updatechecklistsocket("quest", "✅");
+                            }
+                        } catch (error) {
+                            updateerrorsocket("Unable to get Checklist");
+                            console.log(
+                                chalk.red(
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                                ) +
+                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.red("Unable to get Checklist❗")
+                            );
                         }
                     }
                 );
@@ -1914,128 +1928,197 @@ async function getquests(token, channelid, tokentype) {
                         "/messages?limit=1",
                 },
                 async function (error, response, body) {
-                    var bod = JSON.parse(body);
-                    var cont = bod[0].embeds;
-                    await delay(2500);
-                    console.log(
-                        chalk.red(
-                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        ) +
-                            chalk.magenta(` ${tokentype} `) +
-                            chalk.yellow("Checking quest 🔎")
-                    );
-                    if (
-                        cont[0].description.includes(
-                            "You finished all of your quests!"
-                        )
-                    ) {
-                        global.quest = false;
-                    } else {
-                        var quest = cont[0].description
-                            .split("**1. ")[1]
-                            .split("**")[0];
-                        global.questtitle = `${quest}`;
-                        var progress1 = cont[0].description
-                            .split("Progress: [")[1]
-                            .split("/")[0];
-                        var progress2 = cont[0].description
-                            .split("/")[1]
-                            .split("]")[0];
+                    try {
+                        var bod = JSON.parse(body);
+                        var cont = bod[0].embeds;
+                        await delay(2500);
+                        console.log(
+                            chalk.red(
+                                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            ) +
+                                chalk.magenta(" [" + tokentype + "]") +
+                                chalk.yellow("Checking quest 🔎")
+                        );
+                        if (
+                            cont[0].description.includes(
+                                "You finished all of your quests!"
+                            )
+                        ) {
+                            global.quest = false;
+                        } else {
+                            var quest = cont[0].description
+                                .split("**1. ")[1]
+                                .split("**")[0];
+                            global.questtitle = `${quest}`;
+                            var progress1 = cont[0].description
+                                .split("Progress: [")[1]
+                                .split("/")[0];
+                            var progress2 = cont[0].description
+                                .split("/")[1]
+                                .split("]")[0];
 
-                        if (quest.includes("Battle")) {
-                            try {
-                                quest = cont[0].description
-                                    .split("**2. ")[1]
-                                    .split("**")[0];
-                            } catch (error) {
-                                global.quest = false;
+                            if (
+                                (quest.includes("Battle") ||
+                                    quest.includes("Have a friend curse you") ||
+                                    quest.includes(
+                                        "Have a friend pray to you"
+                                    ) ||
+                                    quest.includes(
+                                        "Receive a cookie from 1 friends"
+                                    )) &&
+                                !global.etoken
+                            ) {
+                                try {
+                                    quest = cont[0].description
+                                        .split("**2. ")[1]
+                                        .split("**")[0];
+                                    global.questtitle = `${quest}`;
+                                    var progress1 = cont[0].description
+                                        .split("Progress: [")[1]
+                                        .split("/")[0];
+                                    var progress2 = cont[0].description
+                                        .split("/")[1]
+                                        .split("]")[0];
+                                } catch (error) {
+                                    global.quest = false;
+                                }
+                                if (
+                                    (quest.includes("Battle") ||
+                                        quest.includes(
+                                            "Have a friend curse you"
+                                        ) ||
+                                        quest.includes(
+                                            "Have a friend pray to you"
+                                        ) ||
+                                        quest.includes(
+                                            "Receive a cookie from 1 friends"
+                                        )) &&
+                                    !global.etoken
+                                ) {
+                                    try {
+                                        quest = cont[0].description
+                                            .split("**3. ")[1]
+                                            .split("**")[0];
+                                        global.questtitle = `${quest}`;
+                                        var progress1 = cont[0].description
+                                            .split("Progress: [")[1]
+                                            .split("/")[0];
+                                        var progress2 = cont[0].description
+                                            .split("/")[1]
+                                            .split("]")[0];
+                                    } catch (error) {
+                                        global.quest = false;
+                                    }
+                                }
+                            }
+
+                            if (global.quest) {
+                                socketio.emit("quest", {
+                                    quest: `${global.questtitle}`,
+                                    progress: `${progress1} / ${progress2}`,
+                                    date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+                                });
+
+                                if (!global.etoken) {
+                                    if (quest.includes("Say 'owo'")) {
+                                        global.quest = false;
+                                        return questsayowo(
+                                            token,
+                                            channelid,
+                                            parseInt(progress1),
+                                            parseInt(progress2)
+                                        );
+                                    } else if (
+                                        quest.includes(
+                                            "xp from hunting and battling"
+                                        )
+                                    ) {
+                                        global.quest = false;
+                                        return xpquests(token, channelid);
+                                    } else if (quest.includes("Gamble")) {
+                                        global.quest = false;
+                                        return questgamble(
+                                            token,
+                                            channelid,
+                                            parseInt(progress1), //coded by @mid0aria on github
+                                            parseInt(progress2)
+                                        );
+                                    } else if (
+                                        quest.includes("Use an action")
+                                    ) {
+                                        global.quest = false;
+                                        return questuseactioncommand(
+                                            token,
+                                            channelid,
+                                            parseInt(progress1), //coded by @mid0aria on github
+                                            parseInt(progress2)
+                                        );
+                                    }
+                                } else {
+                                    if (
+                                        quest.includes(
+                                            "Have a friend curse you"
+                                        )
+                                    ) {
+                                        global.quest = false;
+                                        return questcurseme(
+                                            extratoken,
+                                            maintokenuserid,
+                                            channelid,
+                                            parseInt(progress1),
+                                            parseInt(progress2)
+                                        );
+                                    } else if (
+                                        quest.includes(
+                                            "Have a friend pray to you"
+                                        )
+                                    ) {
+                                        global.quest = false; //coded by @mid0aria on github
+                                        return questprayme(
+                                            extratoken,
+                                            maintokenuserid,
+                                            channelid,
+                                            parseInt(progress1),
+                                            parseInt(progress2)
+                                        );
+                                    } else if (
+                                        quest.includes("Battle with a friend")
+                                    ) {
+                                        global.quest = false;
+                                        return questbattlefriend(
+                                            token,
+                                            extratoken,
+                                            maintokenuserid,
+                                            channelid,
+                                            parseInt(progress1),
+                                            parseInt(progress2)
+                                        );
+                                    } else if (
+                                        quest.includes(
+                                            "Receive a cookie from 1 friends"
+                                        )
+                                    ) {
+                                        global.quest = false;
+                                        return questcookiefriend(
+                                            extratoken,
+                                            maintokenuserid,
+                                            channelid,
+                                            parseInt(progress1),
+                                            parseInt(progress2)
+                                        );
+                                    }
+                                }
                             }
                         }
-
-                        if (global.quest) {
-                            socketio.emit("quest", {
-                                quest: `${global.questtitle}`,
-                                progress: `${progress1} / ${progress2}`,
-                                date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-                            });
-
-                            switch (true) {
-                                case quest.includes("Say 'owo'"):
-                                    global.quest = false;
-                                    questsayowo(
-                                        token,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break; //E <3
-                                case quest.includes(
-                                    "xp from hunting and battling"
-                                ):
-                                    global.quest = false;
-                                    xpquests(token, channelid);
-
-                                case quest.includes("Gamble"):
-                                    global.quest = false;
-                                    questgamble(
-                                        token,
-                                        channelid,
-                                        parseInt(progress1), //coded by @mid0aria on github
-                                        parseInt(progress2)
-                                    );
-                                    break;
-
-                                case quest.includes(
-                                    "Have a friend curse you"
-                                ) && global.etoken:
-                                    global.quest = false;
-                                    questcurseme(
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break;
-
-                                case quest.includes(
-                                    "Have a friend pray to you"
-                                ) && global.etoken:
-                                    global.quest = false; //coded by @mid0aria on github
-                                    questprayme(
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break;
-
-                                case quest.includes("Battle with a friend") &&
-                                    global.etoken:
-                                    global.quest = false;
-                                    questbattlefriend(
-                                        token,
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                                    break;
-                                case quest.includes(
-                                    "Receive a cookie from 1 friends"
-                                ) && global.etoken:
-                                    global.quest = false;
-                                    questcookiefriend(
-                                        extratoken,
-                                        maintokenuserid,
-                                        channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2)
-                                    );
-                            }
-                        }
+                    } catch (error) {
+                        updateerrorsocket("Unable to check Quest");
+                        console.log(
+                            chalk.red(
+                                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            ) +
+                                chalk.magenta(" [" + tokentype + "]") +
+                                chalk.red("Unable to check quest❗")
+                        );
                     }
                 }
             );
@@ -2227,6 +2310,32 @@ async function questcookiefriend(token, userid, channelid, pro1, pro2) {
         var socketpro1 = socketp++;
         updatequestssocket(socketpro1, pro2);
         await delay(302000);
+    }
+    global.quest = true;
+    getquests(token, channelid);
+}
+
+async function questuseactioncommand(token, userid, channelid, pro1, pro2) {
+    for (let np = pro2 - pro1; np > 0; np--) {
+        request.post({
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: `wcuddle <@408785106942164992> `,
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        });
+        var socketp = pro1;
+        var socketpro1 = socketp++;
+        updatequestssocket(socketpro1, pro2);
+        await delay(7800);
     }
     global.quest = true;
     getquests(token, channelid);

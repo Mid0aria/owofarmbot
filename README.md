@@ -1,6 +1,7 @@
 6 28 15 26 15<br>
 <a href = "https://youtu.be/sso05qx8Hac">Tutorial (https://youtu.be/sso05qx8Hac)</a>
-<h1 align="center">OwO Farm Bot V1.0.2 </h1>
+
+<h1 align="center">OwO Farm Bot V1.0.3 </h1>
 <h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 100</h2>
 
 <p align="center">
@@ -9,8 +10,8 @@
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a>
 
 Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/24">Click Me</a>
-</p>
 
+</p>
 
 [❗・Important](#important)<br>
 [👑・Features](#features)<br>
@@ -48,7 +49,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
     -   Auto Quest
     -   Auto Daily
     -   Auto Cookie
--   Captcha(Ban) Protection v0.1.7 (beta)
+-   Captcha(Ban) Protection v0.1.8 (beta)
 -   Discord-RPC
 -   **Extra Token**
     -   All Main Token Features
@@ -91,7 +92,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
                 "fabled": "", true or false
                 "special": "", true or false
                 "hidden": "" true or false
-            }            
+            }
         },
         "upgradeautohunt": {
             "enable": "", true or false
@@ -126,7 +127,6 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 
 ```
 
-
 ## 💎・Get Token
 
 ```js
@@ -156,6 +156,7 @@ m)
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
 
 ## 📡・Socket Client
+
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/socketclient.png)
 
 ## 🔗・Required Links
