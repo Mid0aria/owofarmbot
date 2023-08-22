@@ -1,5 +1,5 @@
 6 28 15 26 15<br>
-<a href = "https://youtu.be/sso05qx8Hac">Tutorial (https://youtu.be/sso05qx8Hac)</a>
+<a href = "https://youtu.be/sso05qx8Hac">Tutorial</a>
 
 <h1 align="center">OwO Farm Bot V1.0.3 </h1>
 <h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 100</h2>
