@@ -180,11 +180,11 @@ m)
 ```
 
 ```bash
-> run install.bat
+> type npm install
 ```
 
 ```bash
-> run run.bat
+> type node bot.js
 ```
 
 ## 🥰・Thanks for contribution
