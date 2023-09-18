@@ -26,6 +26,7 @@
     "author": "Mid0aria",
     "license": "ISC",
     "scripts": {
+        "start": "node bot.js",
         "run": "node bot.js",
         "setup": "npm i"
     },
