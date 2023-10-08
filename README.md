@@ -29,6 +29,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 
 ## ❗・Important
 
+-   We would like to point out that long-term use of farm bots may result in a ban from owo and we do not accept responsibility.
 -   Discord may restart as a result of discord rpc overload.
 -   It can detect virus due to captcha(ban) bypasser please turn off your antivirus.
 
