@@ -1,19 +1,21 @@
 6 28 15 26 15<br>
-Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
-Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)
+
+If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
 
 <h1 align="center">OwO Farm Bot V1.0.3 </h1>
-<h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 100</h2>
 
 <p align="center">
-⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
+
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6"/></a>
-<a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a>
-
+<a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a><br>
+Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
+Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)<br>
 Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/24">Click Me</a>
-
 </p>
 
+# Contents
+
+[⭐・Star History](#star-history)<br>
 [❗・Important](#important)<br>
 [👑・Features](#features)<br>
 [⚙・Config.json example](#configjson-example)<br>
@@ -26,6 +28,11 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 [🎈・Usage](#usage)<br>
 [🥰・Thanks for contribution](#thanks-for-contribution)<br>
 
+## ⭐・Star History
+<h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 512</h2>
+⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Mid0aria/owofarmbot,mid0aria/owofarmbotv2&type=Date)](https://star-history.com/#Mid0aria/owofarmbot&mid0aria/owofarmbotv2&Date)
 
 ## ❗・Important
 
@@ -159,8 +166,6 @@ m)
 !!! If you want the captcha alert to work properly, turn off do not disturb
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
-
-
 
 ## 📡・Socket Client
 
