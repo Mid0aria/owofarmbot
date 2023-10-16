@@ -1079,7 +1079,14 @@ function coinflip(token, tokentype, channelid) {
       },
     },
     async function (error, response, body) {
-      await delay(3500);
+      if (error) {
+        console.error("Error posting request:", error);
+        return;
+      }
+      console.log("Request posted:", response.statusCode, body);
+
+      await delay(5000);
+
       request.get(
         {
           headers: {
@@ -1091,6 +1098,12 @@ function coinflip(token, tokentype, channelid) {
             "/messages?limit=1",
         },
         async function (error, response, body) {
+          if (error) {
+            console.error("Error getting response:", error);
+            return;
+          }
+          console.log("Response received:", response.statusCode, body);
+
           try {
             const bod = JSON.parse(body);
             const cont = bod[0].embeds;
@@ -1098,36 +1111,29 @@ function coinflip(token, tokentype, channelid) {
 
             if (cont[0].description.includes("and you lost it all... :c")) {
               currentBet *= 2;
-              lostamount = currentBet/2
+              lostamount = currentBet / 2;
               console.log(
-                  chalk.red(
-                      `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                  ) +
-                  chalk.magenta(" [" + tokentype + "]") +
-                  chalk.yellow(`Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                chalk.red(
+                  `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                ) +
+                chalk.magenta(" [" + tokentype + "]") +
+                chalk.yellow(`Lost ${lostamount} in coinflip, next betting ${currentBet}`)
               );
               if (currentBet > maxBet) {
                 currentBet = settings.gamble.coinflip.default_amount;
-                console.log(
-                    chalk.red(
-                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    ) +
-                    chalk.magenta(" [" + tokentype + "]") +
-                    chalk.yellow(`Lost ${lostamount} in coinflip, next betting ${currentBet}`)
-                );
               }
-              coinflip(token, tokentype, channelid);
             } else {
               currentBet = settings.gamble.coinflip.default_amount;
               console.log(
-                  chalk.red(
-                      `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                  ) +
-                  chalk.magenta(" [" + tokentype + "]") +
-                  chalk.yellow(`You have won ${currentBet} in coinflip`)
+                chalk.red(
+                  `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                ) +
+                chalk.magenta(" [" + tokentype + "]") +
+                chalk.yellow(`You have won ${currentBet} in coinflip`)
               );
-              coinflip(token, tokentype, channelid);
             }
+            // Call coinflip once here, after processing the result
+            coinflip(token, tokentype, channelid);
           } catch (e) {
             // Handle errors
           } finally {
