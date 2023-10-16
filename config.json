@@ -2,10 +2,10 @@
     "settings": {
         "huntandbattle": "true",
         "banbypass": "true",
-        "discordrpc": "true",
+        "discordrpc": "false",
         "pray": "false",
         "curse": "false",
-        "autoquest": "true",
+        "autoquest": "false",
         "extratoken": "false",
         "inventory": {
             "inventorycheck": "true",
@@ -41,7 +41,9 @@
         },
         "gamble": {
             "coinflip": {
-                "enable": "false",
+                "default_amount": 100,
+                "max_amount": 150000,
+                "enable": "true",
                 "amount": "1"
             },
             "slots": {
@@ -51,17 +53,17 @@
         }
     },
     "main": {
-        "token": "",
-        "userid": "",
-        "channelid": "",
-        "owodmchannelid": "",
-        "autoquestchannelid": ""
+        "token": "Nzk1NTI2MzE2ODMyODQ5OTMy.GWuOjV._p3SucKcEDPoHC3PBb_ZyiP43efROVNTBOF-PY",
+        "userid": "795526316832849932",
+        "channelid": "1087590202643578993",
+        "owodmchannelid": "972559720613289984",
+        "autoquestchannelid": "1107525442681962557"
     },
     "extra": {
-        "token": "",
-        "userid": "",
-        "channelid": "",
-        "owodmchannelid": "",
-        "autoquestchannelid": ""
+        "token": "MTA4ODY1Nzk0NDY3OTI5NzA5Nw.GShNng.D3Fceg20lOl500xl_hF8H5Km9VlwCDUtsBdq4c",
+        "userid": "1088657944679297097",
+        "channelid": "1088664882817286184",
+        "owodmchannelid": "1088659994427269160",
+        "autoquestchannelid": "1107525526815506494"
     }
 }

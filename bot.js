@@ -1058,37 +1058,85 @@ function cookie(token, tokentype, channelid) {
     );
 }
 
+let currentBet = settings.gamble.coinflip.default_amount;
+const maxBet = settings.gamble.coinflip.max_amount;
+
 function coinflip(token, tokentype, channelid) {
-    request.post(
+  request.post(
+    {
+      headers: {
+        authorization: token,
+      },
+      url:
+        "https://discord.com/api/v9/channels/" +
+        channelid +
+        "/messages",
+      json: {
+        content: `owo coinflip ${currentBet}`,
+        nonce: nonce(),
+        tts: false,
+        flags: 0,
+      },
+    },
+    async function (error, response, body) {
+      await delay(3500);
+      request.get(
         {
-            headers: {
-                authorization: token,
-            },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
-            json: {
-                content: "owo coinflip " + settings.gamble.coinflip.amount,
-                nonce: nonce(),
-                tts: false,
-                flags: 0,
-            },
+          headers: {
+            authorization: token,
+          },
+          url:
+            "https://discord.com/api/v9/channels/" +
+            channelid +
+            "/messages?limit=1",
         },
-        function (error, response, body) {
-            console.log(
-                chalk.red(
-                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                ) +
+        async function (error, response, body) {
+          try {
+            const bod = JSON.parse(body);
+            const cont = bod[0].embeds;
+            await delay(2500);
+
+            if (cont[0].description.includes("and you lost it all... :c")) {
+              currentBet *= 2;
+              lostamount = currentBet/2
+              console.log(
+                  chalk.red(
+                      `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                  ) +
+                  chalk.magenta(" [" + tokentype + "]") +
+                  chalk.yellow(`Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+              );
+              if (currentBet > maxBet) {
+                currentBet = settings.gamble.coinflip.default_amount;
+                console.log(
+                    chalk.red(
+                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                    ) +
                     chalk.magenta(" [" + tokentype + "]") +
-                    chalk.yellow(
-                        //code d by @mid0aria on github
-                        " Gamble / CoinFlip ✅ / Amount: " +
-                            settings.gamble.coinflip.amount
-                    )
-            );
+                    chalk.yellow(`Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                );
+              }
+              coinflip(token, tokentype, channelid);
+            } else {
+              currentBet = settings.gamble.coinflip.default_amount;
+              console.log(
+                  chalk.red(
+                      `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                  ) +
+                  chalk.magenta(" [" + tokentype + "]") +
+                  chalk.yellow(`You have won ${currentBet} in coinflip`)
+              );
+              coinflip(token, tokentype, channelid);
+            }
+          } catch (e) {
+            // Handle errors
+          } finally {
+            // Cleanup
+          }
         }
-    );
+      );
+    }
+  );
 }
 
 function slots(token, tokentype, channelid) {
