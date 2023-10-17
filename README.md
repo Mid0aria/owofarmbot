@@ -111,6 +111,9 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         },
         "gamble": {
             "coinflip": {
+                "default_amount"= , Enter the amount you want to start from
+                "max_amount": 150000, Enter the amount where the bot will not bet more than that
+                "multipler": , Enter a number by which the lost amount will be multipled by
                 "enable": "", true or false
                 "amount": "1"
             },
@@ -124,13 +127,15 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         "token":"", main token
         "userid":"", token user id
         "channelid":"", channel id for main token
-        "owodmchannelid":"" owo bot dm channel id
+        "owodmchannelid":"", owo bot dm channel id
+        "gamblechannelid":"", channel if for gambling
         "autoquestchannelid":"" auto quest channel id
     },
     "extra":{
         "token":"", extra token
         "userid":"", extra token user id
         "channelid":"", channel id for extra token
+        "gamblechannelid":"", channel if for gambling
         "owodmchannelid":"" extra token owo bot dm channel id
     }
 }
