@@ -1063,82 +1063,99 @@ let currentBet = settings.gamble.coinflip.default_amount;
 const maxBet = settings.gamble.coinflip.max_amount;
 
 function coinflip(token, tokentype, channelid) {
-  request.post(
-    {
-      headers: {
-        authorization: token,
-      },
-      url:
-        "https://discord.com/api/v9/channels/" +
-        channelid +
-        "/messages",
-      json: {
-        content: `owo coinflip ${currentBet}`,
-        nonce: nonce(),
-        tts: false,
-        flags: 0,
-      },
-    },
-    async function (error, response, body) {
-        if (error) {
-        console.error("Error posting request:", error);
-        return;
-      }
-
-      await delay(5000);
-
-      request.get(
+    request.post(
         {
-          headers: {
-            authorization: token,
-          },
-          url:
-            "https://discord.com/api/v9/channels/" +
-            channelid +
-            "/messages?limit=1",
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: `owo coinflip ${currentBet}`,
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
         },
         async function (error, response, body) {
-          if (error) {
-            console.error("Error getting response:", error);
-            return;
-          }
-
-          try {
-            const bod = JSON.parse(body);
-            const cont = bod[0].content;
-
-            if (cont.includes("and you lost it all... :c")) {
-              currentBet *= 3;
-              const lostamount = currentBet / 3;
-              console.log(
-                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                    + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
-              );
-              if (currentBet > maxBet) {
-                currentBet = settings.gamble.coinflip.default_amount;
-              }
-            } else {
-                console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                    + chalk.magenta(" [" + tokentype + "]") + 
-                    chalk.yellow(` You have won ${currentBet} in coinflip`)
-              );
-              currentBet = settings.gamble.coinflip.default_amount;
+            if (error) {
+                console.error("Error posting request:", error);
+                return;
             }
-              
-            var min = 9300;
-            var max = 14000;
-            var randomDelay = Math.floor(Math.random() * (max - min + 1)) + min;
-            await delay(randomDelay);
-          } catch (e) {
-            console.error("Error processing response:", e);
-            // Handle errors
-          } finally {
-            // Cleanup or additional operations
-          }
+
+            await delay(5000);
+
+            request.get(
+                {
+                    headers: {
+                        authorization: token,
+                    },
+                    url:
+                        "https://discord.com/api/v9/channels/" +
+                        channelid +
+                        "/messages?limit=1",
+                },
+                async function (error, response, body) {
+                    if (error) {
+                        console.error("Error getting response:", error);
+                        return;
+                    }
+
+                    try {
+                        const bod = JSON.parse(body);
+                        const cont = bod[0].content;
+
+                        if (cont.includes("and you lost it all... :c")) {
+                            currentBet *= settings.gamble.coinflip.multipler;
+                            const lostamount = currentBet / settings.gamble.coinflip.multipler;
+                            console.log(
+                                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                            );
+                            if (currentBet > maxBet) {
+                                currentBet = settings.gamble.coinflip.default_amount;
+                            }
+                        } else if (cont.includes("captcha")) {
+                            console.clear();
+                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                + chalk.magenta(" [" + tokentype + "]") + chalk.red(" CAPTCHA detected. Manual intervention required.")
+                            );
+                            notifier.notify({
+                                title: "("+ tokenrtype + ") Captcha Detected!",
+                                message: "Solve the captcha and restart the bot!",
+                                icon: "./utilfiles/captcha.png",
+                                sound: true,
+                                wait: true,
+                            });
+                            notifier.on("click", function () {
+                                console.log("click event detected.");
+                            });
+                            // Exit the program
+                            process.exit(1);
+                        } else {
+                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                + chalk.magenta(" [" + tokentype + "]") +
+                                chalk.yellow(` You have won ${currentBet} in coinflip`)
+                            );
+                            currentBet = settings.gamble.coinflip.default_amount;
+                        }
+
+                        var min = 9300;
+                        var max = 14000;
+                        var randomDelay = Math.floor(Math.random() * (max - min + 1)) + min;
+                        await delay(randomDelay);
+                    } catch (e) {
+                        console.error("Error processing response:", e);
+                        // Handle errors
+                    } finally {
+                        // Cleanup or additional operations
+                    }
+                }
+            );
         }
-      );
-    }
-  );
+    );
 }
 
 

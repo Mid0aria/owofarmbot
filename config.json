@@ -2,7 +2,7 @@
     "settings": {
         "huntandbattle": "true",
         "banbypass": "true",
-        "discordrpc": "true",
+        "discordrpc": "false",
         "pray": "false",
         "curse": "false",
         "autoquest": "false",
@@ -43,6 +43,7 @@
             "coinflip": {
                 "default_amount": 1000,
                 "max_amount": 150000,
+                "multipler": 3,
                 "enable": "true", 
                 "amount": "1"
             },
