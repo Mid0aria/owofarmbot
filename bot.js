@@ -105,6 +105,7 @@ var extrachannelid = config.extra.channelid;
 var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
+var maingamblechannelid = config.main.gamblechannelid;
 
 var version = "1.0.3";
 var banversion = "0.1.8";
@@ -562,7 +563,7 @@ if (settings.upgradeautohunt.enable == "true") {
 //--------------------------------GAMBLE-------------------------------------------------//
 if (settings.gamble.coinflip.enable == "true") {
     setInterval(() => {
-        coinflip(maintoken, "Main Token", mainchannelid);
+        coinflip(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
             coinflip(extratoken, "Extra Token", extrachannelid);
         }
@@ -1079,11 +1080,10 @@ function coinflip(token, tokentype, channelid) {
       },
     },
     async function (error, response, body) {
-      if (error) {
+        if (error) {
         console.error("Error posting request:", error);
         return;
       }
-      console.log("Request posted:", response.statusCode, body);
 
       await delay(5000);
 
@@ -1102,48 +1102,46 @@ function coinflip(token, tokentype, channelid) {
             console.error("Error getting response:", error);
             return;
           }
-          console.log("Response received:", response.statusCode, body);
 
           try {
             const bod = JSON.parse(body);
-            const cont = bod[0].embeds;
-            await delay(2500);
+            const cont = bod[0].content;
 
-            if (cont[0].description.includes("and you lost it all... :c")) {
-              currentBet *= 2;
-              lostamount = currentBet / 2;
+            if (cont.includes("and you lost it all... :c")) {
+              currentBet *= 3;
+              const lostamount = currentBet / 2;
               console.log(
-                chalk.red(
-                  `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                ) +
-                chalk.magenta(" [" + tokentype + "]") +
-                chalk.yellow(`Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                    + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
               );
               if (currentBet > maxBet) {
                 currentBet = settings.gamble.coinflip.default_amount;
               }
             } else {
-              currentBet = settings.gamble.coinflip.default_amount;
-              console.log(
-                chalk.red(
-                  `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                ) +
-                chalk.magenta(" [" + tokentype + "]") +
-                chalk.yellow(`You have won ${currentBet} in coinflip`)
+                console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                    + chalk.magenta(" [" + tokentype + "]") + 
+                    chalk.yellow(` You have won ${currentBet} in coinflip`)
               );
+              currentBet = settings.gamble.coinflip.default_amount;
             }
-            // Call coinflip once here, after processing the result
-            coinflip(token, tokentype, channelid);
+              
+            var min = 9300;
+            var max = 14000;
+            var randomDelay = Math.floor(Math.random() * (max - min + 1)) + min;
+            await delay(randomDelay);
           } catch (e) {
+            console.error("Error processing response:", e);
             // Handle errors
           } finally {
-            // Cleanup
+            // Cleanup or additional operations
           }
         }
       );
     }
   );
 }
+
+
 
 function slots(token, tokentype, channelid) {
     request.post(
