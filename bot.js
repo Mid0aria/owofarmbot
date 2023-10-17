@@ -1109,7 +1109,7 @@ function coinflip(token, tokentype, channelid) {
 
             if (cont.includes("and you lost it all... :c")) {
               currentBet *= 3;
-              const lostamount = currentBet / 2;
+              const lostamount = currentBet / 3;
               console.log(
                 chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
                     + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
