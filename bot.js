@@ -1134,6 +1134,8 @@ function coinflip(token, tokentype, channelid) {
                             });
                             // Exit the program
                             process.exit(1);
+                        } else if( cont >= 10 ){
+                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Could not get the reponse, retrying...`)));
                         } else {
                             console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
                                 + chalk.magenta(" [" + tokentype + "]") +
