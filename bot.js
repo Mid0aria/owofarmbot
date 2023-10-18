@@ -1164,10 +1164,17 @@ function coinflip(token, tokentype, channelid) {
                     try {
                         const bod = JSON.parse(body);
                         const cont = bod[0].content;
+                        console.log(cont);
 
                         if (cont.includes("and you lost it all... :c")) {
                             currentBet *= settings.gamble.coinflip.multipler;
-                            const lostamount = currentBet / settings.gamble.coinflip.multipler;
+                            if (Number.isNaN(currentBet)) {
+                                currentBet = currentBet
+                            } else {
+                                currentBet = Math.round(currentBet)
+                            }
+
+                            const lostamount = Math.round(currentBet / settings.gamble.coinflip.multipler);
                             console.log(
                                 chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
                                 + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
@@ -1192,7 +1199,7 @@ function coinflip(token, tokentype, channelid) {
                             });
                             // Exit the program
                             process.exit(1);
-                        } else if( cont.includes("You won") ){
+                        } else if (cont.includes("and you won ") ){
                             console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
                                 + chalk.magenta(" [" + tokentype + "]") +
                                 chalk.yellow(` You have won ${currentBet} in coinflip`)
