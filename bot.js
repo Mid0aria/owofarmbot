@@ -1164,7 +1164,6 @@ function coinflip(token, tokentype, channelid) {
                     try {
                         const bod = JSON.parse(body);
                         const cont = bod[0].content;
-                        console.log(cont);
 
                         if (cont.includes("and you lost it all... :c")) {
                             currentBet *= settings.gamble.coinflip.multipler;
