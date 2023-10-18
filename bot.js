@@ -1214,8 +1214,7 @@ function coinflip(token, tokentype, channelid) {
                         var randomDelay = Math.floor(Math.random() * (max - min + 1)) + min;
                         await delay(randomDelay);
                     } catch (e) {
-                        console.error("Error processing response:", e);
-                        // Handle errors
+                        console.error("Error processing response:", e); // Handle errors
                     } finally {
                         // Cleanup or additional operations
                     }
