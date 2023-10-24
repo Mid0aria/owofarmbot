@@ -106,6 +106,7 @@ var owodmextrachannelid = config.extra.owodmchannelid;
 var mainautoquestchannelid = config.main.autoquestchannelid;
 var extraautoquestchannelid = config.extra.autoquestchannelid;
 var maingamblechannelid = config.main.gamblechannelid;
+var extragamblechannelid = config.extra.gamblechannelid;
 
 var version = "1.0.3";
 var banversion = "0.1.8";
@@ -565,7 +566,7 @@ if (settings.gamble.coinflip.enable == "true") {
     setInterval(() => {
         coinflip(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
-            coinflip(extratoken, "Extra Token", extrachannelid);
+            extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
         }
     }, 20000);
 }
@@ -1224,7 +1225,113 @@ function coinflip(token, tokentype, channelid) {
     );
 }
 
+extra_currentBet = settings.gamble.coinflip.default_amount;
+extra_maxBet = settings.gamble.coinflip.max_amount;
 
+
+function extra_coinflip(token, tokentype, channelid) {
+    request.post(
+        {
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: `owo coinflip ${extra_currentBet}`,
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        },
+        async function (error, response, body) {
+            if (error) {
+                console.error("Error posting request:", error);
+                return;
+            }
+
+            await delay(5000);
+
+            request.get(
+                {
+                    headers: {
+                        authorization: token,
+                    },
+                    url:
+                        "https://discord.com/api/v9/channels/" +
+                        channelid +
+                        "/messages?limit=1",
+                },
+                async function (error, response, body) {
+                    if (error) {
+                        console.error("Error getting response:", error);
+                        return;
+                    }
+
+                    try {
+                        const bod = JSON.parse(body);
+                        const cont = bod[0].content;
+
+                        if (cont.includes("and you lost it all... :c")) {
+                            extra_currentBet *= settings.gamble.coinflip.multipler;
+                            if (Number.isNaN(extra_currentBet)) {
+                                extra_currentBet = extra_currentBet
+                            } else {
+                                extra_currentBet = Math.round(extra_currentBet)
+                            }
+
+                            const lostamount = Math.round(extra_currentBet / settings.gamble.coinflip.multipler);
+                            console.log(
+                                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                            );
+                            if (extra_currentBet > extra_maxBet) {
+                                extra_currentBet = settings.gamble.coinflip.default_amount;
+                            }
+                        } else if (cont.includes("captcha")) {
+                            console.clear();
+                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                + chalk.magenta(" [" + tokentype + "]") + chalk.red(" CAPTCHA detected. Manual intervention required.")
+                            );
+                            notifier.notify({
+                                title: "(Extra Token) Captcha Detected!",
+                                message: "Solve the captcha and restart the bot!",
+                                icon: "./utilfiles/captcha.png",
+                                sound: true,
+                                wait: true,
+                            });
+                            notifier.on("click", function () {
+                                console.log("click event detected.");
+                            });
+                            // Exit the program
+                            process.exit(1);
+                        } else if (cont.includes("and you won ")) {
+                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                + chalk.magenta(" [" + tokentype + "]") +
+                                chalk.yellow(` You have won ${currentBet} in coinflip`)
+                            );
+                            extra_currentBet = settings.gamble.coinflip.default_amount;
+
+                        } else {
+                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Could not get the reponse, retrying...`)));
+                        }
+
+                        var min = 9300;
+                        var max = 14000;
+                        var randomDelay = Math.floor(Math.random() * (max - min + 1)) + min;
+                        await delay(randomDelay);
+                    } catch (e) {
+                        console.error("Error processing response:", e); // Handle errors
+                    } finally {
+                        // Cleanup or additional operations
+                    }
+                }
+            );
+        }
+    );
+}
 
 /**
  * Sends a message to a Discord channel to trigger the "slots" command with a specified amount of gambling.
