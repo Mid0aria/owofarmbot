@@ -568,7 +568,7 @@ if (settings.gamble.coinflip.enable == "true") {
         if (global.etoken) {
             extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
         }
-    }, 20000);
+    }, 25000);
 }
 
 if (settings.gamble.slots.enable == "true") {
@@ -1144,7 +1144,7 @@ function coinflip(token, tokentype, channelid) {
                 return;
             }
 
-            await delay(5000);
+            await delay(6000);
 
             request.get(
                 {
@@ -1169,9 +1169,9 @@ function coinflip(token, tokentype, channelid) {
                         if (cont.includes("and you lost it all... :c")) {
                             currentBet *= settings.gamble.coinflip.multipler;
                             if (Number.isNaN(currentBet)) {
-                                currentBet = currentBet
+                                currentBet = currentBet;
                             } else {
-                                currentBet = Math.round(currentBet)
+                                currentBet = Math.round(currentBet);
                             }
 
                             const lostamount = Math.round(currentBet / settings.gamble.coinflip.multipler);
@@ -1188,7 +1188,7 @@ function coinflip(token, tokentype, channelid) {
                                 + chalk.magenta(" [" + tokentype + "]") + chalk.red(" CAPTCHA detected. Manual intervention required.")
                             );
                             notifier.notify({
-                                title: "("+ tokenrtype + ") Captcha Detected!",
+                                title: "(" + tokentype + ") Captcha Detected!",
                                 message: "Solve the captcha and restart the bot!",
                                 icon: "./utilfiles/captcha.png",
                                 sound: true,
@@ -1199,21 +1199,84 @@ function coinflip(token, tokentype, channelid) {
                             });
                             // Exit the program
                             process.exit(1);
-                        } else if (cont.includes("and you won ") ){
+                        } else if (cont.includes(" and you won")) {
                             console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
                                 + chalk.magenta(" [" + tokentype + "]") +
                                 chalk.yellow(` You have won ${currentBet} in coinflip`)
                             );
                             currentBet = settings.gamble.coinflip.default_amount;
-                            
-                        } else {
-                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Could not get the reponse, retrying...`)));
-                        }
 
-                        var min = 9300;
-                        var max = 14000;
-                        var randomDelay = Math.floor(Math.random() * (max - min + 1)) + min;
-                        await delay(randomDelay);
+                        } else {
+                            await delay(10000);
+                            request.get(
+                                {
+                                    headers: {
+                                        authorization: token,
+                                    },
+                                    url:
+                                        "https://discord.com/api/v9/channels/" +
+                                        channelid +
+                                        "/messages?limit=1",
+                                },
+                                async function (error, response, body) {
+                                    if (error) {
+                                        console.error("Error getting response:", error);
+                                        return;
+                                    }
+
+                                    try {
+                                        const bod = JSON.parse(body);
+                                        const cont = bod[0].content;
+
+                                        if (cont.includes("and you lost it all... :c")) {
+                                            currentBet *= settings.gamble.coinflip.multipler;
+                                            if (Number.isNaN(currentBet)) {
+                                                currentBet = currentBet;
+                                            } else {
+                                                currentBet = Math.round(currentBet);
+                                            }
+
+                                            const lostamount = Math.round(currentBet / settings.gamble.coinflip.multipler);
+                                            console.log(
+                                                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                                + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                                            );
+                                            if (currentBet > maxBet) {
+                                                currentBet = settings.gamble.coinflip.default_amount;
+                                            }
+                                        } else if (cont.includes("captcha")) {
+                                            console.clear();
+                                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                                + chalk.magenta(" [" + tokentype + "]") + chalk.red(" CAPTCHA detected. Manual intervention required.")
+                                            );
+                                            notifier.notify({
+                                                title: "(" + tokenrtype + ") Captcha Detected!",
+                                                message: "Solve the captcha and restart the bot!",
+                                                icon: "./utilfiles/captcha.png",
+                                                sound: true,
+                                                wait: true,
+                                            });
+                                            notifier.on("click", function () {
+                                                console.log("click event detected.");
+                                            });
+                                            // Exit the program
+                                            process.exit(1);
+                                        } else if (cont.includes(" and you won")) {
+                                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                                                + chalk.magenta(" [" + tokentype + "]") +
+                                                chalk.yellow(` You have won ${currentBet} in coinflip`)
+                                            );
+                                            currentBet = settings.gamble.coinflip.default_amount;
+
+                                        } else {
+                                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Could not get the response, retrying...`)));
+                                        }
+                                    } catch (e) {
+                                        console.error("Error processing response:", e); // Handle errors
+                                    }
+                                }
+                            );
+                        }
                     } catch (e) {
                         console.error("Error processing response:", e); // Handle errors
                     } finally {
@@ -1224,6 +1287,7 @@ function coinflip(token, tokentype, channelid) {
         }
     );
 }
+
 
 extra_currentBet = settings.gamble.coinflip.default_amount;
 extra_maxBet = settings.gamble.coinflip.max_amount;
@@ -1252,7 +1316,7 @@ function extra_coinflip(token, tokentype, channelid) {
                 return;
             }
 
-            await delay(5000);
+            await delay(6000);
 
             request.get(
                 {
@@ -1317,11 +1381,7 @@ function extra_coinflip(token, tokentype, channelid) {
                         } else {
                             console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Could not get the reponse, retrying...`)));
                         }
-
-                        var min = 9300;
-                        var max = 14000;
-                        var randomDelay = Math.floor(Math.random() * (max - min + 1)) + min;
-                        await delay(randomDelay);
+                        
                     } catch (e) {
                         console.error("Error processing response:", e); // Handle errors
                     } finally {
