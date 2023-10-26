@@ -112,7 +112,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         "gamble": {
             "coinflip": {
                 "default_amount"= , Enter the amount you want to start from
-                "max_amount": 150000, Enter the amount where the bot will not bet more than that
+                "max_amount": 250000, Enter the amount where the bot will not bet more than that
                 "multipler": , Enter a number by which the lost amount will be multipled by
                 "enable": "", true or false
                 "amount": "1"
