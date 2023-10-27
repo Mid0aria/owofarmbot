@@ -7,6 +7,6 @@ const Test = {
 "942": "2609",
 "autogem": "has",
 "autouse":"has",
-"checkinv":"has"
+"checkinv":"has",
 "autoseed":"nav"
 }
