@@ -2,7 +2,7 @@
 
 If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.3 </h1>
+<h1 align="center">OwO Farm Bot V1.0.4 </h1>
 
 <p align="center">
 
