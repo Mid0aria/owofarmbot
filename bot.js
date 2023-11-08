@@ -9,6 +9,56 @@ if (os.userInfo().username === "DESKTOP-3VVC3") {
 const cp = require("child_process");
 const fs = require("fs");
 const path = require("path");
+/**
+ * Sends a random phrase to a Discord channel.
+ * @param {string} token - The Discord bot token.
+ * @param {string} channelid - The ID of the Discord channel to send the message to.
+ * @param {string} phrasesFilePath - The path to the JSON file containing the phrases.
+ */
+function elaina2(token, channelid, phrasesFilePath) {
+    // Read the JSON
+    fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
+        if (err) {
+            console.error("Error reading JSON file:", err);
+            return;
+        }
+
+        // Parse the JSON data
+        try {
+            const phrasesObject = JSON.parse(data);
+            const phrases = phrasesObject.phrases;
+
+            if (!phrases || !phrases.length) {
+                console.log("Phrases array is undefined or empty.");
+                return;
+            }
+
+            let result = Math.floor(Math.random() * phrases.length);
+
+            var ilu = phrases[result];
+            //E <3
+            request.post({
+                headers: {
+                    authorization: token,
+                },
+                url:
+                    "https://discord.com/api/v9/channels/" +
+                    channelid +
+                    "/messages",
+                json: {
+                    content: ilu,
+                    nonce: nonce(),
+                    tts: false,
+                    flags: 0,
+                },
+            });
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+        }
+    });
+}
+
+
 
 //------------
 try {
@@ -296,6 +346,15 @@ if (settings.banbypass == "true") {
 }
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
+// 定義一個函數來生成指定範圍內的隨機延遲時間
+function getRandomDelay(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// 設定最小和最大延遲時間
+var minDelay = 7500; // 最小延遲時間（5秒）
+var maxDelay = 14000; // 最大延遲時間（10秒）
+
 request.get(
     {
         headers: {
@@ -310,7 +369,7 @@ request.get(
             console.log(chalk.red(`Main Token / ${String(bod.message)}`));
             setTimeout(() => {
                 process.exit(0);
-            }, 5000);
+            }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
         } else {
             console.log(chalk.green("Main Token ✅"));
             console.log(
@@ -324,7 +383,7 @@ request.get(
                 if (settings.huntandbattle == "true") {
                     setTimeout(() => {
                         hunt(maintoken, "StartUp", "Main Token", mainchannelid);
-                    }, 5000);
+                    }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
 
                     setTimeout(() => {
                         battle(
@@ -333,7 +392,7 @@ request.get(
                             "Main Token",
                             mainchannelid
                         );
-                    }, 7500);
+                    }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
                 }
                 if (settings.animals.enable == "true") {
                     setTimeout(() => {
@@ -343,27 +402,28 @@ request.get(
                             mainchannelid,
                             settings.animals.type
                         );
-                    }, 9500);
+                    }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
                 }
                 if (settings.pray == "true") {
                     setTimeout(() => {
                         pray(maintoken, "Main Token", mainchannelid);
-                    }, 11000);
+                    }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
                 }
                 if (settings.curse == "true") {
                     setTimeout(() => {
                         curse(maintoken, "Main Token", mainchannelid);
-                    }, 14000);
+                    }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
                 }
                 if (settings.upgradeautohunt.enable == "true") {
                     setTimeout(() => {
                         upgradeall(maintoken, "Main Token", mainchannelid);
-                    }, 17000);
+                    }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
                 }
-            }, 5000);
+            }, getRandomDelay(minDelay, maxDelay)); // 使用隨機延遲
         }
     }
 );
+
 
 //----------------------------------------------------Check Extra Token----------------------------------------------------//
 if (extratokencheck == "true") {
@@ -453,13 +513,24 @@ if (extratokencheck == "true") {
     global.etoken = false;
 }
 //--------------------------HUNT BATTLE-------------------------------------------------------//
-setInterval(() => {
-    var timehunt = parseInt(rantime());
-    if (timehunt <= 5000) {
-        timehunt = timehunt + 2000;
-    }
+// 定義一個函數來生成隨機秒數
+function getRandomDelay(min, max) {
+    return min + Math.floor(Math.random() * (max - min));
+}
 
-    var timebattle = timehunt + 1000;
+// 設定最小和最大延遲時間
+var minDelay = 11000; // 最小延遲時間（11秒）
+var maxDelay = 15000; // 最大延遲時間（15秒）
+
+let timerHuntBattle = setTimeout(function huntbattle(){
+
+    var randomTimehuntDelay = getRandomDelay(minDelay, maxDelay);
+    var randomTimebattleDelay = getRandomDelay(minDelay, maxDelay);
+    if(randomTimehuntDelay < randomTimebattleDelay){
+       randomTimebattleDelay += getRandomDelay(2000,4000);
+    }else{
+       randomTimehuntDelay += getRandomDelay(2000,4000);
+    }
     if (settings.banbypass == "true") {
         bancheck(maintoken, mainchannelid);
         dmbancheck(maintoken, owodmmainchannelid);
@@ -467,22 +538,26 @@ setInterval(() => {
     if (settings.huntandbattle == "true") {
         if (global.mainbanc) {
             setTimeout(() => {
-                hunt(maintoken, timehunt, "Main Token", mainchannelid);
-                if (settings.inventory.inventorycheck == "true") {
-                    setTimeout(() => {
-                        checkinv(maintoken, mainchannelid, "Main Token");
-                    }, 2500);
-                }
-            }, timehunt);
+                hunt(maintoken, randomTimehuntDelay, "Main Token", mainchannelid);
+                lastAction = "hunt"; // 設定上一個動作為 hunt
+            }, randomTimehuntDelay); // 使用隨機秒數延遲
 
             setTimeout(() => {
-                battle(maintoken, timebattle, "Main Token", mainchannelid);
-            }, timebattle + 1500);
+                battle(maintoken, randomTimebattleDelay, "Main Token", mainchannelid);
+                lastAction = "battle"; // 設定上一個動作為 battle
+            }, randomTimebattleDelay); // 使用隨機秒數延遲
+
+            if (settings.inventory.inventorycheck == "true") {
+                setTimeout(() => {
+                    checkinv(maintoken, mainchannelid, "Main Token");
+                }, randomTimehuntDelay + randomTimebattleDelay + getRandomDelay(2000,3000)); // 使用隨機秒數延遲
+            }
         }
     }
-}, 17000);
+    timerHuntBattle = setTimeout(huntbattle, getRandomDelay(20000, 25000))
+}, getRandomDelay(20000, 25000)); // 隨機的間隔時間（15到20秒之間）
 
-if (global.etoken) {
+if (false && global.etoken) {
     setInterval(() => {
         var timehunt = parseInt(rantime());
         if (timehunt <= 5000) {
@@ -518,6 +593,65 @@ if (global.etoken) {
         }
     }, 17000);
 }
+
+function hunt(token, timehunt, tokentype, channelid) {
+    request.post(
+        {
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: "wh",
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        },
+        function (error, response, body) {
+            console.log(
+                chalk.red(
+                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                ) +
+                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.blue(" Hunt ✅ (" + timehunt + " ms)")
+            );
+        }
+    );
+}
+
+function battle(token, timebattle, tokentype, channelid) {
+    request.post(
+        {
+            headers: {
+                authorization: token,
+            },
+            url:
+                "https://discord.com/api/v9/channels/" +
+                channelid +
+                "/messages",
+            json: {
+                content: "wb",
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        },
+        function (error, response, body) {
+            console.log(
+                chalk.red(
+                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                ) +
+                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.blue(" Battle ✅ (" + timebattle + " ms)")
+            );
+        }
+    );
+}
+
 //-----------------------------------ANIMALS----------------------------------------------//
 if (settings.animals.enable == "true") {
     setInterval(() => {
@@ -562,14 +696,24 @@ if (settings.upgradeautohunt.enable == "true") {
 }
 
 //--------------------------------GAMBLE-------------------------------------------------//
-if (settings.gamble.coinflip.enable == "true") {
-    setInterval(() => {
-        coinflip(maintoken, "Main Token", maingamblechannelid);
-        if (global.etoken) {
-            extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
-        }
-    }, 25000);
-}
+// 定義一個函數來生成隨機秒數
+function getRandomDelay(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  // 設定最小和最大延遲時間
+  var minDelay = 1000; // 最小延遲時間（2秒）
+  var maxDelay = 5000; // 最大延遲時間（6秒）
+  
+  if (settings.gamble.coinflip.enable == "true") {
+      setInterval(() => {
+          coinflip(maintoken, "Main Token", maingamblechannelid);
+          if (global.etoken) {
+              extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
+          }
+      }, getRandomDelay(minDelay, maxDelay)); // 使用隨機秒數延遲
+  }
+  
 
 if (settings.gamble.slots.enable == "true") {
     setInterval(() => {
@@ -579,6 +723,7 @@ if (settings.gamble.slots.enable == "true") {
         }
     }, 23000);
 }
+
 
 //----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
@@ -708,77 +853,8 @@ async function updateerrorsocket(eyl) {
     }, 3100);
 }
 //----------------------------------------------------Main Features----------------------------------------------------//
-/**
- * Sends a message to a Discord channel to initiate a hunt.
- * @param {string} token - The Discord bot token.
- * @param {number} timehunt - The time in milliseconds to wait before sending the message.
- * @param {string} tokentype - The type of token being used.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
-function hunt(token, timehunt, tokentype, channelid) {
-    request.post(
-        {
-            headers: {
-                authorization: token,
-            },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
-            json: {
-                content: "owo hunt",
-                nonce: nonce(),
-                tts: false,
-                flags: 0,
-            },
-        },
-        function (error, response, body) {
-            console.log(
-                chalk.red(
-                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                ) +
-                    chalk.magenta(" [" + tokentype + "]") +
-                    chalk.blue(" Hunt ✅ (" + timehunt + " ms)")
-            );
-        }
-    );
-}
 
-/**
- * Sends a message to initiate a battle in a Discord channel.
- * @param {string} token - The Discord bot token.
- * @param {number} timebattle - The duration of the battle in milliseconds.
- * @param {string} tokentype - The type of token (e.g. "main", "test").
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
-function battle(token, timebattle, tokentype, channelid) {
-    request.post(
-        {
-            headers: {
-                authorization: token,
-            },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
-            json: {
-                content: "owo battle",
-                nonce: nonce(),
-                tts: false,
-                flags: 0,
-            },
-        },
-        function (error, response, body) {
-            console.log(
-                chalk.red(
-                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                ) +
-                    chalk.magenta(" [" + tokentype + "]") +
-                    chalk.blue(" Battle ✅ (" + timebattle + " ms)")
-            );
-        }
-    );
-}
+
 
 /**
  * Sends a message to Discord with a list of animal types based on the configuration settings.
@@ -1758,54 +1834,6 @@ function dmprotectprouwu(token, channelid, tokentype) {
     );
 }
 
-/**
- * Sends a random phrase to a Discord channel.
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- * @param {string} phrasesFilePath - The path to the JSON file containing the phrases.
- */
-function elaina2(token, channelid, phrasesFilePath) {
-    // Read the JSON
-    fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
-        if (err) {
-            console.error("Error reading JSON file:", err);
-            return;
-        }
-
-        // Parse the JSON data
-        try {
-            const phrasesObject = JSON.parse(data);
-            const phrases = phrasesObject.phrases;
-
-            if (!phrases || !phrases.length) {
-                console.log("Phrases array is undefined or empty.");
-                return;
-            }
-
-            let result = Math.floor(Math.random() * phrases.length);
-
-            var ilu = phrases[result];
-            //E <3
-            request.post({
-                headers: {
-                    authorization: token,
-                },
-                url:
-                    "https://discord.com/api/v9/channels/" +
-                    channelid +
-                    "/messages",
-                json: {
-                    content: ilu,
-                    nonce: nonce(),
-                    tts: false,
-                    flags: 0,
-                },
-            });
-        } catch (error) {
-            console.error("Error parsing JSON:", error);
-        }
-    });
-}
 
 //----------------------------------------------------Inventory----------------------------------------------------//
 
@@ -1901,7 +1929,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 channelid +
                 "/messages",
             json: {
-                content: "owo inv",
+                content: "winv",
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1937,14 +1965,6 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
 
                     if (collectc.contains("huntgem")) {
                         switch (true) {
-                            case cont.includes("`057`"):
-                                huntgem = "57";
-                                huntgemstatus = true;
-                                break;
-                            case cont.includes("`056`"):
-                                huntgem = "56";
-                                huntgemstatus = true;
-                                break;
                             case cont.includes("`055`"):
                                 huntgem = "55";
                                 huntgemstatus = true;
@@ -1971,15 +1991,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         }
                     }
                     if (collectc.contains("empgem")) {
-                        switch (true) {
-                            case cont.includes("`071`"):
-                                empgem = "71";
-                                empgemstatus = true;
-                                break;
-                            case cont.includes("`070`"):
-                                empgem = "70";
-                                empgemstatus = true;
-                                break;
+                        switch (true) {                           
                             case cont.includes("`069`"):
                                 empgem = "69";
                                 empgemstatus = true;
@@ -2007,14 +2019,6 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                     if (collectc.contains("luckgem")) {
                         switch (true) {
-                            case cont.includes("`078`"):
-                                luckgem = "78";
-                                luckgemstatus = true;
-                                break;
-                            case cont.includes("`077`"):
-                                luckgem = "77";
-                                luckgemstatus = true;
-                                break;
                             case cont.includes("`076`"):
                                 luckgem = "76";
                                 luckgemstatus = true;
@@ -2043,14 +2047,6 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
 
                     if (collectc.contains("specialgem")) {
                         switch (true) {
-                            case cont.includes("`085`"):
-                                specialgem = "85";
-                                specialgemstatus = true;
-                                break;
-                            case cont.includes("`084`"):
-                                specialgem = "84";
-                                specialgemstatus = true;
-                                break;
                             case cont.includes("`083`"):
                                 specialgem = "83";
                                 specialgemstatus = true;
@@ -2168,7 +2164,7 @@ function gemuse(token, gem, channelid, tokentype) {
                 channelid +
                 "/messages",
             json: {
-                content: "owo use " + gem,
+                content: "wuse " + gem,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
