@@ -1,3 +1,4 @@
+dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
 6 28 15 26 15<br> {/__/}</br>( • . •)</br>/ > 🤍
 
 If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
