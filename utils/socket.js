@@ -84,7 +84,11 @@ setInterval(() => {
     var qst = chalk.blue("Start time: ") + chalk.red(global.questdate);
     var qq = chalk.yellow("Quest: ") + chalk.magenta(`${global.quest}`);
     var qpr = chalk.green("Progress: ") + chalk.yellow(global.questpr);
-    var eyl = chalk.yellow(global.eyl);
+    if (global.eyl === "Everything okay") {
+        var eyl = chalk.yellow(global.eyl);
+    } else {
+        var eyl = chalk.red(global.eyl);
+    }
 
     console.log(
         `

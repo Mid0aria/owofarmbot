@@ -93,22 +93,46 @@ const notifier = require("node-notifier");
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
-var settings = config.settings;
-var maintoken = config.main.token;
-var maintokenuserid = config.main.userid;
-var mainchannelid = config.main.channelid;
-var owodmmainchannelid = config.main.owodmchannelid;
-var extratokencheck = config.settings.extratoken;
-var extratoken = config.extra.token;
-var extratokenuserid = config.extra.userid;
-var extrachannelid = config.extra.channelid;
-var owodmextrachannelid = config.extra.owodmchannelid;
-var mainautoquestchannelid = config.main.autoquestchannelid;
-var extraautoquestchannelid = config.extra.autoquestchannelid;
-var maingamblechannelid = config.main.gamblechannelid;
-var extragamblechannelid = config.extra.gamblechannelid;
+if (os.platform() === "linux" && os.machine() === "x86_64") {
+    try {
+        require.resolve("dotenv");
+    } catch (e) {
+        console.log(chalk.red("Please run: npm install dotenv"));
+        process.exit(0);
+    }
+    require("dotenv").config();
+    var maintoken = process.env.MAIN_TOKEN;
+    var extratoken = process.env.EXTRA_TOKEN;
+    var settings = config.settings;
+    var maintokenuserid = config.main.userid;
+    var mainchannelid = config.main.channelid;
+    var owodmmainchannelid = config.main.owodmchannelid;
+    var extratokencheck = config.settings.extratoken;
+    var extratokenuserid = config.extra.userid;
+    var extrachannelid = config.extra.channelid;
+    var owodmextrachannelid = config.extra.owodmchannelid;
+    var mainautoquestchannelid = config.main.autoquestchannelid;
+    var extraautoquestchannelid = config.extra.autoquestchannelid;
+    var maingamblechannelid = config.main.gamblechannelid;
+    var extragamblechannelid = config.extra.gamblechannelid;
+} else {
+    var maintoken = config.main.token;
+    var extratoken = config.extra.token;
+    var settings = config.settings;
+    var maintokenuserid = config.main.userid;
+    var mainchannelid = config.main.channelid;
+    var owodmmainchannelid = config.main.owodmchannelid;
+    var extratokencheck = config.settings.extratoken;
+    var extratokenuserid = config.extra.userid;
+    var extrachannelid = config.extra.channelid;
+    var owodmextrachannelid = config.extra.owodmchannelid;
+    var mainautoquestchannelid = config.main.autoquestchannelid;
+    var extraautoquestchannelid = config.extra.autoquestchannelid;
+    var maingamblechannelid = config.main.gamblechannelid;
+    var extragamblechannelid = config.extra.gamblechannelid;
+}
 
-var version = "1.0.4";
+var version = "1.0.5";
 var banversion = "0.1.8";
 
 global.quest = true;
@@ -277,6 +301,9 @@ if (settings.huntandbattle == "true") {
             "Hunt and Battle disabled!!! If you want to use the bot, activate it from the config.json file. "
         )
     );
+    updateerrorsocket(
+        "Hunt and Battle disabled!!! If you want to use the bot, activate it from the config.json file. "
+    );
     process.exit(0);
 }
 
@@ -307,7 +334,12 @@ request.get(
         var bod = JSON.parse(body);
 
         if (String(bod.message) === "401: Unauthorized") {
-            console.log(chalk.red(`Main Token / ${String(bod.message)}`));
+            console.log(
+                chalk.red(`Main Token / ${String(bod.message)} (TOKEN WRONG!)`)
+            );
+            updateerrorsocket(
+                `Main Token / ${String(bod.message)} (TOKEN WRONG!)`
+            );
             setTimeout(() => {
                 process.exit(0);
             }, 5000);
@@ -562,6 +594,7 @@ if (settings.upgradeautohunt.enable == "true") {
 }
 
 //--------------------------------GAMBLE-------------------------------------------------//
+
 if (settings.gamble.coinflip.enable == "true") {
     setInterval(() => {
         coinflip(maintoken, "Main Token", maingamblechannelid);
@@ -579,7 +612,6 @@ if (settings.gamble.slots.enable == "true") {
         }
     }, 23000);
 }
-
 //----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
 function checkversion() {
@@ -649,6 +681,9 @@ function checkversion() {
                             "Your farm bot is not up to date please run node updater.js"
                         )
                     );
+                    updateerrorsocket(
+                        "Your farm bot is not up to date please run node updater.js"
+                    );
                     process.exit(0);
                 }
             }
@@ -708,13 +743,6 @@ async function updateerrorsocket(eyl) {
     }, 3100);
 }
 //----------------------------------------------------Main Features----------------------------------------------------//
-/**
- * Sends a message to a Discord channel to initiate a hunt.
- * @param {string} token - The Discord bot token.
- * @param {number} timehunt - The time in milliseconds to wait before sending the message.
- * @param {string} tokentype - The type of token being used.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
 function hunt(token, timehunt, tokentype, channelid) {
     request.post(
         {
@@ -744,13 +772,6 @@ function hunt(token, timehunt, tokentype, channelid) {
     );
 }
 
-/**
- * Sends a message to initiate a battle in a Discord channel.
- * @param {string} token - The Discord bot token.
- * @param {number} timebattle - The duration of the battle in milliseconds.
- * @param {string} tokentype - The type of token (e.g. "main", "test").
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
 function battle(token, timebattle, tokentype, channelid) {
     request.post(
         {
@@ -780,13 +801,6 @@ function battle(token, timebattle, tokentype, channelid) {
     );
 }
 
-/**
- * Sends a message to Discord with a list of animal types based on the configuration settings.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of token being used.
- * @param {string} channelid - The ID of the channel to send the message to.
- * @param {string} type - The type of action to perform (sacrifice or sell).
- */
 function animals(token, tokentype, channelid, type) {
     let animalcheck = false;
     var animaltypes = "";
@@ -850,12 +864,6 @@ function animals(token, tokentype, channelid, type) {
     }
 }
 
-/**
- * Sends a prayer message to a Discord channel using the provided token and channel ID.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of token being used.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
 function pray(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
         var ct = "owo pray <@" + maintokenuserid + ">";
@@ -890,12 +898,6 @@ function pray(token, tokentype, channelid) {
     );
 }
 
-/**
- * Sends a "curse" message to a Discord channel using the provided token and channel ID.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of token being used.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
 function curse(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
         var ct = "owo curse <@" + maintokenuserid + ">";
@@ -930,13 +932,6 @@ function curse(token, tokentype, channelid) {
     );
 }
 
-/**
- * Sends a checklist message to a Discord channel and updates the checklist status based on the message content.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of token (e.g. "Main Token", "Alt Token").
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- * @returns {string} - A message indicating whether the checklist has been completed.
- */
 function checklist(token, tokentype, channelid) {
     request.post(
         {
@@ -1024,7 +1019,9 @@ function checklist(token, tokentype, channelid) {
                                 updatechecklistsocket("quest", "✅");
                             }
                         } catch (error) {
-                            updateerrorsocket("Unable to get Checklist");
+                            updateerrorsocket(
+                                "Unable to get Checklist (RESTART BOT!)"
+                            );
                             console.log(
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -1040,12 +1037,6 @@ function checklist(token, tokentype, channelid) {
     );
 }
 
-/**
- * Sends a message "owo daily" to a Discord channel using the provided token and channel ID.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of token (e.g. "Bot").
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
 function daily(token, tokentype, channelid) {
     request.post(
         {
@@ -1076,12 +1067,6 @@ function daily(token, tokentype, channelid) {
     );
 }
 
-/**
- * Sends a message to a Discord channel with a cookie command.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
 function cookie(token, tokentype, channelid) {
     request.post(
         {
@@ -1112,16 +1097,9 @@ function cookie(token, tokentype, channelid) {
     );
 }
 
-let currentBet = settings.gamble.coinflip.default_amount;
-const maxBet = settings.gamble.coinflip.max_amount;
-
-/**
- * Flips a coin in a Discord channel and handles the response.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to post the message in.
- */
 function coinflip(token, tokentype, channelid) {
+    let currentBet = settings.gamble.coinflip.default_amount;
+    const maxBet = settings.gamble.coinflip.max_amount;
     request.post(
         {
             headers: {
@@ -1174,38 +1152,34 @@ function coinflip(token, tokentype, channelid) {
                                 currentBet = Math.round(currentBet);
                             }
 
-                            const lostamount = Math.round(currentBet / settings.gamble.coinflip.multipler);
+                            const lostamount = Math.round(
+                                currentBet / settings.gamble.coinflip.multipler
+                            );
                             console.log(
-                                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                                chalk.red(
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                                ) +
+                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.yellow(
+                                        ` Lost ${lostamount} in coinflip, next betting ${currentBet}`
+                                    )
                             );
                             if (currentBet > maxBet) {
-                                currentBet = settings.gamble.coinflip.default_amount;
+                                currentBet =
+                                    settings.gamble.coinflip.default_amount;
                             }
-                        } else if (cont.includes("captcha")) {
-                            console.clear();
-                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                + chalk.magenta(" [" + tokentype + "]") + chalk.red(" CAPTCHA detected. Manual intervention required.")
-                            );
-                            notifier.notify({
-                                title: "(" + tokentype + ") Captcha Detected!",
-                                message: "Solve the captcha and restart the bot!",
-                                icon: "./utilfiles/captcha.png",
-                                sound: true,
-                                wait: true,
-                            });
-                            notifier.on("click", function () {
-                                console.log("click event detected.");
-                            });
-                            // Exit the program
-                            process.exit(1);
                         } else if (cont.includes(" and you won")) {
-                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                + chalk.magenta(" [" + tokentype + "]") +
-                                chalk.yellow(` You have won ${currentBet} in coinflip`)
+                            console.log(
+                                chalk.red(
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                                ) +
+                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.yellow(
+                                        ` You have won ${currentBet} in coinflip`
+                                    )
                             );
-                            currentBet = settings.gamble.coinflip.default_amount;
-
+                            currentBet =
+                                settings.gamble.coinflip.default_amount;
                         } else {
                             await delay(10000);
                             request.get(
@@ -1220,7 +1194,10 @@ function coinflip(token, tokentype, channelid) {
                                 },
                                 async function (error, response, body) {
                                     if (error) {
-                                        console.error("Error getting response:", error);
+                                        console.error(
+                                            "Error getting response:",
+                                            error
+                                        );
                                         return;
                                     }
 
@@ -1228,51 +1205,79 @@ function coinflip(token, tokentype, channelid) {
                                         const bod = JSON.parse(body);
                                         const cont = bod[0].content;
 
-                                        if (cont.includes("and you lost it all... :c")) {
-                                            currentBet *= settings.gamble.coinflip.multipler;
+                                        if (
+                                            cont.includes(
+                                                "and you lost it all... :c"
+                                            )
+                                        ) {
+                                            currentBet *=
+                                                settings.gamble.coinflip
+                                                    .multipler;
                                             if (Number.isNaN(currentBet)) {
                                                 currentBet = currentBet;
                                             } else {
-                                                currentBet = Math.round(currentBet);
+                                                currentBet =
+                                                    Math.round(currentBet);
                                             }
 
-                                            const lostamount = Math.round(currentBet / settings.gamble.coinflip.multipler);
+                                            const lostamount = Math.round(
+                                                currentBet /
+                                                    settings.gamble.coinflip
+                                                        .multipler
+                                            );
                                             console.log(
-                                                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                                + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                                                chalk.red(
+                                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                                                ) +
+                                                    chalk.magenta(
+                                                        " [" + tokentype + "]"
+                                                    ) +
+                                                    chalk.yellow(
+                                                        ` Lost ${lostamount} in coinflip, next betting ${currentBet}`
+                                                    )
                                             );
                                             if (currentBet > maxBet) {
-                                                currentBet = settings.gamble.coinflip.default_amount;
+                                                currentBet =
+                                                    settings.gamble.coinflip
+                                                        .default_amount;
                                             }
-                                        } else if (cont.includes("captcha")) {
-                                            console.clear();
-                                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                                + chalk.magenta(" [" + tokentype + "]") + chalk.red(" CAPTCHA detected. Manual intervention required.")
+                                        } else if (
+                                            cont.includes(" and you won")
+                                        ) {
+                                            console.log(
+                                                chalk.red(
+                                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                                                ) +
+                                                    chalk.magenta(
+                                                        " [" + tokentype + "]"
+                                                    ) +
+                                                    chalk.yellow(
+                                                        ` You have won ${currentBet} in coinflip`
+                                                    )
                                             );
-                                            notifier.notify({
-                                                title: "(" + tokenrtype + ") Captcha Detected!",
-                                                message: "Solve the captcha and restart the bot!",
-                                                icon: "./utilfiles/captcha.png",
-                                                sound: true,
-                                                wait: true,
-                                            });
-                                            notifier.on("click", function () {
-                                                console.log("click event detected.");
-                                            });
-                                            // Exit the program
-                                            process.exit(1);
-                                        } else if (cont.includes(" and you won")) {
-                                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                                + chalk.magenta(" [" + tokentype + "]") +
-                                                chalk.yellow(` You have won ${currentBet} in coinflip`)
-                                            );
-                                            currentBet = settings.gamble.coinflip.default_amount;
-
+                                            currentBet =
+                                                settings.gamble.coinflip
+                                                    .default_amount;
                                         } else {
-                                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Could not get the response, retrying...`)));
+                                            console.log(
+                                                chalk.red(
+                                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+                                                        chalk.magenta(
+                                                            " [" +
+                                                                tokentype +
+                                                                "]"
+                                                        ) +
+                                                        chalk.yellow(
+                                                            ` Could not get the response, retrying...`
+                                                        )
+                                                )
+                                            );
                                         }
                                     } catch (e) {
-                                        console.error("Error processing response:", e); // Handle errors
+                                        console.error(
+                                            "Error processing response:",
+                                            e
+                                        ); // Handle errors
                                     }
                                 }
                             );
@@ -1288,12 +1293,9 @@ function coinflip(token, tokentype, channelid) {
     );
 }
 
-
-extra_currentBet = settings.gamble.coinflip.default_amount;
-extra_maxBet = settings.gamble.coinflip.max_amount;
-
-
 function extra_coinflip(token, tokentype, channelid) {
+    extra_currentBet = settings.gamble.coinflip.default_amount;
+    extra_maxBet = settings.gamble.coinflip.max_amount;
     request.post(
         {
             headers: {
@@ -1339,49 +1341,54 @@ function extra_coinflip(token, tokentype, channelid) {
                         const cont = bod[0].content;
 
                         if (cont.includes("and you lost it all... :c")) {
-                            extra_currentBet *= settings.gamble.coinflip.multipler;
+                            extra_currentBet *=
+                                settings.gamble.coinflip.multipler;
                             if (Number.isNaN(extra_currentBet)) {
-                                extra_currentBet = extra_currentBet
+                                extra_currentBet = extra_currentBet;
                             } else {
-                                extra_currentBet = Math.round(extra_currentBet)
+                                extra_currentBet = Math.round(extra_currentBet);
                             }
 
-                            const lostamount = Math.round(extra_currentBet / settings.gamble.coinflip.multipler);
+                            const lostamount = Math.round(
+                                extra_currentBet /
+                                    settings.gamble.coinflip.multipler
+                            );
                             console.log(
-                                chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Lost ${lostamount} in coinflip, next betting ${currentBet}`)
+                                chalk.red(
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                                ) +
+                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.yellow(
+                                        ` Lost ${lostamount} in coinflip, next betting ${currentBet}`
+                                    )
                             );
                             if (extra_currentBet > extra_maxBet) {
-                                extra_currentBet = settings.gamble.coinflip.default_amount;
+                                extra_currentBet =
+                                    settings.gamble.coinflip.default_amount;
                             }
-                        } else if (cont.includes("captcha")) {
-                            console.clear();
-                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                + chalk.magenta(" [" + tokentype + "]") + chalk.red(" CAPTCHA detected. Manual intervention required.")
-                            );
-                            notifier.notify({
-                                title: "(Extra Token) Captcha Detected!",
-                                message: "Solve the captcha and restart the bot!",
-                                icon: "./utilfiles/captcha.png",
-                                sound: true,
-                                wait: true,
-                            });
-                            notifier.on("click", function () {
-                                console.log("click event detected.");
-                            });
-                            // Exit the program
-                            process.exit(1);
                         } else if (cont.includes("and you won ")) {
-                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-                                + chalk.magenta(" [" + tokentype + "]") +
-                                chalk.yellow(` You have won ${currentBet} in coinflip`)
+                            console.log(
+                                chalk.red(
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                                ) +
+                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.yellow(
+                                        ` You have won ${currentBet} in coinflip`
+                                    )
                             );
-                            extra_currentBet = settings.gamble.coinflip.default_amount;
-
+                            extra_currentBet =
+                                settings.gamble.coinflip.default_amount;
                         } else {
-                            console.log(chalk.red(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` + chalk.magenta(" [" + tokentype + "]") + chalk.yellow(` Could not get the reponse, retrying...`)));
+                            console.log(
+                                chalk.red(
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+                                        chalk.magenta(" [" + tokentype + "]") +
+                                        chalk.yellow(
+                                            ` Could not get the reponse, retrying...`
+                                        )
+                                )
+                            );
                         }
-                        
                     } catch (e) {
                         console.error("Error processing response:", e); // Handle errors
                     } finally {
@@ -1393,12 +1400,6 @@ function extra_coinflip(token, tokentype, channelid) {
     );
 }
 
-/**
- * Sends a message to a Discord channel to trigger the "slots" command with a specified amount of gambling.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- */
 function slots(token, tokentype, channelid) {
     request.post(
         {
@@ -1431,12 +1432,6 @@ function slots(token, tokentype, channelid) {
     );
 }
 
-/**
- * Upgrades all autohunt items of a specific type in a Discord channel.
- * @param {string} token - The Discord bot token.
- * @param {string} tokentype - The type of Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to send the upgrade message to.
- */
 function upgradeall(token, tokentype, channelid) {
     request.post(
         {
@@ -1468,13 +1463,6 @@ function upgradeall(token, tokentype, channelid) {
 }
 //----------------------------------------------------BanCheck + Similar Bypass----------------------------------------------------//
 
-/**
- * Checks if a message in a Discord channel contains the word "captcha".
- * If the message contains "captcha", the function logs an error message, sends a notification, and exits the process.
- * If the message does not contain "captcha", the function calls the "elaina2" function and logs a success message.
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to check for messages.
- */
 function bancheck(token, channelid) {
     request.get(
         {
@@ -1503,14 +1491,14 @@ function bancheck(token, channelid) {
                 notifier.notify({
                     title: "(Main Token) Captcha Detected!",
                     message: "Solve the captcha and restart the bot!",
-                    icon: "./utilfiles/captcha.png",
+                    icon: "./utils/captcha.png",
                     sound: true,
                     wait: true,
+                    appID: "OwO Farm Bot",
                 });
-                notifier.on("click", function () {
-                    console.log("click event detected.");
-                });
+
                 setTimeout(() => {
+                    updateerrorsocket("(Main Token) Solve Captcha!");
                     process.exit(0);
                 }, 1500);
             } else {
@@ -1531,11 +1519,6 @@ function bancheck(token, channelid) {
     );
 }
 
-/**
- * Checks for chat captcha in a Discord channel and takes appropriate action based on the result.
- * @param {string} token - Discord bot token.
- * @param {string} channelid - ID of the Discord channel to check for chat captcha.
- */
 function extrabancheck(token, channelid) {
     request.get(
         {
@@ -1563,14 +1546,14 @@ function extrabancheck(token, channelid) {
                 notifier.notify({
                     title: "(Extra Token) Captcha Detected!",
                     message: "Solve the captcha and restart the bot!",
-                    icon: "./utilfiles/captcha.png",
+                    icon: "./utils/captcha.png",
                     sound: true,
                     wait: true,
+                    appID: "OwO Farm Bot",
                 });
-                notifier.on("click", function () {
-                    console.log("click event detected.");
-                });
+
                 setTimeout(() => {
+                    updateerrorsocket("(Extra Token) Solve Captcha!");
                     process.exit(0);
                 }, 1500);
             } else {
@@ -1591,11 +1574,6 @@ function extrabancheck(token, channelid) {
     );
 }
 
-/**
- * Checks if a user has been banned from sending DMs and takes appropriate action.
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the channel to check for messages.
- */
 function dmbancheck(token, channelid) {
     request.get(
         {
@@ -1627,14 +1605,14 @@ function dmbancheck(token, channelid) {
                     notifier.notify({
                         title: "(Main Token) Captcha Detected!",
                         message: "Solve the captcha and restart the bot!",
-                        icon: "./utilfiles/captcha.png",
+                        icon: "./utils/captcha.png",
                         sound: true,
                         wait: true,
+                        appID: "OwO Farm Bot",
                     });
-                    notifier.on("click", function () {
-                        console.log("click event detected.");
-                    });
+
                     setTimeout(() => {
+                        updateerrorsocket("(Main Token) Solve DM Captcha!");
                         process.exit(0);
                     }, 1500);
                 } else {
@@ -1655,13 +1633,7 @@ function dmbancheck(token, channelid) {
         }
     );
 }
-
 //wheres my mind :(
-/**
- * Checks if a Discord user has been banned due to DM captcha and takes appropriate action.
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the channel to check for DM captcha.
- */
 function dmextrabancheck(token, channelid) {
     request.get(
         {
@@ -1692,14 +1664,14 @@ function dmextrabancheck(token, channelid) {
                     notifier.notify({
                         title: "(Extra Token) Captcha Detected!",
                         message: "Solve the captcha and restart the bot!",
-                        icon: "./utilfiles/captcha.png",
+                        icon: "./utils/captcha.png",
                         sound: true,
                         wait: true,
+                        appID: "OwO Farm Bot",
                     });
-                    notifier.on("click", function () {
-                        console.log("click event detected.");
-                    });
+
                     setTimeout(() => {
+                        updateerrorsocket("(Extra Token) Solve DM Captcha!");
                         process.exit(0);
                     }, 1500);
                 } else {
@@ -1720,12 +1692,6 @@ function dmextrabancheck(token, channelid) {
     );
 }
 
-/**
- * Sends a message to a Discord channel using the provided token and channel ID.
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the channel to send the message to.
- * @param {string} tokentype - The type of token being used (e.g. "bot" or "user").
- */
 function dmprotectprouwu(token, channelid, tokentype) {
     request.post(
         {
@@ -1758,12 +1724,6 @@ function dmprotectprouwu(token, channelid, tokentype) {
     );
 }
 
-/**
- * Sends a random phrase to a Discord channel.
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- * @param {string} phrasesFilePath - The path to the JSON file containing the phrases.
- */
 function elaina2(token, channelid, phrasesFilePath) {
     // Read the JSON
     fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
@@ -1809,14 +1769,6 @@ function elaina2(token, channelid, phrasesFilePath) {
 
 //----------------------------------------------------Inventory----------------------------------------------------//
 
-/**
- * Sends a message to a Discord channel requesting the inventory and parses the response to extract gem information.
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to send the message to.
- * @param {string} tokentype - The type of Discord bot token.
- * @param {string} gemc - The type of gem to collect.
- * @param {string} collectc - The message content to search for gem information.
- */
 function checkinv(token, channelid, tokentype) {
     if (settings.inventory.gemcheck == "true") {
         request.get(
@@ -2255,14 +2207,6 @@ function eventuse(token, eventbox, channelid, tokentype) {
 }
 //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. ... __ .
 //----------------------------------------------------Quest----------------------------------------------------//
-/**
- * Retrieves the current quest from a Discord channel using the provided token and channel ID.
- * @async
- * @function getquests
- * @param {string} token - The Discord bot token.
- * @param {string} channelid - The ID of the Discord channel to retrieve the quest from.
- * @param {string} tokentype - The type of token being used (e.g. "main" or "alt").
- */
 async function getquests(token, channelid, tokentype) {
     request.post(
         {
@@ -2476,6 +2420,7 @@ async function getquests(token, channelid, tokentype) {
                             }
                         }
                     } catch (error) {
+                        console.log(error);
                         updateerrorsocket("Unable to check Quest");
                         console.log(
                             chalk.red(

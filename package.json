@@ -26,7 +26,6 @@
     "author": "Mid0aria",
     "license": "ISC",
     "scripts": {
-        "start": "node bot.js",
         "run": "node bot.js",
         "setup": "npm i"
     },
@@ -35,6 +34,7 @@
         "collect.js": "^4.34.3",
         "delay": "^5.0.0",
         "discord-rpc": "^4.0.1",
+        "dotenv": "^16.3.1",
         "follow-redirects": "^1.15.2",
         "node-notifier": "^10.0.1",
         "request": "^2.88.2",

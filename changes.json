@@ -1,3 +1,9 @@
 {
-    "c": ["bot.js", "version.json", "utils/socket.js"]
+    "c": [
+        "bot.js",
+        "version.json",
+        "utils/socket.js",
+        "package.json",
+        "config.json"
+    ]
 }
