@@ -20,6 +20,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 [❗・Important](#important)<br>
 [👑・Features](#features)<br>
 [⚙・Config.json example](#configjson-example)<br>
+[⚙・.env example](#dotenv-example)<br>
 [💎・Get Token](#get-token)<br>
 [📍・OwO DM channel id](#owo-dm-channel-id)<br>
 [📚・Discord RPC](#discord-rpc)<br>
@@ -125,7 +126,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         }
     },
     "main":{
-        "token":"", main token
+        "token":"", main token (if you use replit please edit .env file)
         "userid":"", token user id
         "channelid":"", channel id for main token
         "owodmchannelid":"", owo bot dm channel id
@@ -133,7 +134,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         "autoquestchannelid":"" auto quest channel id
     },
     "extra":{
-        "token":"", extra token
+        "token":"", extra token (if you use replit please edit .env file)
         "userid":"", extra token user id
         "channelid":"", channel id for extra token
         "gamblechannelid":"", channel if for gambling
@@ -142,6 +143,12 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 }
 
 
+```
+## ⚙・dotenv example
+If you use replit, you must enter your tokens in the .env file for the security of your tokens!
+```
+MAIN_TOKEN=mysupermaintokenblabla
+EXTRA_TOKEN=mysuperextratokenblabla
 ```
 
 ## 💎・Get Token
