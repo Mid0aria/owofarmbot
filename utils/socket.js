@@ -3,11 +3,12 @@ var io = socket.connect("http://localhost:1337");
 const chalk = require("chalk");
 
 console.clear();
-process.title = `Socket Client V0.0.2`;
+process.title = `Socket Client V0.0.2 / e.`;
 global.state = "";
 global.quest = "";
 global.questpr = "";
 global.questdate = "";
+global.times = "";
 
 global.checklistdaily = `❌`;
 global.checklistvote = `❌`;
@@ -69,6 +70,10 @@ io.on("errors", (e) => {
         global.eyl = `${global.eyl}\n${e.error}`;
     }
 });
+
+io.on("times", (e) => {
+    global.times = e.data;
+});
 setInterval(() => {
     console.clear();
     var currenttime = chalk.red(
@@ -84,6 +89,7 @@ setInterval(() => {
     var qst = chalk.blue("Start time: ") + chalk.red(global.questdate);
     var qq = chalk.yellow("Quest: ") + chalk.magenta(`${global.quest}`);
     var qpr = chalk.green("Progress: ") + chalk.yellow(global.questpr);
+    var tms = global.times;
     if (global.eyl === "Everything okay") {
         var eyl = chalk.yellow(global.eyl);
     } else {
@@ -94,7 +100,7 @@ setInterval(() => {
         `
 ╔═══════════════════════════════════════════════════════════════════════════
 ║ > Clock: ${currenttime}                                                              
-║ > State: ${state} 
+║ > Settings: ${state} 
 ║
 ╠════════════════════════╦══════════════════════════════════════════════════
 ║                        ║                                          
@@ -108,13 +114,13 @@ setInterval(() => {
 ║ ${cl} ║ LootBox           ║ ${qpr}
 ║ ${gc} ║ Crate             ║
 ╠════════════════════════╩══════════════════════════════════════════════════
-║ > Errors❗
+║ > ⏱️ Times
+║ ${tms}
+╠═══════════════════════════════════════════════════════════════════════════
+║ > Errors❗ 
 ║ ${eyl}
-║
-║
-║
 ╚═══════════════════════════════════════════════════════════════════════════
 
 `
     );
-}, 5000);
+}, 1000);

@@ -132,7 +132,7 @@ if (os.platform() === "linux" && os.machine() === "x86_64") {
     var extragamblechannelid = config.extra.gamblechannelid;
 }
 
-var version = "1.0.5";
+var version = "1.0.6";
 var banversion = "0.1.8";
 
 global.quest = true;
@@ -209,6 +209,21 @@ if (settings.inventory.inventorycheck == "true") {
 } else {
     var rpcinventory = "❌";
 }
+if (settings.times.enable) {
+    var times = "User controlled times.";
+    setTimeout(() => {
+        socketio.emit("times", {
+            data: times,
+        });
+    }, 2500);
+} else {
+    var times = "Developer recommended time intervals are used";
+    setTimeout(() => {
+        socketio.emit("times", {
+            data: times,
+        });
+    }, 2500);
+}
 setTimeout(() => {
     socketio.emit("bot", {
         info: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory Check: ${rpcinventory} Animals: ${rpcanimals}`,
@@ -233,7 +248,7 @@ rpc.on("ready", () => {
                 url: "https://github.com/Mid0aria/owofarmbot",
             },
             {
-                label: "Github",
+                label: "Developer",
                 url: "https://github.com/Mid0aria/",
             },
         ],
@@ -485,13 +500,24 @@ if (extratokencheck == "true") {
     global.etoken = false;
 }
 //--------------------------HUNT BATTLE-------------------------------------------------------//
+if (settings.times.intervals.huntbattle.enable) {
+    var timehuntbattleinterval = settings.times.intervals.huntbattle.time;
+} else {
+    var timehuntbattleinterval = 17000;
+}
+
 setInterval(() => {
-    var timehunt = parseInt(rantime());
-    if (timehunt <= 5000) {
-        timehunt = timehunt + 2000;
+    if (settings.times.enable) {
+        var timehunt = settings.times.hunt;
+        var timebattle = settings.times.battle;
+    } else {
+        var timehunt = parseInt(rantime());
+        if (timehunt <= 6000) {
+            timehunt = timehunt + 2000;
+        }
+        var timebattle = timehunt + 1000;
     }
 
-    var timebattle = timehunt + 1000;
     if (settings.banbypass == "true") {
         bancheck(maintoken, mainchannelid);
         dmbancheck(maintoken, owodmmainchannelid);
@@ -509,16 +535,22 @@ setInterval(() => {
 
             setTimeout(() => {
                 battle(maintoken, timebattle, "Main Token", mainchannelid);
-            }, timebattle + 1500);
+            }, timebattle);
         }
     }
-}, 17000);
+}, timehuntbattleinterval);
 
 if (global.etoken) {
     setInterval(() => {
-        var timehunt = parseInt(rantime());
-        if (timehunt <= 5000) {
-            timehunt = timehunt + 2000;
+        if (settings.times.enable) {
+            var timehunt = settings.times.hunt;
+            var timebattle = settings.times.battle;
+        } else {
+            var timehunt = parseInt(rantime());
+            if (timehunt <= 6000) {
+                timehunt = timehunt + 2000;
+            }
+            var timebattle = timehunt + 1000;
         }
 
         var timebattle = timehunt + 1000;
@@ -545,12 +577,17 @@ if (global.etoken) {
                         "Extra Token",
                         extrachannelid
                     );
-                }, timebattle + 1500);
+                }, timebattle);
             }
         }
-    }, 17000);
+    }, timehuntbattleinterval);
 }
 //-----------------------------------ANIMALS----------------------------------------------//
+if (settings.times.intervals.animals.enable) {
+    var timeanimalsinterval = settings.times.intervals.animals.time;
+} else {
+    var timeanimalsinterval = 1200000;
+}
 if (settings.animals.enable == "true") {
     setInterval(() => {
         animals(maintoken, "Main Token", mainchannelid, settings.animals.type);
@@ -562,46 +599,68 @@ if (settings.animals.enable == "true") {
                 settings.animals.type
             );
         }
-    }, 1200000);
+    }, timeanimalsinterval);
 }
 
 //--------------------------------PRAY-------------------------------------------------//
+if (settings.times.intervals.pray.enable) {
+    var timeprayinterval = settings.times.intervals.pray.time;
+} else {
+    var timeprayinterval = 303000;
+}
 if (settings.pray == "true") {
     setInterval(() => {
         pray(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             pray(extratoken, "Extra Token", extrachannelid);
         }
-    }, 303000);
+    }, timeprayinterval);
 }
 //--------------------------------CURSE-------------------------------------------------//
+if (settings.times.intervals.curse.enable) {
+    var timecurseinterval = settings.times.intervals.curse.time;
+} else {
+    var timecurseinterval = 303500;
+}
 if (settings.curse == "true") {
     setInterval(() => {
         curse(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             curse(extratoken, "Extra Token", extrachannelid);
         }
-    }, 303500);
+    }, timecurseinterval);
 }
 //--------------------------------UPGRADE-------------------------------------------------//
+if (settings.times.intervals.upgrade.enable) {
+    var timeupgradeinterval = settings.times.intervals.upgrade.time;
+} else {
+    var timeupgradeinterval = 1205000;
+}
 if (settings.upgradeautohunt.enable == "true") {
     setInterval(() => {
         upgradeall(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             upgradeall(extratoken, "Extra Token", extrachannelid);
         }
-    }, 1205000);
+    }, timeupgradeinterval);
 }
 
 //--------------------------------GAMBLE-------------------------------------------------//
-
+if (settings.times.intervals.gamble.enable) {
+    var timegamblecoinflipinterval =
+        settings.times.intervals.gamble.coinflip.time;
+    var timegambleslotsinterval = settings.times.intervals.gamble.slots.time;
+} else {
+    var timegamblecoinflipinterval = 25000;
+    var timegambleslotsinterval = 25000;
+}
 if (settings.gamble.coinflip.enable == "true") {
     setInterval(() => {
         coinflip(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
             extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
         }
-    }, 25000);
+    }, timegamblecoinflipinterval);
 }
 
 if (settings.gamble.slots.enable == "true") {
@@ -610,7 +669,7 @@ if (settings.gamble.slots.enable == "true") {
         if (global.etoken) {
             slots(extratoken, "Extra Token", extrachannelid);
         }
-    }, 23000);
+    }, timegambleslotsinterval);
 }
 //----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
