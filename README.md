@@ -1,5 +1,5 @@
 dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
-6 28 15 26 15<br> {/__/}</br>( • . •)</br>/ > 🤍
+6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 🤍
 
 If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
 
@@ -12,6 +12,7 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
 Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)<br>
 Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/24">Click Me</a>
+
 </p>
 
 # Contents
@@ -31,6 +32,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 [🥰・Thanks for contribution](#thanks-for-contribution)<br>
 
 ## ⭐・Star History
+
 <h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 512</h2>
 ⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
 
@@ -73,6 +75,42 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 ```
 {
     "settings": {
+        "times": {
+            "enable": "", true or false
+            "hunt": 11000,  / The time to be entered must be entered in milliseconds.
+            "battle": 10000,  / The time to be entered must be entered in milliseconds.
+            "intervals": {
+                "huntbattle": {
+                    "enable": "true", true or false
+                    "time": 17000  / The time to be entered must be entered in milliseconds.
+                },
+                "animals": {
+                    "enable": "true", true or false
+                    "time": 1200000  / The time to be entered must be entered in milliseconds.
+                },
+                "pray": {
+                    "enable": "true", true or false
+                    "time": 303000  / The time to be entered must be entered in milliseconds.
+                },
+                "curse": {
+                    "enable": "true", true or false
+                    "time": 303500  / The time to be entered must be entered in milliseconds.
+                },
+                "upgrade": {
+                    "enable": "true", true or false
+                    "time": 1205000  / The time to be entered must be entered in milliseconds.
+                },
+                "gamble": {
+                    "enable": "true", true or false
+                    "coinflip": {
+                        "time": 25000  / The time to be entered must be entered in milliseconds.
+                    },
+                    "slots": {
+                        "time": 23000  / The time to be entered must be entered in milliseconds.
+                    }
+                }
+            }
+        },
         "huntandbattle": "", true or false
         "banbypass": "", true or false
         "discordrpc": "", true or false
@@ -144,8 +182,11 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 
 
 ```
+
 ## ⚙・dotenv example
+
 If you use replit, you must enter your tokens in the .env file for the security of your tokens!
+
 ```
 MAIN_TOKEN=mysupermaintokenblabla
 EXTRA_TOKEN=mysuperextratokenblabla
@@ -176,6 +217,7 @@ m)
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/rpc.jpg)
 
 ## ⚠️・Captcha Alert
+
 !!! If you want the captcha alert to work properly, turn off do not disturb
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
@@ -207,5 +249,6 @@ m)
 ```
 
 ## 🥰・Thanks for contribution
+
 VihaanReddyM <a href="https://github.com/VihaanReddyM">(Github)</a><br>
 Hiếu LoneLy <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">(Youtube)</a>
