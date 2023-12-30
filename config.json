@@ -1,5 +1,41 @@
 {
     "settings": {
+        "times": {
+            "enable": "true",
+            "hunt": 11000,
+            "battle": 10000,
+            "intervals": {
+                "huntbattle": {
+                    "enable": "true",
+                    "time": 17000
+                },
+                "animals": {
+                    "enable": "true",
+                    "time": 1200000
+                },
+                "pray": {
+                    "enable": "true",
+                    "time": 303000
+                },
+                "curse": {
+                    "enable": "true",
+                    "time": 303500
+                },
+                "upgrade": {
+                    "enable": "true",
+                    "time": 1205000
+                },
+                "gamble": {
+                    "enable": "true",
+                    "coinflip": {
+                        "time": 25000
+                    },
+                    "slots": {
+                        "time": 23000
+                    }
+                }
+            }
+        },        
         "huntandbattle": "true",
         "banbypass": "true",
         "discordrpc": "false",
