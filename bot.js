@@ -93,10 +93,7 @@ const notifier = require("node-notifier");
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
-if (
-    (os.platform() === "linux" || os.platform() === "android") &&
-    os.machine() === "x86_64"
-) {
+if (os.platform() === "linux" && os.machine() === "x86_64") {
     try {
         require.resolve("dotenv");
     } catch (e) {
