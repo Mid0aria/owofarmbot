@@ -185,7 +185,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 
 ## ⚙・dotenv example
 
-If you use replit or android(termux), you must enter your tokens in the .env file for the security of your tokens!
+If you use replit, you must enter your tokens in the .env file for the security of your tokens!
 
 ```
 MAIN_TOKEN=mysupermaintokenblabla
