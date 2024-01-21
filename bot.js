@@ -1155,9 +1155,9 @@ function cookie(token, tokentype, channelid) {
         }
     );
 }
-
+ let currentBet = settings.gamble.coinflip.default_amount;
 function coinflip(token, tokentype, channelid) {
-    let currentBet = settings.gamble.coinflip.default_amount;
+   
     const maxBet = settings.gamble.coinflip.max_amount;
     request.post(
         {
