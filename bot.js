@@ -508,8 +508,18 @@ if (settings.times.intervals.huntbattle.enable) {
 
 setInterval(() => {
     if (settings.times.enable) {
-        var timehunt = settings.times.hunt;
-        var timebattle = settings.times.battle;
+        var smaller_timehunt = settings.times.huntbottom;
+	    var bigger_timehunt = settings.times.hunttop;
+	    var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+
+        var smaller_timebattle = settings.times.battlebottom;
+    	var bigger_timebattle = settings.times.battletop;
+	    var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+
+// Adding random because OwO will send captcha every 10 commands without this. They know that no "normal" user should able to send message with exact same time.
+// Tried for some days and not receive any captcha check.
+
+
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) {
