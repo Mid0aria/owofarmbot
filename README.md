@@ -77,8 +77,11 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
     "settings": {
         "times": {
             "enable": "", true or false
-            "hunt": 11000,  / The time to be entered must be entered in milliseconds.
-            "battle": 10000,  / The time to be entered must be entered in milliseconds.
+            "huntbottom": 11000,  / The time to be entered must be entered in milliseconds. Minimum time to run hunt command.
+            "hunttop": 16000, / The time to be entered must be entered in milliseconds. Maximum time to run hunt command.
+            "battlebottom": 10000,  / The time to be entered must be entered in milliseconds. Minimum time to run battle command.
+            "battletop": 16000, / The time to be entered must be entered in milliseconds. Maximum time to run battle command.
+
             "intervals": {
                 "huntbattle": {
                     "enable": "true", true or false

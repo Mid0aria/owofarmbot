@@ -2,8 +2,10 @@
     "settings": {
         "times": {
             "enable": "true",
-            "hunt": 11000,
-            "battle": 10000,
+            "huntbottom": 16000,
+            "hunttop": 32000,
+            "battlebottom": 16000,
+            "battle": 16000,
             "intervals": {
                 "huntbattle": {
                     "enable": "true",
