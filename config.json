@@ -5,7 +5,7 @@
             "huntbottom": 16000,
             "hunttop": 32000,
             "battlebottom": 16000,
-            "battle": 16000,
+            "battletop": 32000,
             "intervals": {
                 "huntbattle": {
                     "enable": "true",
