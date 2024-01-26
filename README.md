@@ -3,7 +3,7 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.6 </h1>
+<h1 align="center">OwO Farm Bot V1.0.6.2 </h1>
 
 <p align="center">
 
