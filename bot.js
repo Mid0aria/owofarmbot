@@ -132,7 +132,7 @@ if (os.platform() === "linux" && os.machine() === "x86_64") {
     var extragamblechannelid = config.extra.gamblechannelid;
 }
 
-var version = "1.0.6";
+var version = "1.0.6.2";
 var banversion = "0.1.8";
 
 global.quest = true;
