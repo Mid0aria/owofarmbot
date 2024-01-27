@@ -33,7 +33,44 @@ const notifier = require("node-notifier");
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
-
+if (os.platform() === "linux" && os.machine() === "x86_64") {
+  try {
+    require.resolve("dotenv");
+  } catch (e) {
+    console.log(chalk.red("Please run: npm install dotenv"));
+    process.exit(0);
+  }
+  require("dotenv").config();
+  var maintoken = process.env.MAIN_TOKEN;
+  var extratoken = process.env.EXTRA_TOKEN;
+  var settings = config.settings;
+  var maintokenuserid = config.main.userid;
+  var mainchannelid = config.main.channelid;
+  var owodmmainchannelid = config.main.owodmchannelid;
+  var extratokencheck = config.settings.extratoken;
+  var extratokenuserid = config.extra.userid;
+  var extrachannelid = config.extra.channelid;
+  var owodmextrachannelid = config.extra.owodmchannelid;
+  var mainautoquestchannelid = config.main.autoquestchannelid;
+  var extraautoquestchannelid = config.extra.autoquestchannelid;
+  var maingamblechannelid = config.main.gamblechannelid;
+  var extragamblechannelid = config.extra.gamblechannelid;
+} else {
+  var maintoken = config.main.token;
+  var extratoken = config.extra.token;
+  var settings = config.settings;
+  var maintokenuserid = config.main.userid;
+  var mainchannelid = config.main.channelid;
+  var owodmmainchannelid = config.main.owodmchannelid;
+  var extratokencheck = config.settings.extratoken;
+  var extratokenuserid = config.extra.userid;
+  var extrachannelid = config.extra.channelid;
+  var owodmextrachannelid = config.extra.owodmchannelid;
+  var mainautoquestchannelid = config.main.autoquestchannelid;
+  var extraautoquestchannelid = config.extra.autoquestchannelid;
+  var maingamblechannelid = config.main.gamblechannelid;
+  var extragamblechannelid = config.extra.gamblechannelid;
+}
 var version = "1.0.6.2";
 var banversion = "0.1.8";
 
