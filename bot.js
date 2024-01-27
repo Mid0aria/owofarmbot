@@ -21,11 +21,18 @@ for (let dep of Object.keys(packageJson.dependencies)) {
     cp.execSync(`npm i`);
   }
 }
+const chalk = require("chalk");
+const { https } = require("follow-redirects");
+const collect = require("collect.js");
+const DiscordRPC = require("discord-rpc");
+const request = require("request");
+const delay = require("delay");
+const socketio = require("socket.io")(1337);
+const notifier = require("node-notifier");
 
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
-require("dotenv").config();
 
 var version = "1.0.6.2";
 var banversion = "0.1.8";
