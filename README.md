@@ -11,7 +11,7 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a><br>
 Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
 Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)<br>
-Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/24">Click Me</a>
+Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/new/choose">Click Me</a>
 
 </p>
 
