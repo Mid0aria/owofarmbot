@@ -12,31 +12,20 @@ const path = require("path");
 
 //------------
 const packageJson = require("./package.json");
-Object.keys(packageJson.dependencies).forEach((dep) => {
+
+for (let dep of Object.keys(packageJson.dependencies)) {
   try {
     require.resolve(dep);
   } catch (err) {
+    console.log("Installing dependencies...");
     cp.execSync(`npm i`);
   }
-});
+}
 
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
-if (os.platform() === "linux" && os.machine() === "x86_64") {
-  try {
-    require.resolve("dotenv");
-  } catch (e) {
-    console.log(chalk.red("Please run: npm install dotenv"));
-    process.exit(0);
-  }
-  require("dotenv").config();
-  var maintoken = process.env.MAIN_TOKEN;
-  var extratoken = process.env.EXTRA_TOKEN;
-} else {
-  var maintoken = config.main.token;
-  var extratoken = config.extra.token;
-}
+require("dotenv").config();
 
 var version = "1.0.6.2";
 var banversion = "0.1.8";
