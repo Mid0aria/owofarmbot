@@ -11,83 +11,23 @@ const fs = require("fs");
 const path = require("path");
 
 //------------
-try {
-    require.resolve("chalk");
-} catch (e) {
-    console.log("Please run: npm install chalk@4.1.2");
-    process.exit(0);
+const packageJson = require("./package.json");
+
+for (let dep of Object.keys(packageJson.dependencies)) {
+  try {
+    require.resolve(dep);
+  } catch (err) {
+    console.log("Installing dependencies...");
+    cp.execSync(`npm i`);
+  }
 }
 const chalk = require("chalk");
-
-//------------
-try {
-    require.resolve("follow-redirects");
-    //E <3
-} catch (e) {
-    console.log(chalk.red("Please run: npm install follow-redirects"));
-    process.exit(0);
-}
-const { http, https } = require("follow-redirects");
-
-//------------
-try {
-    require.resolve("collect.js");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install collect.js"));
-    process.exit(0);
-}
+const { https } = require("follow-redirects");
 const collect = require("collect.js");
-
-//------------
-try {
-    require.resolve("discord-rpc");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install discord-rpc"));
-    process.exit(0);
-}
 const DiscordRPC = require("discord-rpc");
-
-//------------
-try {
-    require.resolve("request");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install request"));
-    process.exit(0);
-}
 const request = require("request");
-
-//------------
-try {
-    require.resolve("delay");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install delay"));
-    process.exit(0);
-}
 const delay = require("delay");
-
-//------------
-try {
-    require.resolve("socket.io");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install socket.io"));
-    process.exit(0);
-}
 const socketio = require("socket.io")(1337);
-
-//------------
-try {
-    require.resolve("socket.io-client");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install socket.io-client"));
-    process.exit(0);
-}
-//------------
-try {
-    require.resolve("node-notifier");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install node-notifier"));
-    process.exit(0);
-}
 const notifier = require("node-notifier");
 
 const rpcclientid = "1078993881556865155";
