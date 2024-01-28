@@ -37,8 +37,8 @@ const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
 
-let maintoken = process.env.MAIN_TOKEN ?? config.main.token;
-let extratoken = process.env.EXTRA_TOKEN ?? config.extra.token;
+let maintoken = config.main.token ?? process.env.MAIN_TOKEN;
+let extratoken = config.extra.token ?? process.env.EXTRA_TOKEN;
 let settings = config.settings;
 let maintokenuserid = config.main.userid;
 let mainchannelid = config.main.channelid;
