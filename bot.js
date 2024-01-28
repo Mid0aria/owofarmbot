@@ -14,12 +14,12 @@ const path = require("path");
 const packageJson = require("./package.json");
 
 for (let dep of Object.keys(packageJson.dependencies)) {
-  try {
-    require.resolve(dep);
-  } catch (err) {
-    console.log("Installing dependencies...");
-    cp.execSync(`npm i`);
-  }
+    try {
+        require.resolve(dep);
+    } catch (err) {
+        console.log("Installing dependencies...");
+        cp.execSync(`npm i`);
+    }
 }
 
 require("dotenv").config();
@@ -37,7 +37,6 @@ const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
 
-
 let maintoken = process.env.MAIN_TOKEN ?? config.main.token;
 let extratoken = process.env.EXTRA_TOKEN ?? config.extra.token;
 let settings = config.settings;
@@ -52,7 +51,6 @@ let mainautoquestchannelid = config.main.autoquestchannelid;
 let extraautoquestchannelid = config.extra.autoquestchannelid;
 let maingamblechannelid = config.main.gamblechannelid;
 let extragamblechannelid = config.extra.gamblechannelid;
-
 
 var version = "1.0.6.2";
 var banversion = "0.1.8";
@@ -108,12 +106,12 @@ if (settings.huntandbattle == "true") {
 }
 if (settings.banbypass == "true") {
     var rpcbanb = "✅";
-    var rpcbant = "BanBypass system v" + banversion;
-    var rpcdetails = "🔥 Bot v" + version + "/BanBypass v" + banversion + " 🔥";
+    var rpcbant = `BanBypass system v${banversion}`;
+    var rpcdetails = `🔥 Bot v${version}/BanBypass v${banversion} 🔥`;
 } else {
     var rpcbanb = "❌";
     var rpcbant = "BanBypass system disabled";
-    var rpcdetails = "🔥 Bot v" + version + " 🔥";
+    var rpcdetails = `🔥 Bot v${version} 🔥`;
 }
 if (settings.animals.enable == "true") {
     if (settings.animals.type == "sacrifice") {
@@ -160,7 +158,7 @@ rpc.on("ready", () => {
         state: `Hunt and Battle: ${rpchab} BanBypass: ${rpcbanb} Inventory: ${rpcinventory} Animals: ${rpcanimals}`,
         startTimestamp: new Date(),
         largeImageKey: "owo",
-        largeImageText: "v" + version,
+        largeImageText: `v${version}`,
         smallImageKey: "ban",
         smallImageText: rpcbant,
         instance: false,
@@ -220,17 +218,18 @@ checkversion();
 
 DiscordRPC.register(rpcclientid);
 
-rpc.login({ clientId: rpcclientid }).catch((e) => {
-    console.log(",..,");
-});
-
+if (settings.discordrpc === "true") {
+    rpc.login({ clientId: rpcclientid }).catch((e) => {
+        console.log(",..,");
+    });
+}
 console.log(chalk.cyan("github.com/mid0aria"));
 console.log(chalk.cyan("Made with love for e <3"));
 
 if (settings.huntandbattle == "true") {
     console.log(
         chalk.magenta("OwO Farm Bot Started ") +
-            chalk.blue("version " + version)
+            chalk.blue(`version ${version}`)
     );
 } else {
     console.log(
@@ -250,7 +249,7 @@ if (settings.banbypass == "true") {
 
     console.log(
         chalk.yellow("Captcha (ban) Bypass System by Aix ") +
-            chalk.blue("version " + banversion)
+            chalk.blue(`version ${banversion}`)
     );
     console.log(`{/__/}\n( ^ . ^)\n/ > ` + chalk.red("Captcha Bypass"));
 } else {
@@ -431,17 +430,21 @@ if (settings.times.intervals.huntbattle.enable) {
 setInterval(() => {
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
-	    var bigger_timehunt = settings.times.hunttop;
-	    var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+        var bigger_timehunt = settings.times.hunttop;
+        var timehunt = Math.floor(
+            Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
+                smaller_timehunt
+        );
 
         var smaller_timebattle = settings.times.battlebottom;
-    	var bigger_timebattle = settings.times.battletop;
-	    var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+        var bigger_timebattle = settings.times.battletop;
+        var timebattle = Math.floor(
+            Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
+                smaller_timebattle
+        );
 
-// Adding random because OwO will send captcha every 10 commands without this. They know that no "normal" user should able to send message with exact same time.
-// Tried for some days and not receive any captcha check.
-
-
+        // Adding random because OwO will send captcha every 10 commands without this. They know that no "normal" user should able to send message with exact same time.
+        // Tried for some days and not receive any captcha check.
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) {
@@ -704,8 +707,25 @@ function sleepy(t, e) {
             `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
         ) +
             chalk.magenta(` [${t} Token] `) +
-            chalk.red(e + " Waiting ...")
+            chalk.red(`${e} Waiting ...`)
     );
+}
+
+async function typing(token, channelid) {
+    if (settings.typingindicator === "true") {
+        request.post(
+            {
+                headers: {
+                    authorization: token,
+                },
+                url: `https://discord.com/api/v9/channels/${channelid}/typing`,
+            },
+            function (error, response, body) {
+                if (error)
+                    return console.log(chalk.red("Typing indicator failed"));
+            }
+        );
+    } else return;
 }
 
 async function updatequestssocket(p1, p2) {
@@ -718,7 +738,6 @@ async function updatequestssocket(p1, p2) {
 
 async function updatechecklistsocket(i, e) {
     setTimeout(() => {
-        //console.log(`${i}  +++  ${e}`);
         socketio.emit("checklist", {
             name: i,
             status: e,
@@ -735,15 +754,14 @@ async function updateerrorsocket(eyl) {
 }
 //----------------------------------------------------Main Features----------------------------------------------------//
 function hunt(token, timehunt, tokentype, channelid) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+
             json: {
                 content: "owo hunt",
                 nonce: nonce(),
@@ -756,23 +774,21 @@ function hunt(token, timehunt, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
-                    chalk.blue(" Hunt ✅ (" + timehunt + " ms)")
+                    chalk.magenta(` [${tokentype}]`) +
+                    chalk.blue(` Hunt ✅ (${timehunt} ms)`)
             );
         }
     );
 }
 
 function battle(token, timebattle, tokentype, channelid) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "owo battle",
                 nonce: nonce(),
@@ -785,8 +801,8 @@ function battle(token, timebattle, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
-                    chalk.blue(" Battle ✅ (" + timebattle + " ms)")
+                    chalk.magenta(` [${tokentype}]`) +
+                    chalk.blue(` Battle ✅ (${timebattle} ms)`)
             );
         }
     );
@@ -825,6 +841,7 @@ function animals(token, tokentype, channelid, type) {
 
     if (animalcheck) {
         const request = require("request");
+        typing(token, channelid);
         request.post(
             {
                 headers: {
@@ -840,36 +857,30 @@ function animals(token, tokentype, channelid, type) {
             },
             function (error, response, body) {
                 console.log(
-                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                        ` [${tokentype}]` +
-                        ` Animals ✅ / Type: ${type}`
+                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()} [${tokentype}] Animals ✅ / Type: ${type}`
                 );
             }
         );
     } else {
         console.log(
-            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                ` [${tokentype}]` +
-                ` Animals ❌ / Error: Incorrect Type`
+            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()} [${tokentype}] Animals ❌ / Error: Incorrect Type`
         );
     }
 }
 
 function pray(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
-        var ct = "owo pray <@" + maintokenuserid + ">";
+        var ct = `owo pray <@${maintokenuserid}>`;
     } else {
         var ct = "owo pray";
     }
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: ct,
                 nonce: nonce(),
@@ -882,7 +893,7 @@ function pray(token, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow(" Pray ✅")
             );
         }
@@ -891,19 +902,17 @@ function pray(token, tokentype, channelid) {
 
 function curse(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
-        var ct = "owo curse <@" + maintokenuserid + ">";
+        var ct = `owo curse <@${maintokenuserid}>`;
     } else {
         var ct = "owo curse";
     }
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: ct,
                 nonce: nonce(),
@@ -916,7 +925,7 @@ function curse(token, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow(" Curse ✅")
             );
         }
@@ -924,15 +933,13 @@ function curse(token, tokentype, channelid) {
 }
 
 function checklist(token, tokentype, channelid) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "owo cl",
                 nonce: nonce(),
@@ -945,7 +952,7 @@ function checklist(token, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow("Sending Checklist📜 ...")
             );
             setTimeout(() => {
@@ -954,10 +961,7 @@ function checklist(token, tokentype, channelid) {
                         headers: {
                             authorization: token,
                         },
-                        url:
-                            "https://discord.com/api/v9/channels/" +
-                            channelid +
-                            "/messages?limit=1",
+                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
                     },
                     function (error, response, body) {
                         try {
@@ -965,7 +969,7 @@ function checklist(token, tokentype, channelid) {
                             var cont = bod[0].embeds;
                             var des = cont[0].description;
 
-                            chalk.magenta(" [" + tokentype + "]") +
+                            chalk.magenta(` [${tokentype}]`) +
                                 chalk.yellow("Getting Checklist 🔎");
                             if (des.includes("☑️ 🎉")) {
                                 updatechecklistsocket("all", "✅");
@@ -1017,7 +1021,7 @@ function checklist(token, tokentype, channelid) {
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                 ) +
-                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.magenta(` [${tokentype}]`) +
                                     chalk.red("Unable to get Checklist❗")
                             );
                         }
@@ -1029,15 +1033,13 @@ function checklist(token, tokentype, channelid) {
 }
 
 function daily(token, tokentype, channelid) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "owo daily",
                 nonce: nonce(),
@@ -1051,7 +1053,7 @@ function daily(token, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow(" Daily ✅")
             );
         }
@@ -1059,15 +1061,13 @@ function daily(token, tokentype, channelid) {
 }
 
 function cookie(token, tokentype, channelid) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "owo cookie <@408785106942164992>",
                 nonce: nonce(),
@@ -1081,25 +1081,22 @@ function cookie(token, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow(" Cookie ✅")
             );
         }
     );
 }
- let currentBet = settings.gamble.coinflip.default_amount;
+let currentBet = settings.gamble.coinflip.default_amount;
 function coinflip(token, tokentype, channelid) {
-   
     const maxBet = settings.gamble.coinflip.max_amount;
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo coinflip ${currentBet}`,
                 nonce: nonce(),
@@ -1120,10 +1117,7 @@ function coinflip(token, tokentype, channelid) {
                     headers: {
                         authorization: token,
                     },
-                    url:
-                        "https://discord.com/api/v9/channels/" +
-                        channelid +
-                        "/messages?limit=1",
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -1150,7 +1144,7 @@ function coinflip(token, tokentype, channelid) {
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                 ) +
-                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.magenta(` [${tokentype}]`) +
                                     chalk.yellow(
                                         ` Lost ${lostamount} in coinflip, next betting ${currentBet}`
                                     )
@@ -1164,7 +1158,7 @@ function coinflip(token, tokentype, channelid) {
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                 ) +
-                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.magenta(` [${tokentype}]`) +
                                     chalk.yellow(
                                         ` You have won ${currentBet} in coinflip`
                                     )
@@ -1178,10 +1172,7 @@ function coinflip(token, tokentype, channelid) {
                                     headers: {
                                         authorization: token,
                                     },
-                                    url:
-                                        "https://discord.com/api/v9/channels/" +
-                                        channelid +
-                                        "/messages?limit=1",
+                                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
                                 },
                                 async function (error, response, body) {
                                     if (error) {
@@ -1221,7 +1212,7 @@ function coinflip(token, tokentype, channelid) {
                                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                                 ) +
                                                     chalk.magenta(
-                                                        " [" + tokentype + "]"
+                                                        ` [${tokentype}]`
                                                     ) +
                                                     chalk.yellow(
                                                         ` Lost ${lostamount} in coinflip, next betting ${currentBet}`
@@ -1240,7 +1231,7 @@ function coinflip(token, tokentype, channelid) {
                                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                                 ) +
                                                     chalk.magenta(
-                                                        " [" + tokentype + "]"
+                                                        ` [${tokentype}]`
                                                     ) +
                                                     chalk.yellow(
                                                         ` You have won ${currentBet} in coinflip`
@@ -1254,9 +1245,7 @@ function coinflip(token, tokentype, channelid) {
                                                 chalk.red(
                                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
                                                         chalk.magenta(
-                                                            " [" +
-                                                                tokentype +
-                                                                "]"
+                                                            ` [${tokentype}]`
                                                         ) +
                                                         chalk.yellow(
                                                             ` Could not get the response, retrying...`
@@ -1287,15 +1276,13 @@ function coinflip(token, tokentype, channelid) {
 function extra_coinflip(token, tokentype, channelid) {
     extra_currentBet = settings.gamble.coinflip.default_amount;
     extra_maxBet = settings.gamble.coinflip.max_amount;
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo coinflip ${extra_currentBet}`,
                 nonce: nonce(),
@@ -1316,10 +1303,7 @@ function extra_coinflip(token, tokentype, channelid) {
                     headers: {
                         authorization: token,
                     },
-                    url:
-                        "https://discord.com/api/v9/channels/" +
-                        channelid +
-                        "/messages?limit=1",
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -1348,7 +1332,7 @@ function extra_coinflip(token, tokentype, channelid) {
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                 ) +
-                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.magenta(` [${tokentype}]`) +
                                     chalk.yellow(
                                         ` Lost ${lostamount} in coinflip, next betting ${currentBet}`
                                     )
@@ -1362,7 +1346,7 @@ function extra_coinflip(token, tokentype, channelid) {
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                 ) +
-                                    chalk.magenta(" [" + tokentype + "]") +
+                                    chalk.magenta(` [${tokentype}]`) +
                                     chalk.yellow(
                                         ` You have won ${currentBet} in coinflip`
                                     )
@@ -1373,7 +1357,7 @@ function extra_coinflip(token, tokentype, channelid) {
                             console.log(
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                        chalk.magenta(" [" + tokentype + "]") +
+                                        chalk.magenta(` [${tokentype}]`) +
                                         chalk.yellow(
                                             ` Could not get the reponse, retrying...`
                                         )
@@ -1392,17 +1376,15 @@ function extra_coinflip(token, tokentype, channelid) {
 }
 
 function slots(token, tokentype, channelid) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo slots " + settings.gamble.slots.amount,
+                content: `owo slots ${settings.gamble.slots.amount}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1413,10 +1395,9 @@ function slots(token, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow(
-                        " Gamble / Slots ✅ / Amount: " +
-                            settings.gamble.slots.amount
+                        ` Gamble / Slots ✅ / Amount: ${settings.gamble.slots.amount}`
                     )
             );
         }
@@ -1424,18 +1405,15 @@ function slots(token, tokentype, channelid) {
 }
 
 function upgradeall(token, tokentype, channelid) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token, //E <3
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content:
-                    "owo upgrade " + settings.upgradeautohunt.type + " all",
+                content: `owo upgrade ${settings.upgradeautohunt.type} all`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1446,7 +1424,7 @@ function upgradeall(token, tokentype, channelid) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow(" Upgrade AutoHunt ✅")
             );
         }
@@ -1460,10 +1438,7 @@ function bancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages?limit=1",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
         },
         function (error, response, body) {
             var bod = JSON.parse(body);
@@ -1516,10 +1491,7 @@ function extrabancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages?limit=1",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
         },
         function (error, response, body) {
             var bod = JSON.parse(body);
@@ -1571,10 +1543,7 @@ function dmbancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages?limit=1",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
         },
         function (error, response, body) {
             var bod = JSON.parse(body);
@@ -1624,17 +1593,14 @@ function dmbancheck(token, channelid) {
         }
     );
 }
-//wheres my mind :(
+
 function dmextrabancheck(token, channelid) {
     request.get(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages?limit=1",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
         },
         function (error, response, body) {
             var bod = JSON.parse(body);
@@ -1684,16 +1650,14 @@ function dmextrabancheck(token, channelid) {
 }
 
 function dmprotectprouwu(token, channelid, tokentype) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
                 "super-x": autoseed(token),
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "hi bro",
                 nonce: nonce(),
@@ -1707,7 +1671,7 @@ function dmprotectprouwu(token, channelid, tokentype) {
                     chalk.red(
                         `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                     ) +
-                        chalk.magenta(" [" + tokentype + "]") +
+                        chalk.magenta(` [${tokentype}]`) +
                         chalk.red(" OwO dm channel id incorrect ❌")
                 );
             }
@@ -1737,14 +1701,13 @@ function elaina2(token, channelid, phrasesFilePath) {
 
             var ilu = phrases[result];
             //E <3
+            typing(token, channelid);
             request.post({
                 headers: {
                     authorization: token,
                 },
-                url:
-                    "https://discord.com/api/v9/channels/" +
-                    channelid +
-                    "/messages",
+                url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+
                 json: {
                     content: ilu,
                     nonce: nonce(),
@@ -1767,10 +1730,7 @@ function checkinv(token, channelid, tokentype) {
                 headers: {
                     authorization: token,
                 },
-                url:
-                    "https://discord.com/api/v9/channels/" +
-                    channelid +
-                    "/messages?limit=1",
+                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
             },
             function (error, response, body) {
                 var bod = JSON.parse(body);
@@ -1784,7 +1744,7 @@ function checkinv(token, channelid, tokentype) {
                         chalk.red(
                             `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                         ) +
-                            chalk.magenta(" [" + tokentype + "]") +
+                            chalk.magenta(` [${tokentype}]`) +
                             chalk.yellow(" inventory checking 🔍 (type-1)")
                         //cod ed by @mid0aria on github
                     );
@@ -1826,7 +1786,7 @@ function checkinv(token, channelid, tokentype) {
             chalk.red(
                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
             ) +
-                chalk.magenta(" [" + tokentype + "]") +
+                chalk.magenta(` [${tokentype}]`) +
                 chalk.yellow(" inventory checking 🔍 (type-2)")
         );
         getinv(token, channelid, tokentype, "nogem", collect(["nocollection"]));
@@ -1834,15 +1794,13 @@ function checkinv(token, channelid, tokentype) {
 }
 
 function getinv(token, channelid, tokentype, gemc, collectc) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "owo inv",
                 nonce: nonce(),
@@ -1858,10 +1816,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 headers: {
                     authorization: token,
                 },
-                url:
-                    "https://discord.com/api/v9/channels/" +
-                    channelid +
-                    "/messages?limit=1",
+                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
             },
             function (error, response, body) {
                 var bod = JSON.parse(body);
@@ -2101,17 +2056,15 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
 }
 
 function gemuse(token, gem, channelid, tokentype) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo use " + gem,
+                content: `owo use ${gem}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2122,7 +2075,7 @@ function gemuse(token, gem, channelid, tokentype) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "]") +
+                    chalk.magenta(` [${tokentype}]`) +
                     chalk.yellow(" Gem ✅")
             );
         }
@@ -2130,17 +2083,15 @@ function gemuse(token, gem, channelid, tokentype) {
 }
 
 function boxuse(token, box, channelid, tokentype) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo " + box,
+                content: `owo ${box}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2151,25 +2102,23 @@ function boxuse(token, box, channelid, tokentype) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "] ") +
-                    chalk.yellow(box + " ✅")
+                    chalk.magenta(` [${tokentype}]`) +
+                    chalk.yellow(` ${box}✅`)
             );
         }
     );
 }
 
 function eventuse(token, eventbox, channelid, tokentype) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo use " + eventbox,
+                content: `owo use ${eventbox}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2190,8 +2139,8 @@ function eventuse(token, eventbox, channelid, tokentype) {
                 chalk.red(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
-                    chalk.magenta(" [" + tokentype + "] ") +
-                    chalk.yellow(namebox + " ✅")
+                    chalk.magenta(` [${tokentype}]`) +
+                    chalk.yellow(` ${namebox} ✅`)
             );
         }
     );
@@ -2199,15 +2148,13 @@ function eventuse(token, eventbox, channelid, tokentype) {
 //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. ... __ .
 //----------------------------------------------------Quest----------------------------------------------------//
 async function getquests(token, channelid, tokentype) {
+    typing(token, channelid);
     request.post(
         {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "owo quest",
                 nonce: nonce(),
@@ -2222,10 +2169,7 @@ async function getquests(token, channelid, tokentype) {
                     headers: {
                         authorization: token,
                     },
-                    url:
-                        "https://discord.com/api/v9/channels/" +
-                        channelid +
-                        "/messages?limit=1",
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
                 },
                 async function (error, response, body) {
                     try {
@@ -2236,7 +2180,7 @@ async function getquests(token, channelid, tokentype) {
                             chalk.red(
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                             ) +
-                                chalk.magenta(" [" + tokentype + "]") +
+                                chalk.magenta(` [${tokentype}]`) +
                                 chalk.yellow("Checking quest 🔎")
                         );
                         if (
@@ -2417,7 +2361,7 @@ async function getquests(token, channelid, tokentype) {
                             chalk.red(
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                             ) +
-                                chalk.magenta(" [" + tokentype + "]") +
+                                chalk.magenta(` [${tokentype}]`) +
                                 chalk.red("Unable to check quest❗")
                         );
                     }
@@ -2433,10 +2377,7 @@ async function questsayowo(token, channelid, pro1, pro2) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: "owo",
                 nonce: nonce(),
@@ -2469,10 +2410,7 @@ async function questcurseme(token, userid, channelid, pro1, pro2) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo curse <@${userid}>`,
                 nonce: nonce(),
@@ -2495,10 +2433,7 @@ async function questprayme(token, userid, channelid, pro1, pro2) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo pray <@${userid}>`,
                 nonce: nonce(),
@@ -2528,10 +2463,7 @@ async function questbattlefriend(
             headers: {
                 authorization: extratoken,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo battle <@${mainuserid}>`,
                 nonce: nonce(),
@@ -2544,10 +2476,7 @@ async function questbattlefriend(
             headers: {
                 authorization: maintoken,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo ab`,
                 nonce: nonce(),
@@ -2570,10 +2499,7 @@ async function questgamble(token, channelid, pro1, pro2) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo cf 1`,
                 nonce: nonce(),
@@ -2596,10 +2522,7 @@ async function questcookiefriend(token, userid, channelid, pro1, pro2) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
                 content: `owo cookie <@${userid}>`,
                 nonce: nonce(),
@@ -2622,12 +2545,9 @@ async function questuseactioncommand(token, userid, channelid, pro1, pro2) {
             headers: {
                 authorization: token,
             },
-            url:
-                "https://discord.com/api/v9/channels/" +
-                channelid +
-                "/messages",
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `wcuddle <@408785106942164992> `,
+                content: `owo cuddle <@408785106942164992> `,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
