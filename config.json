@@ -41,6 +41,7 @@
         "huntandbattle": "true",
         "banbypass": "true",
         "discordrpc": "false",
+        "typingindicator": "true",        
         "pray": "false",
         "curse": "false",
         "autoquest": "false",
