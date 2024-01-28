@@ -1,4 +1,5 @@
 {
     "version": "1.0.6.2",
-    "updater": "0.0.3"
+    "updater": "0.0.3",
+    "whatsnew": "test123"
 }
