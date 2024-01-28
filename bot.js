@@ -52,7 +52,7 @@ let extraautoquestchannelid = config.extra.autoquestchannelid;
 let maingamblechannelid = config.main.gamblechannelid;
 let extragamblechannelid = config.extra.gamblechannelid;
 
-var version = "1.0.6.2";
+var version = "1.0.6.3";
 var banversion = "0.1.8";
 
 global.quest = true;
