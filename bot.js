@@ -673,7 +673,7 @@ function checkversion() {
                     console.log(
                         chalk.red(
                             "Your farm bot is not up to date please run node updater.js"
-                        )
+                        ) + chalk.yellow(`\nRelease note: ${bod.note}`)
                     );
                     updateerrorsocket(
                         "Your farm bot is not up to date please run node updater.js"
