@@ -11,7 +11,7 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a><br>
 Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
 Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)<br>
-Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/new/choose">Click Me</a>
+Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/24">Click Me</a>
 
 </p>
 
@@ -66,6 +66,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
     -   Auto Cookie
 -   Captcha(Ban) Protection v0.1.8 (beta)
 -   Discord-RPC
+-   Typing Indicator
 -   **Extra Token**
     -   All Main Token Features
     -   Auto Pray for Main Token
@@ -117,6 +118,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         "huntandbattle": "", true or false
         "banbypass": "", true or false
         "discordrpc": "", true or false
+        "typingindicator": "", true or false
         "pray": "", true or false
         "extratoken": "", true or false
         "autoquest": "", true or false
@@ -256,5 +258,6 @@ m)
 VihaanReddyM <a href="https://github.com/VihaanReddyM">(Github)</a><br>
 Random-629671 <a href="https://github.com/Random-629671">(Github)</a><br>
 Le-Khuong <a href="https://github.com/Le-Khuong">(Github)</a><br>
+mallusrgreatv2 <a href="https://github.com/mallusrgreatv2">(Github)</a><br>
 
 Hiếu LoneLy <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">(Youtube)</a>
