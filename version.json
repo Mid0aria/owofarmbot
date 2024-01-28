@@ -1,5 +1,5 @@
 {
     "version": "1.0.6.3",
     "updater": "0.0.3",
-    "note": "test123"
+    "note": "fixed 401 unauthorized bug & added typing indicator"
 }
