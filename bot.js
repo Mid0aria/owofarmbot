@@ -600,9 +600,9 @@ if (settings.gamble.coinflip.enable == "true") {
 
 if (settings.gamble.slots.enable == "true") {
     setInterval(() => {
-        slots(maintoken, "Main Token", mainchannelid);
+        slots(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
-            slots(extratoken, "Extra Token", extrachannelid);
+            slots(extratoken, "Extra Token", extragamblechannelid);
         }
     }, timegambleslotsinterval);
 }
