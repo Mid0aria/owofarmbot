@@ -11,126 +11,48 @@ const fs = require("fs");
 const path = require("path");
 
 //------------
-try {
-    require.resolve("chalk");
-} catch (e) {
-    console.log("Please run: npm install chalk@4.1.2");
-    process.exit(0);
+const packageJson = require("./package.json");
+
+for (let dep of Object.keys(packageJson.dependencies)) {
+  try {
+    require.resolve(dep);
+  } catch (err) {
+    console.log("Installing dependencies...");
+    cp.execSync(`npm i`);
+  }
 }
+
+require("dotenv").config();
+
 const chalk = require("chalk");
-
-//------------
-try {
-    require.resolve("follow-redirects");
-    //E <3
-} catch (e) {
-    console.log(chalk.red("Please run: npm install follow-redirects"));
-    process.exit(0);
-}
-const { http, https } = require("follow-redirects");
-
-//------------
-try {
-    require.resolve("collect.js");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install collect.js"));
-    process.exit(0);
-}
+const { https } = require("follow-redirects");
 const collect = require("collect.js");
-
-//------------
-try {
-    require.resolve("discord-rpc");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install discord-rpc"));
-    process.exit(0);
-}
 const DiscordRPC = require("discord-rpc");
-
-//------------
-try {
-    require.resolve("request");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install request"));
-    process.exit(0);
-}
 const request = require("request");
-
-//------------
-try {
-    require.resolve("delay");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install delay"));
-    process.exit(0);
-}
 const delay = require("delay");
-
-//------------
-try {
-    require.resolve("socket.io");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install socket.io"));
-    process.exit(0);
-}
 const socketio = require("socket.io")(1337);
-
-//------------
-try {
-    require.resolve("socket.io-client");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install socket.io-client"));
-    process.exit(0);
-}
-//------------
-try {
-    require.resolve("node-notifier");
-} catch (e) {
-    console.log(chalk.red("Please run: npm install node-notifier"));
-    process.exit(0);
-}
 const notifier = require("node-notifier");
 
 const rpcclientid = "1078993881556865155";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 const config = require("./config.json");
-if (os.platform() === "linux" && os.machine() === "x86_64") {
-    try {
-        require.resolve("dotenv");
-    } catch (e) {
-        console.log(chalk.red("Please run: npm install dotenv"));
-        process.exit(0);
-    }
-    require("dotenv").config();
-    var maintoken = process.env.MAIN_TOKEN;
-    var extratoken = process.env.EXTRA_TOKEN;
-    var settings = config.settings;
-    var maintokenuserid = config.main.userid;
-    var mainchannelid = config.main.channelid;
-    var owodmmainchannelid = config.main.owodmchannelid;
-    var extratokencheck = config.settings.extratoken;
-    var extratokenuserid = config.extra.userid;
-    var extrachannelid = config.extra.channelid;
-    var owodmextrachannelid = config.extra.owodmchannelid;
-    var mainautoquestchannelid = config.main.autoquestchannelid;
-    var extraautoquestchannelid = config.extra.autoquestchannelid;
-    var maingamblechannelid = config.main.gamblechannelid;
-    var extragamblechannelid = config.extra.gamblechannelid;
-} else {
-    var maintoken = config.main.token;
-    var extratoken = config.extra.token;
-    var settings = config.settings;
-    var maintokenuserid = config.main.userid;
-    var mainchannelid = config.main.channelid;
-    var owodmmainchannelid = config.main.owodmchannelid;
-    var extratokencheck = config.settings.extratoken;
-    var extratokenuserid = config.extra.userid;
-    var extrachannelid = config.extra.channelid;
-    var owodmextrachannelid = config.extra.owodmchannelid;
-    var mainautoquestchannelid = config.main.autoquestchannelid;
-    var extraautoquestchannelid = config.extra.autoquestchannelid;
-    var maingamblechannelid = config.main.gamblechannelid;
-    var extragamblechannelid = config.extra.gamblechannelid;
-}
+
+
+let maintoken = process.env.MAIN_TOKEN ?? config.main.token;
+let extratoken = process.env.EXTRA_TOKEN ?? config.extra.token;
+let settings = config.settings;
+let maintokenuserid = config.main.userid;
+let mainchannelid = config.main.channelid;
+let owodmmainchannelid = config.main.owodmchannelid;
+let extratokencheck = config.settings.extratoken;
+let extratokenuserid = config.extra.userid;
+let extrachannelid = config.extra.channelid;
+let owodmextrachannelid = config.extra.owodmchannelid;
+let mainautoquestchannelid = config.main.autoquestchannelid;
+let extraautoquestchannelid = config.extra.autoquestchannelid;
+let maingamblechannelid = config.main.gamblechannelid;
+let extragamblechannelid = config.extra.gamblechannelid;
+
 
 var version = "1.0.6.2";
 var banversion = "0.1.8";
@@ -256,7 +178,7 @@ rpc.on("ready", () => {
 });
 
 if (extratoken === maintoken) {
-    var extratokencheck = "false";
+    extratokencheck = "false";
 }
 
 if (mainchannelid.length < 1) {
