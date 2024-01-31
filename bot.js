@@ -966,6 +966,7 @@ function checklist(token, tokentype, channelid) {
                     function (error, response, body) {
                         try {
                             var bod = JSON.parse(body);
+                            if(!bod[0]) return;
                             var cont = bod[0].embeds;
                             var des = cont[0].description;
 
@@ -1127,6 +1128,7 @@ function coinflip(token, tokentype, channelid) {
 
                     try {
                         const bod = JSON.parse(body);
+                        if(!bod[0]) return;
                         const cont = bod[0].content;
 
                         if (cont.includes("and you lost it all... :c")) {
@@ -1185,6 +1187,7 @@ function coinflip(token, tokentype, channelid) {
 
                                     try {
                                         const bod = JSON.parse(body);
+                                        if(!bod[0]) return;
                                         const cont = bod[0].content;
 
                                         if (
@@ -1313,6 +1316,7 @@ function extra_coinflip(token, tokentype, channelid) {
 
                     try {
                         const bod = JSON.parse(body);
+                        if(!bod[0]) return;
                         const cont = bod[0].content;
 
                         if (cont.includes("and you lost it all... :c")) {
@@ -1442,6 +1446,7 @@ function bancheck(token, channelid) {
         },
         function (error, response, body) {
             var bod = JSON.parse(body);
+            if(!bod[0]) return;
             var cont = bod[0].content;
 
             if (cont.includes("captcha")) {
@@ -1495,6 +1500,7 @@ function extrabancheck(token, channelid) {
         },
         function (error, response, body) {
             var bod = JSON.parse(body);
+            if(!bod[0]) return;
             var cont = bod[0].content;
             if (cont.includes("captcha")) {
                 global.extrabanc = false;
@@ -1734,6 +1740,7 @@ function checkinv(token, channelid, tokentype) {
             },
             function (error, response, body) {
                 var bod = JSON.parse(body);
+                if(!bod[0]) return;
                 var cont = bod[0].content;
                 if (
                     cont.includes("You found:") ||
@@ -1820,6 +1827,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
             },
             function (error, response, body) {
                 var bod = JSON.parse(body);
+                if(!bod[0]) return;
                 var cont = bod[0].content;
                 if (gemc == "gemvar") {
                     var empgem = "";
@@ -2174,6 +2182,7 @@ async function getquests(token, channelid, tokentype) {
                 async function (error, response, body) {
                     try {
                         var bod = JSON.parse(body);
+                        if(!bod[0]) return;
                         var cont = bod[0].embeds;
                         await delay(2500);
                         console.log(
