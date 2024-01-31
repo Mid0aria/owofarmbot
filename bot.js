@@ -1558,7 +1558,7 @@ function dmbancheck(token, channelid) {
             } else {
                 var cont = bod[0].content;
 
-                if (cont.includes("Are you a real human?")) {
+                if (cont.toLowerCase().includes("are you a real human?")) {
                     global.mainbanc = false;
                     console.clear();
                     console.log(
@@ -1614,7 +1614,7 @@ function dmextrabancheck(token, channelid) {
                 dmprotectprouwu(token, channelid, "Extra Token");
             } else {
                 var cont = bod[0].content;
-                if (cont.includes("Are you a real human?")) {
+                if (cont.toLowerCase().includes("are you a real human?")) {
                     global.extrabanc = false;
                     console.clear();
                     console.log(
