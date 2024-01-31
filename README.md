@@ -85,27 +85,27 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
 
             "intervals": {
                 "huntbattle": {
-                    "enable": "true", true or false
+                    "enable": true, true or false
                     "time": 17000  / The time to be entered must be entered in milliseconds.
                 },
                 "animals": {
-                    "enable": "true", true or false
+                    "enable": true, true or false
                     "time": 1200000  / The time to be entered must be entered in milliseconds.
                 },
                 "pray": {
-                    "enable": "true", true or false
+                    "enable": true, true or false
                     "time": 303000  / The time to be entered must be entered in milliseconds.
                 },
                 "curse": {
-                    "enable": "true", true or false
+                    "enable": true, true or false
                     "time": 303500  / The time to be entered must be entered in milliseconds.
                 },
                 "upgrade": {
-                    "enable": "true", true or false
+                    "enable": true, true or false
                     "time": 1205000  / The time to be entered must be entered in milliseconds.
                 },
                 "gamble": {
-                    "enable": "true", true or false
+                    "enable": true, true or false
                     "coinflip": {
                         "time": 25000  / The time to be entered must be entered in milliseconds.
                     },
