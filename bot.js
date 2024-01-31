@@ -99,12 +99,12 @@ console.log(asciieye);
 console.log("opened socket client");
 cp.exec("cd utils && start socket.bat");
 
-if (settings.huntandbattle == "true") {
+if (settings.huntandbattle) {
     var rpchab = "✅";
 } else {
     var rpchab = "❌";
 }
-if (settings.banbypass == "true") {
+if (settings.banbypass) {
     var rpcbanb = "✅";
     var rpcbant = `BanBypass system v${banversion}`;
     var rpcdetails = `🔥 Bot v${version}/BanBypass v${banversion} 🔥`;
@@ -113,7 +113,7 @@ if (settings.banbypass == "true") {
     var rpcbant = "BanBypass system disabled";
     var rpcdetails = `🔥 Bot v${version} 🔥`;
 }
-if (settings.animals.enable == "true") {
+if (settings.animals.enable) {
     if (settings.animals.type == "sacrifice") {
         var rpcanimals = "sacrifice";
     } else if (settings.animals.type == "sell") {
@@ -124,7 +124,7 @@ if (settings.animals.enable == "true") {
 } else {
     var rpcanimals = "❌";
 }
-if (settings.inventory.inventorycheck == "true") {
+if (settings.inventory.inventorycheck) {
     var rpcinventory = "✅";
 } else {
     var rpcinventory = "❌";
@@ -176,7 +176,7 @@ rpc.on("ready", () => {
 });
 
 if (extratoken === maintoken) {
-    extratokencheck = "false";
+    extratokencheck = false;
 }
 
 if (mainchannelid.length < 1) {
@@ -195,7 +195,7 @@ if (owodmmainchannelid.length < 1) {
     process.exit(0);
 }
 
-if (extratokencheck == "true") {
+if (extratokencheck) {
     if (extrachannelid.length < 1) {
         console.log(chalk.red("Extra Token Channel ID ❌"));
 
@@ -218,7 +218,7 @@ checkversion();
 
 DiscordRPC.register(rpcclientid);
 
-if (settings.discordrpc === "true") {
+if (settings.discordrpc) {
     rpc.login({ clientId: rpcclientid }).catch((e) => {
         console.log(",..,");
     });
@@ -226,7 +226,7 @@ if (settings.discordrpc === "true") {
 console.log(chalk.cyan("github.com/mid0aria"));
 console.log(chalk.cyan("Made with love for e <3"));
 
-if (settings.huntandbattle == "true") {
+if (settings.huntandbattle) {
     console.log(
         chalk.magenta("OwO Farm Bot Started ") +
             chalk.blue(`version ${version}`)
@@ -243,7 +243,7 @@ if (settings.huntandbattle == "true") {
     process.exit(0);
 }
 
-if (settings.banbypass == "true") {
+if (settings.banbypass) {
     global.mainbanc = false;
     global.extrabanc = false;
 
@@ -289,7 +289,7 @@ request.get(
             sleepy("Main", "CheckList");
 
             setTimeout(() => {
-                if (settings.huntandbattle == "true") {
+                if (settings.huntandbattle) {
                     setTimeout(() => {
                         hunt(maintoken, "StartUp", "Main Token", mainchannelid);
                     }, 5000);
@@ -303,7 +303,7 @@ request.get(
                         );
                     }, 7500);
                 }
-                if (settings.animals.enable == "true") {
+                if (settings.animals.enable) {
                     setTimeout(() => {
                         animals(
                             maintoken,
@@ -313,17 +313,17 @@ request.get(
                         );
                     }, 9500);
                 }
-                if (settings.pray == "true") {
+                if (settings.pray) {
                     setTimeout(() => {
                         pray(maintoken, "Main Token", mainchannelid);
                     }, 11000);
                 }
-                if (settings.curse == "true") {
+                if (settings.curse) {
                     setTimeout(() => {
                         curse(maintoken, "Main Token", mainchannelid);
                     }, 14000);
                 }
-                if (settings.upgradeautohunt.enable == "true") {
+                if (settings.upgradeautohunt.enable) {
                     setTimeout(() => {
                         upgradeall(maintoken, "Main Token", mainchannelid);
                     }, 17000);
@@ -334,7 +334,7 @@ request.get(
 );
 
 //----------------------------------------------------Check Extra Token----------------------------------------------------//
-if (extratokencheck == "true") {
+if (extratokencheck) {
     global.etoken = true;
     request.get(
         {
@@ -364,7 +364,7 @@ if (extratokencheck == "true") {
                             sleepy("Extra", "CheckList");
                         }, 5000);
                     }, 3500);
-                    if (settings.huntandbattle == "true") {
+                    if (settings.huntandbattle) {
                         setTimeout(() => {
                             hunt(
                                 extratoken,
@@ -383,7 +383,7 @@ if (extratokencheck == "true") {
                             );
                         }, 7500);
                     }
-                    if (settings.animals.enable == "true") {
+                    if (settings.animals.enable) {
                         setTimeout(() => {
                             animals(
                                 extratoken,
@@ -394,17 +394,17 @@ if (extratokencheck == "true") {
                         }, 9500);
                         //coded   by @mid0aria on gi thub
                     }
-                    if (settings.pray == "true") {
+                    if (settings.pray) {
                         setTimeout(() => {
                             pray(extratoken, "Extra Token", extrachannelid);
                         }, 11000);
                     }
-                    if (settings.curse == "true") {
+                    if (settings.curse) {
                         setTimeout(() => {
                             curse(extratoken, "Extra Token", extrachannelid);
                         }, 14000);
                     }
-                    if (settings.upgradeautohunt.enable == "true") {
+                    if (settings.upgradeautohunt.enable) {
                         setTimeout(() => {
                             upgradeall(
                                 extratoken,
@@ -453,15 +453,15 @@ setInterval(() => {
         var timebattle = timehunt + 1000;
     }
 
-    if (settings.banbypass == "true") {
+    if (settings.banbypass) {
         bancheck(maintoken, mainchannelid);
         dmbancheck(maintoken, owodmmainchannelid);
     }
-    if (settings.huntandbattle == "true") {
+    if (settings.huntandbattle) {
         if (global.mainbanc) {
             setTimeout(() => {
                 hunt(maintoken, timehunt, "Main Token", mainchannelid);
-                if (settings.inventory.inventorycheck == "true") {
+                if (settings.inventory.inventorycheck) {
                     setTimeout(() => {
                         checkinv(maintoken, mainchannelid, "Main Token");
                     }, 2500);
@@ -489,15 +489,15 @@ if (global.etoken) {
         }
 
         var timebattle = timehunt + 1000;
-        if (settings.banbypass == "true") {
+        if (settings.banbypass) {
             extrabancheck(extratoken, extrachannelid);
             dmextrabancheck(extratoken, owodmextrachannelid);
         }
-        if (settings.huntandbattle == "true") {
+        if (settings.huntandbattle) {
             if (global.extrabanc) {
                 setTimeout(() => {
                     hunt(extratoken, timehunt, "Extra Token", extrachannelid);
-                    if (settings.inventory.inventorycheck == "true") {
+                    if (settings.inventory.inventorycheck) {
                         setTimeout(() => {
                             checkinv(extratoken, extrachannelid, "Extra Token");
                         }, 2500);
@@ -523,7 +523,7 @@ if (settings.times.intervals.animals.enable) {
 } else {
     var timeanimalsinterval = 1200000;
 }
-if (settings.animals.enable == "true") {
+if (settings.animals.enable) {
     setInterval(() => {
         animals(maintoken, "Main Token", mainchannelid, settings.animals.type);
         if (global.etoken) {
@@ -543,7 +543,7 @@ if (settings.times.intervals.pray.enable) {
 } else {
     var timeprayinterval = 303000;
 }
-if (settings.pray == "true") {
+if (settings.pray) {
     setInterval(() => {
         pray(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
@@ -557,7 +557,7 @@ if (settings.times.intervals.curse.enable) {
 } else {
     var timecurseinterval = 303500;
 }
-if (settings.curse == "true") {
+if (settings.curse) {
     setInterval(() => {
         curse(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
@@ -571,7 +571,7 @@ if (settings.times.intervals.upgrade.enable) {
 } else {
     var timeupgradeinterval = 1205000;
 }
-if (settings.upgradeautohunt.enable == "true") {
+if (settings.upgradeautohunt.enable) {
     setInterval(() => {
         upgradeall(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
@@ -589,7 +589,7 @@ if (settings.times.intervals.gamble.enable) {
     var timegamblecoinflipinterval = 25000;
     var timegambleslotsinterval = 25000;
 }
-if (settings.gamble.coinflip.enable == "true") {
+if (settings.gamble.coinflip.enable) {
     setInterval(() => {
         coinflip(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
@@ -598,7 +598,7 @@ if (settings.gamble.coinflip.enable == "true") {
     }, timegamblecoinflipinterval);
 }
 
-if (settings.gamble.slots.enable == "true") {
+if (settings.gamble.slots.enable) {
     setInterval(() => {
         slots(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
@@ -712,7 +712,7 @@ function sleepy(t, e) {
 }
 
 async function typing(token, channelid) {
-    if (settings.typingindicator === "true") {
+    if (settings.typingindicator) {
         request.post(
             {
                 headers: {
@@ -830,7 +830,7 @@ function animals(token, tokentype, channelid, type) {
     for (a in ranks) {
         var e = ranks[a];
 
-        if (config.settings.animals.animaltype[e] === "true") {
+        if (config.settings.animals.animaltype[e]) {
             var animaltypes = animaltypes + `${e} `;
         }
     }
@@ -1003,7 +1003,7 @@ function checklist(token, tokentype, channelid) {
                                 updatechecklistsocket("vote", "✅");
                             }
                             if (des.includes("⬛ 📜")) {
-                                if (settings.autoquest === "true") {
+                                if (settings.autoquest) {
                                     getquests(
                                         maintoken,
                                         mainautoquestchannelid,
@@ -1724,7 +1724,7 @@ function elaina2(token, channelid, phrasesFilePath) {
 //----------------------------------------------------Inventory----------------------------------------------------//
 
 function checkinv(token, channelid, tokentype) {
-    if (settings.inventory.gemcheck == "true") {
+    if (settings.inventory.gemcheck) {
         request.get(
             {
                 headers: {
@@ -1996,7 +1996,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                 }
 
-                if (settings.inventory.lootboxcheck == "true") {
+                if (settings.inventory.lootboxcheck) {
                     if (cont.includes("`050`")) {
                         setTimeout(() => {
                             boxuse(token, "lootbox all", channelid, tokentype);
@@ -2004,7 +2004,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                 }
 
-                if (settings.inventory.fabledlootboxcheck == "true") {
+                if (settings.inventory.fabledlootboxcheck) {
                     if (cont.includes("`049`")) {
                         setTimeout(() => {
                             boxuse(
@@ -2017,7 +2017,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                 }
 
-                if (settings.inventory.cratecheck == "true") {
+                if (settings.inventory.cratecheck) {
                     if (cont.includes("`100`")) {
                         setTimeout(() => {
                             boxuse(token, "crate all", channelid, tokentype);
@@ -2025,7 +2025,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                 }
 
-                if (settings.inventory.eventcheck == "true") {
+                if (settings.inventory.eventcheck) {
                     if (cont.includes("`018`")) {
                         // valentines day
                         setTimeout(() => {
