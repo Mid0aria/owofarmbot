@@ -1,0 +1,114 @@
+{
+    "midoservices_authkey": "",
+    "windowssettings": { "controlcdetect": false },
+    "settings": {
+        "times": {
+            "enable": true,
+            "huntbottom": 16000,
+            "hunttop": 32000,
+            "battlebottom": 16000,
+            "battletop": 32000,
+            "intervals": {
+                "huntbattle": {
+                    "enable": true,
+                    "time": 17000
+                },
+                "animals": {
+                    "enable": true,
+                    "time": 1200000
+                },
+                "pray": {
+                    "enable": true,
+                    "time": 303000
+                },
+                "curse": {
+                    "enable": true,
+                    "time": 303500
+                },
+                "upgrade": {
+                    "enable": true,
+                    "time": 1205000
+                },
+                "gamble": {
+                    "enable": true,
+                    "coinflip": {
+                        "time": 25000
+                    },
+                    "slots": {
+                        "time": 23000
+                    }
+                }
+            }
+        },
+        "prefix": "",
+        "huntandbattle": true,
+        "banbypass": true,
+        "discordrpc": false,
+        "typingindicator": true,
+        "pray": false,
+        "curse": false,
+        "autoquest": false,
+        "extratoken": false,
+        "inventory": {
+            "inventorycheck": true,
+            "gemcheck": true,
+            "lootboxcheck": true,
+            "fabledlootboxcheck": true,
+            "cratecheck": true,
+            "eventcheck": true
+        },
+        "animals": {
+            "enable": false,
+            "type": "sacrifice",
+            "animaltype": {
+                "common": true,
+                "uncommon": true,
+                "rare": true,
+                "epic": false,
+                "mythical": false,
+                "patreon": false,
+                "cpatreon": false,
+                "legendary": false,
+                "gem": false,
+                "bot": false,
+                "distorted": false,
+                "fabled": false,
+                "special": false,
+                "hidden": false
+            }
+        },
+        "upgradeautohunt": {
+            "enable": false,
+            "type": "duration"
+        },
+        "gamble": {
+            "coinflip": {
+                "default_amount": 1000,
+                "max_amount": 150000,
+                "multipler": 3,
+                "enable": false,
+                "amount": "1"
+            },
+            "slots": {
+                "enable": false,
+                "amount": "1"
+            }
+        }
+    },
+    "main": {
+        "token": "",
+        "userid": "",
+        "channelid": "",
+        "owodmchannelid": "",
+        "gamblechannelid": "",
+        "autoquestchannelid": ""
+    },
+    "extra": {
+        "token": "",
+        "userid": "",
+        "channelid": "",
+        "owodmchannelid": "",
+        "gamblechannelid": "",
+        "autoquestchannelid": ""
+    }
+}
