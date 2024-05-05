@@ -45,7 +45,7 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 -   Discord may restart as a result of discord rpc overload.
 -   It can detect virus due to captcha(ban) bypasser please turn off your antivirus.
 -   DO NOT USE ONE CHANNEL FOR TWO ACCOUNTS, USE IT FOR 1 ACCOUNT ONLY
--   We use a diagnostic report system to understand and correct errors in the bottle. The information we keep on our servers:
+-   We use a diagnostic report system to understand and correct errors in the farmbot. The information we keep on our servers:
     -   userkey
     -   project name
     -   systeminformation (system, osInfo, uuid, versions, cpu (we get this datas from the "systeminformation" library))
