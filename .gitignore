@@ -3,6 +3,7 @@ node_modules/
 images/
 .env
 test.js
+test2.js
 captcha_trainerv1.js
 blank.js
 package-lock.json

@@ -9,8 +9,8 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6"/></a>
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a><br>
-Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
-Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)<br>
+Tutorial needed? (PC) <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
+~~Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)~~(no longer works due to replit's measures against selfbots)<br>
 Tutorial 3 (TERMUX) <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">Click Here</a> (Thanks OwO Sever)<br>
 Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</a>
 
@@ -39,12 +39,17 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Mid0aria/owofarmbot,mid0aria/owofarmbot_ui&type=Date)](https://star-history.com/#Mid0aria/owofarmbot&mid0aria/owofarmbot_ui&Date)
 
-## ❗・Important
+## ❗・Important (Anyone using the bot is deemed to have read and accepted these)
 
 -   We would like to point out that long-term use of farm bots may result in a ban from owo and we do not accept responsibility.
 -   Discord may restart as a result of discord rpc overload.
 -   It can detect virus due to captcha(ban) bypasser please turn off your antivirus.
 -   DO NOT USE ONE CHANNEL FOR TWO ACCOUNTS, USE IT FOR 1 ACCOUNT ONLY
+-   We use a diagnostic report system to understand and correct errors in the bottle. The information we keep on our servers:
+    -   userkey
+    -   project name
+    -   systeminformation (system, osInfo, uuid, versions, cpu (we get this datas from the "systeminformation" library))
+    -   report (error log)
 
 ## 👑・Features
 
