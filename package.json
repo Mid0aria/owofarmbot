@@ -31,7 +31,7 @@
         "setup": "npm i"
     },
     "dependencies": {
-        "chalk": "^4.1.2",
+        "chalk": "^5.3.0",
         "collect.js": "^4.34.3",
         "delay": "^5.0.0",
         "discord-rpc": "^4.0.1",
