@@ -35,7 +35,7 @@ echo -e "${GREEN} [+] ${BLUE} Updating termux.... ${RESTORE}"
 sleep 2
 echo -e "Kindly Press ENTER on any dialouge shown until Termux is updated"
 apt update -y && apt upgrade -y
-echo -e "${GREEN} [+] ${BLUE} Sucessfully updated termux ${RESTORE}"
+echo -e "${GREEN} [+] ${BLUE} Successfully updated termux ${RESTORE}"
 echo -e "${GREEN} [+] ${BLUE} Installing necessary packages ${RESTORE}"
 sleep 3
 pkg install git nodejs wget 
