@@ -29,7 +29,8 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 [⚠️・Captcha Alert](#captcha-alert)<br>
 [📡・Socket Client](#socket-client)<br>
 [🔗・Required Links](#required-links)<br>
-[🎈・Usage](#usage)<br>
+[🎈・Installation](#Installation)<br>
+[🚀・Termux Installation](#-termux-installation)<br>
 [🥰・Thanks for contribution](#thanks-for-contribution)<br>
 
 ## ⭐・Star History
@@ -77,6 +78,7 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 -   **Extra Token**
     -   All Main Token Features
     -   Auto Pray for Main Token
+
 
 ## ⚙・config.json example
 
@@ -247,7 +249,7 @@ m)
 [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)<br>
 [Farm Bot Zip File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
 
-## 🎈・Usage
+## 🎈・Installation
 
 ```
 > YOU NEED LATEST NODEJS !
@@ -256,11 +258,23 @@ m)
 ```
 
 ```bash
-> type npm install
+$ cd owofarmbot
+$ npm install (only in the first installation)
+$ node bot.js
 ```
 
+
+## 🚀・ Termux Installation
 ```bash
-> type node bot.js
+> Install
+
+$ curl -s https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh
+$ bash termux-setup.sh
+
+> Edit config.json:
+
+$ cd owofarmbot
+$ nano config.json
 ```
 
 ## 🥰・Thanks for contribution
@@ -269,6 +283,7 @@ VihaanReddyM <a href="https://github.com/VihaanReddyM">(Github)</a><br>
 Random-629671 <a href="https://github.com/Random-629671">(Github)</a><br>
 Le-Khuong <a href="https://github.com/Le-Khuong">(Github)</a><br>
 mallusrgreatv2 <a href="https://github.com/mallusrgreatv2">(Github)</a><br>
-
-Hiếu LoneLy <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">(Youtube)</a>
+Le-Khuong <a href="https://github.com/Le-Khuong">(Github)</a><br>
+NotRichit <a href="https://github.com/NotRichit">(Github)</a><br>
+Hiếu LoneLy <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">(Youtube)</a><br>
 OwO Sever <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">(Youtube)</a>
