@@ -29,7 +29,7 @@ echo -e "░█▀▀▀ ░█▄▄█ ░█▄▄▀ ░█░█░█ ░�
 echo -e "░█─── ░█─░█ ░█─░█ ░█──░█ ░█▄▄█ ░█▄▄▄█ ─░█── ${RESTORE}"
 echo -e "${GREEN} [=] ${BLUE} Please Allow termux to access files in the dialuge shown ${RESTORE}"
 sleep 3
-termux-storage-setup
+termux-setup-storage
 sleep 2
 echo -e "${GREEN} [+] ${BLUE} Updating termux.... ${RESTORE}"
 sleep 2
