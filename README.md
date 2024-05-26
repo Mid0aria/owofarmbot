@@ -77,7 +77,10 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 -   **Extra Token**
     -   All Main Token Features
     -   Auto Pray for Main Token
-
+# Termux Installation
+```bash
+bash <(curl -s https://raw.githubusercontent.com/NotRichit/owofarmbot/main/termux-setup.sh)
+```
 ## ⚙・config.json example
 
 ```
