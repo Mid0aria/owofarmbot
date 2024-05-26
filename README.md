@@ -267,7 +267,7 @@ $ node bot.js
 ```bash
 > Install
 
-$ pkg install wget
+$ apt update -y && apt upgrade -y && pkg install wget
 $ wget https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh
 $ sh termux-setup.sh
 

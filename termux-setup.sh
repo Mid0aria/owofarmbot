@@ -16,28 +16,28 @@ LPURPLE='\033[01;35m'
 LCYAN='\033[01;36m'
 WHITE='\033[01;37m'
 clear
-echo -e "${BLUE}░█████╗░░██╗░░░░░░░██╗░█████╗░"
-echo -e "██╔══██╗░██║░░██╗░░██║██╔══██╗"
-echo -e "██║░░██║░╚██╗████╗██╔╝██║░░██║"
-echo -e "██║░░██║░░████╔═████║░██║░░██║"
-echo -e "╚█████╔╝░░╚██╔╝░╚██╔╝░╚█████╔╝"
-echo -e "░╚════╝░░░░╚═╝░░░╚═╝░░░╚════╝░"
+echo "${BLUE}░█████╗░░██╗░░░░░░░██╗░█████╗░"
+echo "██╔══██╗░██║░░██╗░░██║██╔══██╗"
+echo "██║░░██║░╚██╗████╗██╔╝██║░░██║"
+echo "██║░░██║░░████╔═████║░██║░░██║"
+echo "╚█████╔╝░░╚██╔╝░╚██╔╝░╚█████╔╝"
+echo "░╚════╝░░░░╚═╝░░░╚═╝░░░╚════╝░"
 sleep 1
 
-echo -e "░█▀▀▀ ─█▀▀█ ░█▀▀█ ░█▀▄▀█ ░█▀▀█ ░█▀▀▀█ ▀▀█▀▀"
-echo -e "░█▀▀▀ ░█▄▄█ ░█▄▄▀ ░█░█░█ ░█▀▀▄ ░█──░█ ─░█──" 
-echo -e "░█─── ░█─░█ ░█─░█ ░█──░█ ░█▄▄█ ░█▄▄▄█ ─░█── ${RESTORE}"
-echo -e "${GREEN} [=] ${BLUE} Please Allow termux to access files in the dialuge shown ${RESTORE}"
+echo "░█▀▀▀ ─█▀▀█ ░█▀▀█ ░█▀▄▀█ ░█▀▀█ ░█▀▀▀█ ▀▀█▀▀"
+echo "░█▀▀▀ ░█▄▄█ ░█▄▄▀ ░█░█░█ ░█▀▀▄ ░█──░█ ─░█──" 
+echo "░█─── ░█─░█ ░█─░█ ░█──░█ ░█▄▄█ ░█▄▄▄█ ─░█── ${RESTORE}"
+echo "${GREEN} [=] ${BLUE} Please Allow termux to access files in the dialuge shown ${RESTORE}"
 sleep 1
-echo -e "${YELLOW} [!] ${PURPLE} Please Wait... ${RESTORE}"
+echo "${YELLOW} [!] ${PURPLE} Please Wait... ${RESTORE}"
 termux-setup-storage
 sleep 6
-echo -e "${GREEN} [+] ${BLUE} Updating termux.... ${RESTORE}"
+echo "${GREEN} [+] ${BLUE} Updating termux.... ${RESTORE}"
 sleep 2
-echo -e "Kindly Press ENTER on any dialouge shown until Termux is updated"
+echo "Kindly Press ENTER on any dialouge shown until Termux is updated"
 apt update -y && apt upgrade -y
-echo -e "${GREEN} [+] ${BLUE} Successfully updated termux ${RESTORE}"
-echo -e "${GREEN} [+] ${BLUE} Installing necessary packages ${RESTORE}"
+echo "${GREEN} [+] ${BLUE} Successfully updated termux ${RESTORE}"
+echo "${GREEN} [+] ${BLUE} Installing necessary packages ${RESTORE}"
 sleep 3
 pkg install git 
 sleep 1
@@ -46,12 +46,13 @@ sleep 1
 export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 sleep 2
 nvm install v21.7.3
-
-echo -e "${GREEN} [+] ${BLUE} Installed Packages ${RESTORE}"
-echo -e "${GREEN} [+] ${BLUE} Installing OwO Farm Bot ${RESTORE}"
+sleep 1
+unset PREFIX && nvm use node
+echo "${GREEN} [+] ${BLUE} Installed Packages ${RESTORE}"
+echo "${GREEN} [+] ${BLUE} Installing OwO Farm Bot ${RESTORE}"
 git clone https://github.com/Mid0aria/owofarmbot/
 cd owofarmbot
-echo -e "${GREEN} [+] ${BLUE} Installing nodejs packages${RESTORE}"
+echo "${GREEN} [+] ${BLUE} Installing nodejs packages${RESTORE}"
 npm i --no-bin-links #using --no-bin-links to not get any errors regarding symbolic links
-echo -e "${GREEN} [=] Installed Successfully , Please edit config.json"
+echo "${GREEN} [=] Installed Successfully , Please edit config.json"
 
