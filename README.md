@@ -79,7 +79,6 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
     -   All Main Token Features
     -   Auto Pray for Main Token
 
-
 ## ⚙・config.json example
 
 ```
@@ -263,13 +262,12 @@ $ npm install (only in the first installation)
 $ node bot.js
 ```
 
-
 ## 🚀・ Termux Installation
+
 ```bash
 > Install
 
-$ curl -s https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh
-$ bash termux-setup.sh
+$ curl -o- https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh | bash
 
 > Edit config.json:
 

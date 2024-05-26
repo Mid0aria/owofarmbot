@@ -40,7 +40,7 @@ echo -e "${GREEN} [+] ${BLUE} Installing necessary packages ${RESTORE}"
 sleep 3
 pkg install git wget 
 sleep 1
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 sleep 1
 source ~/.bashrc
 sleep 2
