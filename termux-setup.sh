@@ -38,7 +38,14 @@ apt update -y && apt upgrade -y
 echo -e "${GREEN} [+] ${BLUE} Successfully updated termux ${RESTORE}"
 echo -e "${GREEN} [+] ${BLUE} Installing necessary packages ${RESTORE}"
 sleep 3
-pkg install git nodejs wget 
+pkg install git wget 
+sleep 1
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
+sleep 1
+source ~/.bashrc
+sleep 2
+nvm install v21.7.3
+
 echo -e "${GREEN} [+] ${BLUE} Installed Packages ${RESTORE}"
 echo -e "${GREEN} [+] ${BLUE} Installing OwO Farm Bot ${RESTORE}"
 git clone https://github.com/Mid0aria/owofarmbot/
