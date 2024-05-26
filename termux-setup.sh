@@ -16,7 +16,7 @@ LPURPLE='\033[01;35m'
 LCYAN='\033[01;36m'
 WHITE='\033[01;37m'
 clear
-echo -e " ${BLUE}░█████╗░░██╗░░░░░░░██╗░█████╗░"
+echo -e "${BLUE}░█████╗░░██╗░░░░░░░██╗░█████╗░"
 echo -e "██╔══██╗░██║░░██╗░░██║██╔══██╗"
 echo -e "██║░░██║░╚██╗████╗██╔╝██║░░██║"
 echo -e "██║░░██║░░████╔═████║░██║░░██║"
@@ -26,4 +26,24 @@ sleep 1
 
 echo -e "░█▀▀▀ ─█▀▀█ ░█▀▀█ ░█▀▄▀█ ░█▀▀█ ░█▀▀▀█ ▀▀█▀▀"
 echo -e "░█▀▀▀ ░█▄▄█ ░█▄▄▀ ░█░█░█ ░█▀▀▄ ░█──░█ ─░█──" 
-echo -e "░█─── ░█─░█ ░█─░█ ░█──░█ ░█▄▄█ ░█▄▄▄█ ─░█──"
+echo -e "░█─── ░█─░█ ░█─░█ ░█──░█ ░█▄▄█ ░█▄▄▄█ ─░█── ${RESTORE}"
+echo -e "${GREEN} [=] ${BLUE} Please Allow termux to access files in the dialuge shown ${RESTORE}"
+sleep 3
+termux-storage-setup
+sleep 2
+echo -e "${GREEN} [+] ${BLUE} Updating termux.... ${RESTORE}"
+sleep 2
+echo -e "Kindly Press ENTER on any dialouge shown until Termux is updated"
+apt update -y && apt upgrade -y
+echo -e "${GREEN} [+] ${BLUE} Sucessfully updated termux ${RESTORE}"
+echo -e "${GREEN} [+] ${BLUE} Istalling necessary packages ${RESTORE}"
+sleep 3
+pkg install git nodejs wget 
+echo -e "${GREEN} [+] ${BLUE} Installed Packages ${RESTORE}"
+echo -e "${GREEN} [+] ${BLUE} Installing OwO Farm Bot by MidoPy${RESTORE}"
+git clone https://github.com/Mid0aria/owofarmbot/
+cd owofarmbot
+echo -e "${GREEN} [+] ${BLUE} Installing nodejs packages${RESTORE}"
+npm i --no-bin-links #using --no-bin-links to not get any errors regarding symbolic links
+echo -e "${GREEN} [=] Installed Successfully , Please edit config.json"
+
