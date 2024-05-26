@@ -36,11 +36,11 @@ sleep 2
 echo -e "Kindly Press ENTER on any dialouge shown until Termux is updated"
 apt update -y && apt upgrade -y
 echo -e "${GREEN} [+] ${BLUE} Sucessfully updated termux ${RESTORE}"
-echo -e "${GREEN} [+] ${BLUE} Istalling necessary packages ${RESTORE}"
+echo -e "${GREEN} [+] ${BLUE} Installing necessary packages ${RESTORE}"
 sleep 3
 pkg install git nodejs wget 
 echo -e "${GREEN} [+] ${BLUE} Installed Packages ${RESTORE}"
-echo -e "${GREEN} [+] ${BLUE} Installing OwO Farm Bot by MidoPy${RESTORE}"
+echo -e "${GREEN} [+] ${BLUE} Installing OwO Farm Bot ${RESTORE}"
 git clone https://github.com/Mid0aria/owofarmbot/
 cd owofarmbot
 echo -e "${GREEN} [+] ${BLUE} Installing nodejs packages${RESTORE}"
