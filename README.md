@@ -21,7 +21,7 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 [⭐・Star History](#star-history)<br>
 [❗・Important](#important)<br>
 [👑・Features](#features)<br>
-[🚀・Termux Installation](#termux-installation)<br>
+[🚀・Termux Installation](#-termux-installation)<br>
 [⚙・Config.json example](#configjson-example)<br>
 [⚙・.env example](#dotenv-example)<br>
 [💎・Get Token](#get-token)<br>
