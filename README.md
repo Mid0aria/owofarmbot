@@ -258,19 +258,21 @@ m)
 ```
 
 ```bash
-> type npm install
+$ cd owofarmbot
+$ npm install (only in the first installation)
+$ node bot.js
 ```
 
-```bash
-> type node bot.js
-```
 
 ## 🚀・ Termux Installation
 ```bash
+> Install
+
 $ curl -s https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh
 $ bash termux-setup.sh
 
-> edit config.json:
+> Edit config.json:
+
 $ cd owofarmbot
 $ nano config.json
 ```
