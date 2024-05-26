@@ -267,7 +267,9 @@ $ node bot.js
 ```bash
 > Install
 
-$ curl -o- https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh | bash
+$ pkg install wget
+$ wget https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh
+$ sh termux-setup.sh
 
 > Edit config.json:
 

@@ -29,8 +29,8 @@ echo -e "░█▀▀▀ ░█▄▄█ ░█▄▄▀ ░█░█░█ ░�
 echo -e "░█─── ░█─░█ ░█─░█ ░█──░█ ░█▄▄█ ░█▄▄▄█ ─░█── ${RESTORE}"
 echo -e "${GREEN} [=] ${BLUE} Please Allow termux to access files in the dialuge shown ${RESTORE}"
 sleep 1
-termux-setup-storage
 echo -e "${YELLOW} [!] ${PURPLE} Please Wait... ${RESTORE}"
+termux-setup-storage
 sleep 6
 echo -e "${GREEN} [+] ${BLUE} Updating termux.... ${RESTORE}"
 sleep 2
@@ -39,11 +39,11 @@ apt update -y && apt upgrade -y
 echo -e "${GREEN} [+] ${BLUE} Successfully updated termux ${RESTORE}"
 echo -e "${GREEN} [+] ${BLUE} Installing necessary packages ${RESTORE}"
 sleep 3
-pkg install git wget 
+pkg install git 
 sleep 1
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 sleep 1
-source ~/.bashrc
+export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 sleep 2
 nvm install v21.7.3
 
