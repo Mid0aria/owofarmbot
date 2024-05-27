@@ -12,6 +12,7 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 Tutorial needed? (PC) <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
 ~~Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)~~(no longer works due to replit's measures against selfbots)<br>
 Tutorial 3 (TERMUX) <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">Click Here</a> (Thanks OwO Sever)<br>
+Tutorial 4 (Termux) [Click Here](#-termux-installation)
 Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</a>
 
 </p>
@@ -209,7 +210,11 @@ EXTRA_TOKEN=mysuperextratokenblabla
 ```
 
 ## 💎・Get Token
-
+### PC
+1. Open Chrome and login to discord.com/app
+2. Press CTRL + Shift + i and then click console
+3. Paste the following code
+4. The string provided will be your token.
 ```js
 (webpackChunkdiscord_app.push([
     [""],
@@ -223,7 +228,18 @@ m)
     .find((m) => m?.exports?.default?.getToken !== void 0)
     .exports.default.getToken();
 ```
-
+### Mobile/Android
+1. Open chrome
+2. Create a bookmark (by clicking on star button in 3 dots menu)
+3. Edit it and set name to token finder and url to the following code:
+   ```javascript
+   javascript: (webpackChunkdiscord_app.push([    [""],    {},    (e) => {        m = [];        for (let c in e.c) m.push(e.c[c]);    },]),m)    .find((m) => m?.exports?.default?.getToken%20!==%20void%200)%20%20%20%20.exports.default.getToken();
+   ```
+4. Open Discord.com/app (website) and log in.
+5. Tap on search bar and type token Finder (don't search it just type)
+6. A Star Icon with Name Token Fonder will appear
+7. Click on that
+8. A new page will open , the string in the page will be your token.
 ## 📍・OwO DM channel id
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/owochannelid.jpg)
@@ -241,7 +257,7 @@ m)
 ## 📡・Socket Client
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/socketclient.png)
-
+Only works on **windows** using **Terminal**
 ## 🔗・Required Links
 
 [NodeJS](https://nodejs.org/en/)<br>
