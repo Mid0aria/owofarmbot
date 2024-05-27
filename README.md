@@ -12,7 +12,7 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 Tutorial needed? (PC) <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
 ~~Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)~~(no longer works due to replit's measures against selfbots)<br>
 Tutorial 3 (TERMUX) <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">Click Here</a> (Thanks OwO Sever)<br>
-Tutorial 4 (Termux) [Click Here](#-termux-installation)
+Tutorial 4 (Termux) [Click Here](#-termux-installation)<br>
 Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</a>
 
 </p>
