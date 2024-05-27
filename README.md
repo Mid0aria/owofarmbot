@@ -1,19 +1,24 @@
 dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
 6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 🤍
 
-If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
+If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
 <h1 align="center">OwO Farm Bot V1.0.6.7</h1>
 
 <p align="center">
 
-<a href="https://github.com/Mid0aria/owofarmbot"><img src="https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6"/></a>
-<a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a><br>
-Tutorial needed? (PC) <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
-~~Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)~~(no longer works due to replit's measures against selfbots)<br>
-Tutorial 3 (TERMUX) <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">Click Here</a> (Thanks OwO Sever)<br>
-Tutorial 4 (Termux) [Click Here](#-termux-installation)<br>
-Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</a>
+[![Total Views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6)](https://github.com/Mid0aria/owofarmbot)
+[![Last Commit](https://img.shields.io/github/last-commit/mid0aria/owofarmbot)](https://github.com/Mid0aria/owofarmbot)
+## Tutorials
+### Videos
+- [Windows](https://www.youtube.com/watch?v=sso05qx8Hac) - Official
+- [Android (Termux)](https://www.youtube.com/watch?v=78XrZgDtEXU) - OwO Sever
+- **Not Working** [Replit](https://www.youtube.com/watch?v=tiSd99NEhb4) - Hiếu LoneLy
+### Text
+- [Windows / Linux](#windows--linux) - Official
+- [Android / iOS (Termux)](#android--ios-termux) - Official
+
+To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), go to [`#🤖・bot-commands`](https://discord.com/channels/1202294695091507230/1203705738770256032), and send `s!key`. The official bot will directly message you with the key.
 
 </p>
 
@@ -31,22 +36,21 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 [📡・Socket Client](#socket-client)<br>
 [🔗・Required Links](#required-links)<br>
 [🎈・Installation](#Installation)<br>
-[🚀・Termux Installation](#-termux-installation)<br>
-[🥰・Thanks for contribution](#thanks-for-contribution)<br>
+[🥰・Contributors](#thanks-for-contribution)<br>
 
 ## ⭐・Star History
 
 <h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 512</h2>
-⭐⭐⭐ You can also give this repository a star to show more people and they can use this repository<br>
+⭐⭐⭐ You can also give this repository a star so that others know we're trusted!<br>
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Mid0aria/owofarmbot,mid0aria/owofarmbot_ui&type=Date)](https://star-history.com/#Mid0aria/owofarmbot&mid0aria/owofarmbot_ui&Date)
 
 ## ❗・Important (Anyone using the bot is deemed to have read and accepted these)
 
--   We would like to point out that long-term use of farm bots may result in a ban from owo and we do not accept responsibility.
--   Discord may restart as a result of discord rpc overload.
--   It can detect virus due to captcha(ban) bypasser please turn off your antivirus.
--   DO NOT USE ONE CHANNEL FOR TWO ACCOUNTS, USE IT FOR 1 ACCOUNT ONLY
+-   Use of this farm bot may lead to actions being taken against your OwO profile and/or your Discord account. We are not responsible for them.
+-   Discord may restart as a result of discord RPC overload.
+-   It can detect virus due to captcha (ban) bypasser please turn off your antivirus.
+-   DO NOT USE ONE CHANNEL FOR TWO ACCOUNTS, USE IT FOR 1 ACCOUNT ONLY.
 -   We use a diagnostic report system to understand and correct errors in the farmbot. The information we keep on our servers:
     -   userkey
     -   project name
@@ -202,44 +206,40 @@ Need midoservices_authkey or Need Help? <a href ="https://discord.gg/WzYXVbXt6C"
 
 ## ⚙・dotenv example
 
-If you use replit, you must enter your tokens in the .env file for the security of your tokens!
+If you use Replit, you must enter your tokens in the .env file for the security of your tokens!
 
 ```
 MAIN_TOKEN=mysupermaintokenblabla
 EXTRA_TOKEN=mysuperextratokenblabla
 ```
 
+Optionally, you may also use the Secrets tab.
+
 ## 💎・Get Token
+
 ### PC
-1. Open Chrome and login to discord.com/app
-2. Press CTRL + Shift + i and then click console
-3. Paste the following code
-4. The string provided will be your token.
+1. Open your preferred browser (with developer tools) and login to https://discord.com/app
+2. Press CTRL + Shift + I and open the Console tab.
+3. Paste the following code.
+4. The text returned (excluding the quotes `'`) will be your Discord account token.
+
 ```js
-(webpackChunkdiscord_app.push([
-    [""],
-    {},
-    (e) => {
-        m = [];
-        for (let c in e.c) m.push(e.c[c]);
-    },
-]),
-m)
-    .find((m) => m?.exports?.default?.getToken !== void 0)
-    .exports.default.getToken();
+(webpackChunkdiscord_app.push([[""],{},e=>{for(let t in m=[],e.c)m.push(e.c[t])},]),m).find(e=>e?.exports?.default?.getToken!==void 0).exports.default.getToken();
 ```
+
 ### Mobile/Android
-1. Open chrome
+
+1. Open Chrome
 2. Create a bookmark (by clicking on star button in 3 dots menu)
-3. Edit it and set name to token finder and url to the following code:
+3. Edit it and set name to Token Finder and url to the following code:
    ```javascript
-   javascript: (webpackChunkdiscord_app.push([    [""],    {},    (e) => {        m = [];        for (let c in e.c) m.push(e.c[c]);    },]),m)    .find((m) => m?.exports?.default?.getToken%20!==%20void%200)%20%20%20%20.exports.default.getToken();
+   javascript: (webpackChunkdiscord_app.push([[""],{},(e)=>{m=[];for (let c in e.c) m.push(e.c[c]);},]),m).find((m) => m?.exports?.default?.getToken%20!==%20void%200)%20%20%20%20.exports.default.getToken();
    ```
-4. Open Discord.com/app (website) and log in.
-5. Tap on search bar and type token Finder (don't search it just type)
-6. A Star Icon with Name Token Fonder will appear
-7. Click on that
-8. A new page will open , the string in the page will be your token.
+4. Open https://discord.com/app and log in.
+5. Tap on search bar and type Token Finder (don't search it just type)
+6. Click on the bookmark named Token Finder.
+6. A new page will open, the text in the page will be your Discord account token.
+
 ## 📍・OwO DM channel id
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/owochannelid.jpg)
@@ -250,56 +250,66 @@ m)
 
 ## ⚠️・Captcha Alert
 
-!!! If you want the captcha alert to work properly, turn off do not disturb
+> [!NOTE]
+> If you want the captcha alert to work properly, turn off do not disturb
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
 
 ## 📡・Socket Client
 
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/socketclient.png)
-Only works on **windows** using **Terminal**
+Only works on **Windows** using [**Terminal**](https://apps.microsoft.com/detail/9n0dx20hk701)
+
 ## 🔗・Required Links
 
 [NodeJS](https://nodejs.org/en/)<br>
-[Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)<br>
-[Farm Bot Zip File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
+[Terminal](https://apps.microsoft.com/detail/9n0dx20hk701)<br>
+[Farm Bot ZIP File](https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip)
 
 ## 🎈・Installation
 
-```
-> YOU NEED LATEST NODEJS !
-> download zip file or run git clone https://github.com/Mid0aria/owofarmbot.git
-> edit config.json
-```
+### 🖥️・Windows / Linux
 
 ```bash
-$ cd owofarmbot
-$ npm install (only in the first installation)
-$ node bot.js
+# Check Node.js version:
+node -v
+
+# Clone the files with git:
+git clone https://github.com/Mid0aria/owofarmbot
+# Optionally you can also download from github at https://github.com/Mid0aria/owofarmbot/archive/refs/heads/main.zip
+
+# Enter into the cloned directory:
+cd owofarmbot
+
+# Configure the bot
+notepad config.json # On windows
+nano config.json # On linux, can also use any other preferred file writing software
+
+# Run the bot:
+node bot.js
 ```
 
-## 🚀・ Termux Installation
+### 📱・Android / iOS (Termux)
 
 ```bash
-> Install
+# Install:
 
-$ apt update -y && apt upgrade -y && pkg install wget
-$ wget https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh
-$ sh termux-setup.sh
+apt update -y && apt upgrade -y && pkg install wget
+wget https://raw.githubusercontent.com/mid0aria/owofarmbot/main/termux-setup.sh
+sh termux-setup.sh
 
-> Edit config.json:
+# Edit config.json:
 
-$ cd owofarmbot
-$ nano config.json
+cd owofarmbot
+nano config.json
 ```
 
-## 🥰・Thanks for contribution
+## 🥰・Contributors
 
-VihaanReddyM <a href="https://github.com/VihaanReddyM">(Github)</a><br>
-Random-629671 <a href="https://github.com/Random-629671">(Github)</a><br>
-Le-Khuong <a href="https://github.com/Le-Khuong">(Github)</a><br>
-mallusrgreatv2 <a href="https://github.com/mallusrgreatv2">(Github)</a><br>
-Le-Khuong <a href="https://github.com/Le-Khuong">(Github)</a><br>
-NotRichit <a href="https://github.com/NotRichit">(Github)</a><br>
-Hiếu LoneLy <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">(Youtube)</a><br>
-OwO Sever <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">(Youtube)</a>
+- VihaanReddyM [(GitHub)](https://github.com/VihaanReddyM)
+- Random-629671 [(GitHub)](https://github.com/Random-629671)
+- Le-Khuong [(GitHub)](https://github.com/Le-Khuong)
+- mallusrgreatv2 [(GitHub)](https://github.com/mallusrgreatv2)
+- NotRichit [(GitHub)](https://github.com/NotRichit)
+- Hiếu LoneLy [(YouTube)](https://www.youtube.com/watch?v=tiSd99NEhb4)
+- OwO Sever [(YouTube)](https://www.youtube.com/watch?v=78XrZgDtEXU)
