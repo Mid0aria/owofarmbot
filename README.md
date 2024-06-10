@@ -3,20 +3,25 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.6.8 (EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.6.8(OPEN SOURCE)(EOL)</h1>
 <h1>I do not recommend using this bot until v2 is released</h1>
 <p align="center">
 
 [![Total Views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6)](https://github.com/Mid0aria/owofarmbot)
 [![Last Commit](https://img.shields.io/github/last-commit/mid0aria/owofarmbot)](https://github.com/Mid0aria/owofarmbot)
+
 ## Tutorials
+
 ### Videos
-- [Windows](https://www.youtube.com/watch?v=sso05qx8Hac) - Official
-- [Android (Termux)](https://www.youtube.com/watch?v=78XrZgDtEXU) - OwO Sever
-- **Not Working** [Replit](https://www.youtube.com/watch?v=tiSd99NEhb4) - Hiếu LoneLy
+
+-   [Windows](https://www.youtube.com/watch?v=sso05qx8Hac) - Official
+-   [Android (Termux)](https://www.youtube.com/watch?v=78XrZgDtEXU) - OwO Sever
+-   **Not Working** [Replit](https://www.youtube.com/watch?v=tiSd99NEhb4) - Hiếu LoneLy
+
 ### Text
-- [Windows / Linux](#windows--linux) - Official
-- [Android / iOS (Termux)](#android--ios-termux) - Official
+
+-   [Windows / Linux](#windows--linux) - Official
+-   [Android / iOS (Termux)](#android--ios-termux) - Official
 
 To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), go to [`#🤖・bot-commands`](https://discord.com/channels/1202294695091507230/1203705738770256032), and send `s!key`. The official bot will directly message you with the key.
 
@@ -218,13 +223,23 @@ Optionally, you may also use the Secrets tab.
 ## 💎・Get Token
 
 ### PC
+
 1. Open your preferred browser (with developer tools) and login to https://discord.com/app
 2. Press CTRL + Shift + I and open the Console tab.
 3. Paste the following code.
 4. The text returned (excluding the quotes `'`) will be your Discord account token.
 
 ```js
-(webpackChunkdiscord_app.push([[""],{},e=>{for(let t in m=[],e.c)m.push(e.c[t])},]),m).find(e=>e?.exports?.default?.getToken!==void 0).exports.default.getToken();
+(webpackChunkdiscord_app.push([
+    [""],
+    {},
+    (e) => {
+        for (let t in ((m = []), e.c)) m.push(e.c[t]);
+    },
+]),
+m)
+    .find((e) => e?.exports?.default?.getToken !== void 0)
+    .exports.default.getToken();
 ```
 
 ### Mobile/Android
@@ -232,13 +247,13 @@ Optionally, you may also use the Secrets tab.
 1. Open Chrome
 2. Create a bookmark (by clicking on star button in 3 dots menu)
 3. Edit it and set name to Token Finder and url to the following code:
-   ```javascript
-   javascript: (webpackChunkdiscord_app.push([[""],{},(e)=>{m=[];for (let c in e.c) m.push(e.c[c]);},]),m).find((m) => m?.exports?.default?.getToken%20!==%20void%200)%20%20%20%20.exports.default.getToken();
-   ```
+    ```javascript
+    javascript: (webpackChunkdiscord_app.push([[""],{},(e)=>{m=[];for (let c in e.c) m.push(e.c[c]);},]),m).find((m) => m?.exports?.default?.getToken%20!==%20void%200)%20%20%20%20.exports.default.getToken();
+    ```
 4. Open https://discord.com/app and log in.
 5. Tap on search bar and type Token Finder (don't search it just type)
 6. Click on the bookmark named Token Finder.
-6. A new page will open, the text in the page will be your Discord account token.
+7. A new page will open, the text in the page will be your Discord account token.
 
 ## 📍・OwO DM channel id
 
@@ -306,10 +321,10 @@ nano config.json
 
 ## 🥰・Contributors
 
-- VihaanReddyM [(GitHub)](https://github.com/VihaanReddyM)
-- Random-629671 [(GitHub)](https://github.com/Random-629671)
-- Le-Khuong [(GitHub)](https://github.com/Le-Khuong)
-- mallusrgreatv2 [(GitHub)](https://github.com/mallusrgreatv2)
-- NotRichit [(GitHub)](https://github.com/NotRichit)
-- Hiếu LoneLy [(YouTube)](https://www.youtube.com/watch?v=tiSd99NEhb4)
-- OwO Sever [(YouTube)](https://www.youtube.com/watch?v=78XrZgDtEXU)
+-   VihaanReddyM [(GitHub)](https://github.com/VihaanReddyM)
+-   Random-629671 [(GitHub)](https://github.com/Random-629671)
+-   Le-Khuong [(GitHub)](https://github.com/Le-Khuong)
+-   mallusrgreatv2 [(GitHub)](https://github.com/mallusrgreatv2)
+-   NotRichit [(GitHub)](https://github.com/NotRichit)
+-   Hiếu LoneLy [(YouTube)](https://www.youtube.com/watch?v=tiSd99NEhb4)
+-   OwO Sever [(YouTube)](https://www.youtube.com/watch?v=78XrZgDtEXU)
