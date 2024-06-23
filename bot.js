@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.6.8";
+var version = "1.0.7.0";
 var banversion = "0.1.9";
 //coded by @mid0aria on github
 const os = require("os");
@@ -253,59 +253,6 @@ if (settings.banbypass) {
     console.log(chalk.red(`{/__/}\n( • . •)\n/ > 🥒`));
 }
 
-async function diagnosticreport(report) {
-    let reportString = report.toString();
-
-    let encodedreport = Buffer.from(reportString).toString("base64");
-    valueObject = {
-        system: "*",
-        osInfo: "*",
-        uuid: "*",
-        versions: "*",
-        cpu: "*",
-    };
-
-    diagnosticinformation.get(valueObject).then((data) =>
-        request.post(
-            {
-                headers: {
-                    "content-type": "application/x-www-form-urlencoded",
-                },
-
-                url: "apiurl",
-                body:
-                    `project=${projectname}&systeminformation=` +
-                    JSON.stringify(data) +
-                    `&report=${encodedreport}`,
-            },
-            function (error, response, body) {
-                if (error) {
-                    console.log(
-                        chalk.red("Error sending Diagnostic Report to server")
-                    );
-                    return process.exit(0);
-                }
-
-                var bod = JSON.parse(body);
-                if (bod.error === "false") {
-                    console.log(
-                        chalk.green(bod.message) +
-                            `\nReportID: ${chalk.magenta(bod.reportid)}`
-                    );
-                    return process.exit(0);
-                } else {
-                    console.log(
-                        chalk.red(
-                            "Error sending Diagnostic Report to server" +
-                                `\n${chalk.magenta(bod.message)}`
-                        )
-                    );
-                    return process.exit(0);
-                }
-            }
-        )
-    );
-}
 //----------------------------------------------------Check Main Token----------------------------------------------------//
 request.get(
     {
@@ -317,7 +264,6 @@ request.get(
     function (error, response, body) {
         if (error) {
             console.error(error);
-            return diagnosticreport(error);
         }
         var bod = JSON.parse(body);
 
@@ -398,7 +344,6 @@ if (extratokencheck) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             var bod = JSON.parse(body);
 
@@ -836,7 +781,6 @@ async function typing(token, channelid) {
                     console.log(chalk.red("Typing indicator failed"));
                     if (error) {
                         console.error(error);
-                        return diagnosticreport(error);
                     }
                 }
             }
@@ -889,7 +833,6 @@ function hunt(token, timehunt, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -920,7 +863,6 @@ function battle(token, timebattle, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -983,7 +925,6 @@ function animals(token, tokentype, channelid, type) {
             function (error, response, body) {
                 if (error) {
                     console.error(error);
-                    return diagnosticreport(error);
                 }
                 console.log(
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()} [${tokentype}] Animals ✅ / Type: ${type}`
@@ -1020,7 +961,6 @@ function pray(token, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -1056,7 +996,6 @@ function curse(token, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -1087,7 +1026,6 @@ function checklist(token, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -1107,7 +1045,6 @@ function checklist(token, tokentype, channelid) {
                     function (error, response, body) {
                         if (error) {
                             console.error(error);
-                            return diagnosticreport(error);
                         }
                         try {
                             var bod = JSON.parse(body);
@@ -1170,7 +1107,6 @@ function checklist(token, tokentype, channelid) {
                                     chalk.magenta(` [${tokentype}]`) +
                                     chalk.red("Unable to get Checklist❗")
                             );
-                            return diagnosticreport(error);
                         }
                     }
                 );
@@ -1197,7 +1133,6 @@ function daily(token, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             updatechecklistsocket("daily", "✅");
             console.log(
@@ -1229,7 +1164,6 @@ function cookie(token, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             updatechecklistsocket("cookie", "✅");
             console.log(
@@ -1263,7 +1197,6 @@ function coinflip(token, tokentype, channelid) {
             if (error) {
                 if (error) {
                     console.error(error);
-                    return diagnosticreport(error);
                 }
             }
 
@@ -1280,7 +1213,6 @@ function coinflip(token, tokentype, channelid) {
                     if (error) {
                         if (error) {
                             console.error(error);
-                            return diagnosticreport(error);
                         }
                     }
 
@@ -1337,7 +1269,6 @@ function coinflip(token, tokentype, channelid) {
                                 async function (error, response, body) {
                                     if (error) {
                                         console.error(error);
-                                        return diagnosticreport(error);
                                     }
 
                                     try {
@@ -1450,7 +1381,6 @@ function extra_coinflip(token, tokentype, channelid) {
         async function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
 
             await delay(6000);
@@ -1465,7 +1395,6 @@ function extra_coinflip(token, tokentype, channelid) {
                 async function (error, response, body) {
                     if (error) {
                         console.error(error);
-                        return diagnosticreport(error);
                     }
 
                     try {
@@ -1552,7 +1481,6 @@ function slots(token, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -1585,7 +1513,6 @@ function upgradeall(token, tokentype, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -1612,7 +1539,6 @@ function checkinv(token, channelid, tokentype) {
             function (error, response, body) {
                 if (error) {
                     console.error(error);
-                    return diagnosticreport(error);
                 }
                 var bod = JSON.parse(body);
                 if (!bod[0]) return;
@@ -1693,7 +1619,6 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
         }
     ); //coded by @mid0aria on github
@@ -1708,7 +1633,6 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
             function (error, response, body) {
                 if (error) {
                     console.error(error);
-                    return diagnosticreport(error);
                 }
                 var bod = JSON.parse(body);
                 if (!bod[0]) return;
@@ -1965,7 +1889,6 @@ function gemuse(token, gem, channelid, tokentype) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -1996,7 +1919,6 @@ function boxuse(token, box, channelid, tokentype) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             console.log(
                 chalk.red(
@@ -2027,7 +1949,6 @@ function eventuse(token, eventbox, channelid, tokentype) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             switch (eventbox) {
                 case "18":
@@ -2069,7 +1990,6 @@ async function getquests(token, channelid, tokentype) {
         async function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             await delay(3500);
             request.get(
@@ -2082,7 +2002,6 @@ async function getquests(token, channelid, tokentype) {
                 async function (error, response, body) {
                     if (error) {
                         console.error(error);
-                        return diagnosticreport(error);
                     }
                     try {
                         var bod = JSON.parse(body);
@@ -2278,7 +2197,6 @@ async function getquests(token, channelid, tokentype) {
                         );
 
                         console.error(error);
-                        return diagnosticreport(error);
                     }
                 }
             );
@@ -2490,7 +2408,6 @@ function bancheck(token, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
@@ -2555,7 +2472,6 @@ function extrabancheck(token, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
@@ -2619,7 +2535,6 @@ function dmbancheck(token, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             var bod = JSON.parse(body);
             if (bod[0] == undefined) {
@@ -2687,7 +2602,6 @@ function dmextrabancheck(token, channelid) {
         function (error, response, body) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
             var bod = JSON.parse(body);
             if (bod[0] == undefined) {
@@ -2811,7 +2725,6 @@ function elaina2(token, channelid, phrasesFilePath) {
         } catch (error) {
             if (error) {
                 console.error(error);
-                return diagnosticreport(error);
             }
         }
     });

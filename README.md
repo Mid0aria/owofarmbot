@@ -1,9 +1,9 @@
 dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
-6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 🤍
+6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 💔
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.6.8(OPEN SOURCE)(EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.7.0(OPEN SOURCE)(EOL)</h1>
 <h1>I do not recommend using this bot until v2 is released</h1>
 <p align="center">
 
@@ -56,11 +56,6 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
 -   Discord may restart as a result of discord RPC overload.
 -   It can detect virus due to captcha (ban) bypasser please turn off your antivirus.
 -   DO NOT USE ONE CHANNEL FOR TWO ACCOUNTS, USE IT FOR 1 ACCOUNT ONLY.
--   We use a diagnostic report system to understand and correct errors in the farmbot. The information we keep on our servers:
-    -   userkey
-    -   project name
-    -   systeminformation (system, osInfo, uuid, versions, cpu (we get this datas from the "systeminformation" library))
-    -   report (error log)
 
 ## 👑・Features
 
@@ -82,7 +77,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
     -   Auto Quest
     -   Auto Daily
     -   Auto Cookie
--   Captcha(Ban) Protection v0.1.8 (beta)
+-   Captcha(Ban) Protection v0.1.9 (beta)
 -   Discord-RPC
 -   Typing Indicator
 -   **Extra Token**
