@@ -266,7 +266,7 @@ if (notifynumber < 0) {
 }
 if (notifynumber > 6)	
 {
-    console.log(	chalk.white(" Look like your bumber of notify is quite big, are you sure?"));
+    console.log(	chalk.white(" Look like your number of notify is quite big, are you sure?"));
 }
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
