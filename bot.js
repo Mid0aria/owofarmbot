@@ -255,7 +255,7 @@ if (settings.banbypass) {
 
 //notify related
 //sorry i dont know about javascript very much
-const notifynumber = config.settings.notifynumber;
+var notifynumber = config.settings.notifynumber;
 
 if (notifynumber < 0) {
 	console.log(
