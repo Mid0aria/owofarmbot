@@ -253,6 +253,22 @@ if (settings.banbypass) {
     console.log(chalk.red(`{/__/}\n( • . •)\n/ > 🥒`));
 }
 
+//notify related
+//sorry i dont know about javascript very much
+const notifynumber = config.settings.notifynumber;
+
+if (notifynumber < 0) {
+	console.log(
+		chalk.red(" Invalid notify number!"),
+		chalk.white(" Defaulting to 1."),
+		chalk.gray(" Why on earth you think you can use a negative value for a notify repeating number?"));
+	notifynumber = 1;
+}
+if (notifynumber > 6)	
+{
+    console.log(	chalk.white(" Look like your bumber of notify is quite big, are you sure?"));
+}
+
 //----------------------------------------------------Check Main Token----------------------------------------------------//
 request.get(
     {
@@ -2430,19 +2446,20 @@ function bancheck(token, channelid) {
                         chalk.magenta(" [Main Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                notifier.notify({
-                    title: "(Main Token) Captcha Detected!",
-                    message: "Solve the captcha and restart the bot!",
-                    icon: "./utils/captcha.png",
-                    sound: true,
-                    wait: true,
-                    appID: "OwO Farm Bot",
-                });
-
+                for (let i = 0; i < notifynumber; i++) {
+					notifier.notify({
+						title: "(Main Token) Captcha Detected!",
+						message: "Solve the captcha and restart the bot!",
+						icon: "./utils/captcha.png",
+						sound: true,
+						wait: true,
+						appID: "OwO Farm Bot",
+					});
+				}
                 setTimeout(() => {
                     updateerrorsocket("(Main Token) Solve Captcha!");
                     process.exit(0);
-                }, 1500);
+                }, 1600);
             } else {
                 global.mainbanc = true;
                 elaina2(token, channelid);
@@ -2493,19 +2510,20 @@ function extrabancheck(token, channelid) {
                         chalk.magenta(" [Extra Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                notifier.notify({
-                    title: "(Extra Token) Captcha Detected!",
-                    message: "Solve the captcha and restart the bot!",
-                    icon: "./utils/captcha.png",
-                    sound: true,
-                    wait: true,
-                    appID: "OwO Farm Bot",
-                });
-
+                for (let i = 0; i < notifynumber; i++) {
+						notifier.notify({
+						title: "(Extra Token) Captcha Detected!",
+						message: "Solve the captcha and restart the bot!",
+						icon: "./utils/captcha.png",
+						sound: true,
+						wait: true,
+						appID: "OwO Farm Bot",
+					});
+				}
                 setTimeout(() => {
                     updateerrorsocket("(Extra Token) Solve Captcha!");
                     process.exit(0);
-                }, 1500);
+                }, 1600);
             } else {
                 global.extrabanc = true;
                 elaina2(token, channelid);
@@ -2559,19 +2577,20 @@ function dmbancheck(token, channelid) {
                             chalk.magenta(" [Main Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    notifier.notify({
-                        title: "(Main Token) Captcha Detected!",
-                        message: "Solve the captcha and restart the bot!",
-                        icon: "./utils/captcha.png",
-                        sound: true,
-                        wait: true,
-                        appID: "OwO Farm Bot",
-                    });
-
-                    setTimeout(() => {
-                        updateerrorsocket("(Main Token) Solve DM Captcha!");
-                        process.exit(0);
-                    }, 1500);
+                    for (let i = 0; i < notifynumber; i++) {
+						notifier.notify({
+							title: "(Main Token) Captcha Detected!",
+							message: "Solve the captcha and restart the bot!",
+							icon: "./utils/captcha.png",
+							sound: true,
+							wait: true,
+							appID: "OwO Farm Bot",
+						});
+					}
+					setTimeout(() => {
+						updateerrorsocket("(Main Token) Solve DM Captcha!");
+						process.exit(0);
+					}, 1600);
                 } else {
                     global.mainbanc = true;
                     console.log(
@@ -2625,19 +2644,20 @@ function dmextrabancheck(token, channelid) {
                             chalk.magenta(" [Extra Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    notifier.notify({
-                        title: "(Extra Token) Captcha Detected!",
-                        message: "Solve the captcha and restart the bot!",
-                        icon: "./utils/captcha.png",
-                        sound: true,
-                        wait: true,
-                        appID: "OwO Farm Bot",
-                    });
-
-                    setTimeout(() => {
-                        updateerrorsocket("(Extra Token) Solve DM Captcha!");
-                        process.exit(0);
-                    }, 1500);
+                    for (let i = 0; i < notifynumber; i++) {
+						notifier.notify({
+							title: "(Extra Token) Captcha Detected!",
+							message: "Solve the captcha and restart the bot!",
+							icon: "./utils/captcha.png",
+							sound: true,
+							wait: true,
+							appID: "OwO Farm Bot",
+						});
+					}
+					setTimeout(() => {
+						updateerrorsocket("(Extra Token) Solve DM Captcha!");
+						process.exit(0);
+					}, 1600);
                 } else {
                     global.extrabanc = true;
                     console.log(
