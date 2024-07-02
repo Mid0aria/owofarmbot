@@ -1040,7 +1040,7 @@ function checklist(token, tokentype, channelid) {
                         headers: {
                             authorization: token,
                         },
-                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                     },
                     function (error, response, body) {
                         if (error) {
@@ -1207,7 +1207,7 @@ function coinflip(token, tokentype, channelid) {
                     headers: {
                         authorization: token,
                     },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -1264,7 +1264,7 @@ function coinflip(token, tokentype, channelid) {
                                     headers: {
                                         authorization: token,
                                     },
-                                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                                 },
                                 async function (error, response, body) {
                                     if (error) {
@@ -1390,7 +1390,7 @@ function extra_coinflip(token, tokentype, channelid) {
                     headers: {
                         authorization: token,
                     },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -1534,7 +1534,7 @@ function checkinv(token, channelid, tokentype) {
                 headers: {
                     authorization: token,
                 },
-                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
             },
             function (error, response, body) {
                 if (error) {
@@ -1628,7 +1628,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 headers: {
                     authorization: token,
                 },
-                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
             },
             function (error, response, body) {
                 if (error) {
@@ -1997,7 +1997,7 @@ async function getquests(token, channelid, tokentype) {
                     headers: {
                         authorization: token,
                     },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -2403,7 +2403,7 @@ function bancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=5`,
         },
         function (error, response, body) {
             if (error) {
@@ -2467,7 +2467,7 @@ function extrabancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=5`,
         },
         function (error, response, body) {
             if (error) {
@@ -2530,7 +2530,7 @@ function dmbancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
         },
         function (error, response, body) {
             if (error) {
@@ -2597,7 +2597,7 @@ function dmextrabancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
         },
         function (error, response, body) {
             if (error) {
