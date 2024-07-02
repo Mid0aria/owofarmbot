@@ -260,8 +260,8 @@ var notifynumber = config.settings.notifynumber;
 if (notifynumber < 0) {
 	console.log(
 		chalk.red(" Invalid notify number!"),
-		chalk.white(" Defaulting to 1."),
-		chalk.gray(" Why on earth you think you can use a negative value for a notify repeating number?"));
+		chalk.white("\n Defaulting to 1."),
+		chalk.gray("\n Why on earth you think you can use a negative value for a notify repeating number?"));
 	notifynumber = 1;
 }
 if (notifynumber > 6)	
