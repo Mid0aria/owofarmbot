@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.0";
+var version = "1.0.7.1";
 var banversion = "0.1.9";
 //coded by @mid0aria on github
 const os = require("os");
