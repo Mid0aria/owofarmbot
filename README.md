@@ -182,7 +182,8 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
                 "enable": "", true or false
                 "amount": "1"
             }
-        }
+        },
+        "notifynumber": "5" //how many times to repeat the notification
     },
     "main":{
         "token":"", main token (if you use replit please edit .env file)
