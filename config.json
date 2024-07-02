@@ -93,7 +93,8 @@
                 "enable": false,
                 "amount": "1"
             }
-        }
+        },
+        "notifynumber": "1"
     },
     "main": {
         "token": "",
