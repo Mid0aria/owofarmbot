@@ -1,6 +1,6 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.0";
-var banversion = "0.1.9";
+var version = "1.0.7.1";
+var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
 if (os.userInfo().username === "DESKTOP-3VVC3") {
@@ -251,6 +251,22 @@ if (settings.banbypass) {
     global.mainbanc = true;
     global.extrabanc = true;
     console.log(chalk.red(`{/__/}\n( • . •)\n/ > 🥒`));
+}
+
+//notify related
+//sorry i dont know about javascript very much
+var notifynumber = config.settings.notifynumber;
+
+if (notifynumber < 0) {
+	console.log(
+		chalk.red(" Invalid notify number!"),
+		chalk.white("\n Defaulting to 1."),
+		chalk.gray("\n Why on earth you think you can use a negative value for a notify repeating number?"));
+	notifynumber = 1;
+}
+if (notifynumber > 6)	
+{
+    console.log(	chalk.white(" Look like your number of notify is quite big, are you sure?"));
 }
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
@@ -1040,7 +1056,7 @@ function checklist(token, tokentype, channelid) {
                         headers: {
                             authorization: token,
                         },
-                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                     },
                     function (error, response, body) {
                         if (error) {
@@ -1207,7 +1223,7 @@ function coinflip(token, tokentype, channelid) {
                     headers: {
                         authorization: token,
                     },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -1264,7 +1280,7 @@ function coinflip(token, tokentype, channelid) {
                                     headers: {
                                         authorization: token,
                                     },
-                                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                                 },
                                 async function (error, response, body) {
                                     if (error) {
@@ -1390,7 +1406,7 @@ function extra_coinflip(token, tokentype, channelid) {
                     headers: {
                         authorization: token,
                     },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -1534,7 +1550,7 @@ function checkinv(token, channelid, tokentype) {
                 headers: {
                     authorization: token,
                 },
-                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
             },
             function (error, response, body) {
                 if (error) {
@@ -1628,7 +1644,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 headers: {
                     authorization: token,
                 },
-                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
             },
             function (error, response, body) {
                 if (error) {
@@ -1997,7 +2013,7 @@ async function getquests(token, channelid, tokentype) {
                     headers: {
                         authorization: token,
                     },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -2403,7 +2419,7 @@ function bancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=5`,
         },
         function (error, response, body) {
             if (error) {
@@ -2430,19 +2446,20 @@ function bancheck(token, channelid) {
                         chalk.magenta(" [Main Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                notifier.notify({
-                    title: "(Main Token) Captcha Detected!",
-                    message: "Solve the captcha and restart the bot!",
-                    icon: "./utils/captcha.png",
-                    sound: true,
-                    wait: true,
-                    appID: "OwO Farm Bot",
-                });
-
+                for (let i = 0; i < notifynumber; i++) {
+					notifier.notify({
+						title: "(Main Token) Captcha Detected!",
+						message: "Solve the captcha and restart the bot!",
+						icon: "./utils/captcha.png",
+						sound: true,
+						wait: true,
+						appID: "OwO Farm Bot",
+					});
+				}
                 setTimeout(() => {
                     updateerrorsocket("(Main Token) Solve Captcha!");
                     process.exit(0);
-                }, 1500);
+                }, 1600);
             } else {
                 global.mainbanc = true;
                 elaina2(token, channelid);
@@ -2467,7 +2484,7 @@ function extrabancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=5`,
         },
         function (error, response, body) {
             if (error) {
@@ -2493,19 +2510,20 @@ function extrabancheck(token, channelid) {
                         chalk.magenta(" [Extra Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                notifier.notify({
-                    title: "(Extra Token) Captcha Detected!",
-                    message: "Solve the captcha and restart the bot!",
-                    icon: "./utils/captcha.png",
-                    sound: true,
-                    wait: true,
-                    appID: "OwO Farm Bot",
-                });
-
+                for (let i = 0; i < notifynumber; i++) {
+						notifier.notify({
+						title: "(Extra Token) Captcha Detected!",
+						message: "Solve the captcha and restart the bot!",
+						icon: "./utils/captcha.png",
+						sound: true,
+						wait: true,
+						appID: "OwO Farm Bot",
+					});
+				}
                 setTimeout(() => {
                     updateerrorsocket("(Extra Token) Solve Captcha!");
                     process.exit(0);
-                }, 1500);
+                }, 1600);
             } else {
                 global.extrabanc = true;
                 elaina2(token, channelid);
@@ -2530,7 +2548,7 @@ function dmbancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
         },
         function (error, response, body) {
             if (error) {
@@ -2559,19 +2577,20 @@ function dmbancheck(token, channelid) {
                             chalk.magenta(" [Main Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    notifier.notify({
-                        title: "(Main Token) Captcha Detected!",
-                        message: "Solve the captcha and restart the bot!",
-                        icon: "./utils/captcha.png",
-                        sound: true,
-                        wait: true,
-                        appID: "OwO Farm Bot",
-                    });
-
-                    setTimeout(() => {
-                        updateerrorsocket("(Main Token) Solve DM Captcha!");
-                        process.exit(0);
-                    }, 1500);
+                    for (let i = 0; i < notifynumber; i++) {
+						notifier.notify({
+							title: "(Main Token) Captcha Detected!",
+							message: "Solve the captcha and restart the bot!",
+							icon: "./utils/captcha.png",
+							sound: true,
+							wait: true,
+							appID: "OwO Farm Bot",
+						});
+					}
+					setTimeout(() => {
+						updateerrorsocket("(Main Token) Solve DM Captcha!");
+						process.exit(0);
+					}, 1600);
                 } else {
                     global.mainbanc = true;
                     console.log(
@@ -2597,7 +2616,7 @@ function dmextrabancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
         },
         function (error, response, body) {
             if (error) {
@@ -2625,19 +2644,20 @@ function dmextrabancheck(token, channelid) {
                             chalk.magenta(" [Extra Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    notifier.notify({
-                        title: "(Extra Token) Captcha Detected!",
-                        message: "Solve the captcha and restart the bot!",
-                        icon: "./utils/captcha.png",
-                        sound: true,
-                        wait: true,
-                        appID: "OwO Farm Bot",
-                    });
-
-                    setTimeout(() => {
-                        updateerrorsocket("(Extra Token) Solve DM Captcha!");
-                        process.exit(0);
-                    }, 1500);
+                    for (let i = 0; i < notifynumber; i++) {
+						notifier.notify({
+							title: "(Extra Token) Captcha Detected!",
+							message: "Solve the captcha and restart the bot!",
+							icon: "./utils/captcha.png",
+							sound: true,
+							wait: true,
+							appID: "OwO Farm Bot",
+						});
+					}
+					setTimeout(() => {
+						updateerrorsocket("(Extra Token) Solve DM Captcha!");
+						process.exit(0);
+					}, 1600);
                 } else {
                     global.extrabanc = true;
                     console.log(
