@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7.1",
+    "version": "1.0.8.0",
     "updater": "0.0.3",
-    "note": "V1.0.7.1: Attempt to make ban bypass system more accurate (EOL)"
+    "note": "V1.0.8.0: Mutiple update, mainly aim to avoid new OwO ban system (EOL)"
 }
