@@ -305,7 +305,7 @@ request.get(
             );
 
             checklist(maintoken, "Main Token", mainchannelid);
-	    getquests(maintoken, mainautoquestchannelid, "Main Token");
+	    if (settings.autoquest) getquests(maintoken, mainautoquestchannelid, "Main Token");
             sleepy("Main", "CheckList");
         }
     }
@@ -341,7 +341,7 @@ if (extratokencheck) {
                 if (global.etoken) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
-			getquests(extratoken, extraautoquestchannelid, "Extra Token");
+			if (settings.autoquest) getquests(extratoken, extraautoquestchannelid, "Extra Token");
                         setTimeout(() => {
                             sleepy("Extra", "CheckList");
                         }, 5000);
@@ -361,9 +361,7 @@ function triggerhunt() {
 		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
     } else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 
@@ -389,16 +387,13 @@ function triggerbattle() {
 		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
 	} else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 	
 	if (settings.huntandbattle) {			
-			if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
-			else battlecheck(maintoken, "Main Token", mainchannelid, 3);
-		}
+		if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
+		else battlecheck(maintoken, "Main Token", mainchannelid, 3);
 	}
 }
 
@@ -409,21 +404,22 @@ function triggerextrahunt() {
 		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
     } else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-	if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
-	else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
-	if (settings.inventory.inventorycheck) {
-		setTimeout(() => {
-			checkinv(extratoken, extrachannelid, "Extra Token");
-		}, 2500);
-	}
-	if (settings.banbypass) {
-		bancheck(extratoken, extrachannelid);
-		dmbancheck(extratoken, owodmextrachannelid);
+
+	if (settings.huntandbattle) {
+		if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
+		else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
+		if (settings.inventory.inventorycheck) {
+			setTimeout(() => {
+				checkinv(extratoken, extrachannelid, "Extra Token");
+			}, 2500);
+		}
+		if (settings.banbypass) {
+			bancheck(extratoken, extrachannelid);
+			dmbancheck(extratoken, owodmextrachannelid);
+		}
 	}
 }
 
@@ -434,9 +430,7 @@ function triggerextrabattle() {
 		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
 	} else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 	
