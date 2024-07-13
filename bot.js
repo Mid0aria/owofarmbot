@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.8.0";
+var version = "1.0.8.3";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -358,68 +358,100 @@ function triggerhunt() {
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
         var bigger_timehunt = settings.times.hunttop;
+		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
     } else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) timehunt = timehunt + 2000;
+        if (timehunt <= 6000) {
+            timehunt = timehunt + 2000;
+        }
         var timebattle = timehunt + 1000;
     }
 
     if (settings.huntandbattle) {
-		if (!global.etoken) { //put the random calculation inside each token type to get two different random time
-			var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
-			if (global.mainhuntc) setTimeout(() => hunt(maintoken, timehunt, "Main Token", mainchannelid), timehunt);
-			else huntcheck(maintoken, "Main Token", mainchannelid, 3);
-			if (settings.inventory.inventorycheck) {
-				setTimeout(() => {
-					checkinv(maintoken, mainchannelid, "Main Token");
-				}, 2500);
-			}
-			if (settings.banbypass) {
-				bancheck(maintoken, mainchannelid);
-				dmbancheck(maintoken, owodmmainchannelid);
-			}
-		} else {
-			var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
-			if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
-			else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
-			if (settings.inventory.inventorycheck) {
-				setTimeout(() => {
-					checkinv(extratoken, extrachannelid, "Extra Token");
-				}, 2500);
-			}
-			if (settings.banbypass) {
-				bancheck(extratoken, extrachannelid);
-				dmbancheck(extratoken, owodmextrachannelid);
-			}
+		if (global.mainhuntc) setTimeout(() => hunt(maintoken, timehunt, "Main Token", mainchannelid), timehunt);
+		else huntcheck(maintoken, "Main Token", mainchannelid, 3);
+		if (settings.inventory.inventorycheck) {
+			setTimeout(() => {
+				checkinv(maintoken, mainchannelid, "Main Token");
+			}, 2500);
 		}
+		if (settings.banbypass) {
+			bancheck(maintoken, mainchannelid);
+			dmbancheck(maintoken, owodmmainchannelid);
+		}	
     }
 }
 
 function triggerbattle() {
 	if (settings.times.enable) {
 		var smaller_timebattle = settings.times.battlebottom;
-		var bigger_timebattle = settings.times.battletop;
+        var bigger_timebattle = settings.times.battletop;
+		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
 	} else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) timehunt = timehunt + 2000;
+        if (timehunt <= 6000) {
+            timehunt = timehunt + 2000;
+        }
+        var timebattle = timehunt + 1000;
+    }
+	
+	if (settings.huntandbattle) {			
+			if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
+			else battlecheck(maintoken, "Main Token", mainchannelid, 3);
+		}
+	}
+}
+
+function triggerextrahunt() {
+	if (settings.times.enable) {
+        var smaller_timehunt = settings.times.huntbottom;
+        var bigger_timehunt = settings.times.hunttop;
+		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+    } else {
+        var timehunt = parseInt(rantime());
+        if (timehunt <= 6000) {
+            timehunt = timehunt + 2000;
+        }
+        var timebattle = timehunt + 1000;
+    }
+	if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
+	else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
+	if (settings.inventory.inventorycheck) {
+		setTimeout(() => {
+			checkinv(extratoken, extrachannelid, "Extra Token");
+		}, 2500);
+	}
+	if (settings.banbypass) {
+		bancheck(extratoken, extrachannelid);
+		dmbancheck(extratoken, owodmextrachannelid);
+	}
+}
+
+function triggerextrabattle() {
+	if (settings.times.enable) {
+		var smaller_timebattle = settings.times.battlebottom;
+        var bigger_timebattle = settings.times.battletop;
+		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+	} else {
+        var timehunt = parseInt(rantime());
+        if (timehunt <= 6000) {
+            timehunt = timehunt + 2000;
+        }
         var timebattle = timehunt + 1000;
     }
 	
 	if (settings.huntandbattle) {
-		if(!global.etoken) {
-			var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
-			if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
-			else battlecheck(maintoken, "Main Token", mainchannelid, 3);
-		} else {
-			var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
-			if (global.extrabattlec) setTimeout(() => battle(extratoken, timebattle, "Extra Token", extrachannelid), timebattle);
-			else battlecheck(extratoken, "Extra Token", extrachannelid, 3);
-		}
+		if (global.extrabattlec) setTimeout(() => battle(extratoken, timebattle, "Extra Token", extrachannelid), timebattle);
+		else battlecheck(extratoken, "Extra Token", extrachannelid, 3);
 	}
 }
 
 triggerhunt();
 triggerbattle();
+if (global.etoken) {
+	triggerextrahunt();
+	triggerextrabattle();
+}
 //-----------------------------------ANIMALS----------------------------------------------//
 if (settings.times.intervals.animals.enable) {
     var timeanimalsinterval = settings.times.intervals.animals.time;
@@ -741,9 +773,14 @@ function hunt(token, timehunt, tokentype, channelid) {
             );
         }
     );
-	if (tokentype == "Extra Token") global.extrahuntc = false;
-	else global.mainhuntc = false;
-	huntcheck(token, tokentype, channelid, 3);
+	if (tokentype == "Extra Token") {
+		global.extrahuntc = false;
+		extrahuntcheck(token, tokentype, channelid, 3);
+	}
+	else {
+		global.mainhuntc = false;
+		huntcheck(token, tokentype, channelid, 3);
+	}
 }
 
 function battle(token, timebattle, tokentype, channelid) {
@@ -774,9 +811,14 @@ function battle(token, timebattle, tokentype, channelid) {
             );
         }
     );
-	if (tokentype == "Extra Token") global.extrabattlec = false;
-	else global.mainbattlec = false;
-	battlecheck(token, tokentype, channelid, 3);
+	if (tokentype == "Extra Token") {
+		global.extrabattlec = false;
+		extrabattlecheck(token, tokentype, channelid, 3);
+	}
+	else {
+		global.mainbattlec = false;
+		battlecheck(token, tokentype, channelid, 3);
+	}
 }
 
 function animals(token, tokentype, channelid, type) {
@@ -2660,16 +2702,14 @@ function huntcheck(token, tokentype, channelid, checknumber)
                 cont.includes("You found:") ||
                 cont.includes("and caught a")
             ) {
-				if (tokentype == "Extra Token") global.extrahuntc = true;
-				else global.mainhuntc = true;
+				global.mainhuntc = true;
 				triggerhunt();
 			} else {
 				checknumber = checknumber + 1;
 				if (checknumber >= 8) {
-					if (tokentype == "Extra Token") global.extrahuntc = true;
-					else global.mainhuntc = true;
+					global.mainhuntc = true;
 					triggerhunt();
-					return; //make sure not checking anymore
+					return;
 				} else setTimeout(() => huntcheck(token, tokentype, channelid, checknumber), 1600);
 			}
         }
@@ -2699,17 +2739,87 @@ function battlecheck(token, tokentype, channelid, checknumber)
 				cont[0].footer.text.includes("your team gained")
 				)
 			) {
-				if (tokentype == "Extra Token") global.extrabattlec = true;
-				else global.mainbattlec = true;
+				global.mainbattlec = true;
 				triggerbattle();
 			} else {
 				checknumber = checknumber + 1;
 				if (checknumber >= 8) {
-					if (tokentype == "Extra Token") global.extrabattlec = true;
-					else global.mainbattlec = true;
+					global.mainbattlec = true;
 					triggerbattle();
 					return;
 				} else setTimeout(() => battlecheck(token, tokentype, channelid, checknumber), 1600);
+			}
+        }
+    );
+}
+
+function extrahuntcheck(token, tokentype, channelid, checknumber)
+{
+	request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=${checknumber}`,
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error(error);
+            }
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].content;
+
+            if (
+                cont.includes("You found:") ||
+                cont.includes("and caught a")
+            ) {
+				global.extrahuntc = true;
+				triggerextrahunt();
+			} else {
+				checknumber = checknumber + 1;
+				if (checknumber >= 8) {
+					global.extrahuntc = true;
+					triggerextrahunt();
+					return;
+				} else setTimeout(() => extrahuntcheck(token, tokentype, channelid, checknumber), 1600);
+			}
+        }
+    );
+}
+
+function extrabattlecheck(token, tokentype, channelid, checknumber)
+{
+	request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=${checknumber}`,
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error(error);
+            }
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].embeds;
+			
+			if (
+			cont.length > 0 && (
+				cont[0].author.name.includes("goes into battle") ||
+				cont[0].footer.text.includes("your team gained")
+				)
+			) {
+				global.extrabattlec = true;
+				triggerextrabattle();
+			} else {
+				checknumber = checknumber + 1;
+				if (checknumber >= 8) {
+					global.extrabattlec = true;
+					triggerextrabattle();
+					return;
+				} else setTimeout(() => extrabattlecheck(token, tokentype, channelid, checknumber), 1600);
 			}
         }
     );
