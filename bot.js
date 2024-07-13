@@ -388,8 +388,8 @@ function triggerhunt() {
 				}, 2500);
 			}
 			if (settings.banbypass) {
-				bancheck(maintoken, mainchannelid);
-				dmbancheck(maintoken, owodmmainchannelid);
+				bancheck(extratoken, extrachannelid);
+				dmbancheck(extratoken, owodmextrachannelid);
 			}
 		}
     }
