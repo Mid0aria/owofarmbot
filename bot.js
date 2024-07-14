@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.1";
+var version = "1.0.7.2";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -269,6 +269,11 @@ if (notifynumber > 6)
     console.log(	chalk.white(" Look like your number of notify is quite big, are you sure?"));
 }
 
+global.mainhuntc = true;
+global.mainbattlec = true;
+global.extrahuntc = true;
+global.extrabattlec = true;
+
 //----------------------------------------------------Check Main Token----------------------------------------------------//
 request.get(
     {
@@ -300,49 +305,8 @@ request.get(
             );
 
             checklist(maintoken, "Main Token", mainchannelid);
+	    if (settings.autoquest) getquests(maintoken, mainautoquestchannelid, "Main Token");
             sleepy("Main", "CheckList");
-
-            /*setTimeout(() => {
-                if (settings.huntandbattle) {
-                    setTimeout(() => {
-                        hunt(maintoken, "StartUp", "Main Token", mainchannelid);
-                    }, 5000);
-
-                    setTimeout(() => {
-                        battle(
-                            maintoken,
-                            "StartUp",
-                            "Main Token",
-                            mainchannelid
-                        );
-                    }, 7500);
-                }
-                if (settings.animals.enable) {
-                    setTimeout(() => {
-                        animals(
-                            maintoken,
-                            "Main Token",
-                            mainchannelid,
-                            settings.animals.type
-                        );
-                    }, 9500);
-                }
-                if (settings.pray) {
-                    setTimeout(() => {
-                        pray(maintoken, "Main Token", mainchannelid);
-                    }, 11000);
-                }
-                if (settings.curse) {
-                    setTimeout(() => {
-                        curse(maintoken, "Main Token", mainchannelid);
-                    }, 14000);
-                }
-                if (settings.upgradeautohunt.enable) {
-                    setTimeout(() => {
-                        upgradeall(maintoken, "Main Token", mainchannelid);
-                    }, 17000);
-                }
-            }, 5000);*/
         }
     }
 );
@@ -377,60 +341,11 @@ if (extratokencheck) {
                 if (global.etoken) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
+			if (settings.autoquest) getquests(extratoken, extraautoquestchannelid, "Extra Token");
                         setTimeout(() => {
                             sleepy("Extra", "CheckList");
                         }, 5000);
                     }, 3500);
-
-                    /*if (settings.huntandbattle) {
-                        setTimeout(() => {
-                            hunt(
-                                extratoken,
-                                "StartUp",
-                                "Extra Token",
-                                extrachannelid
-                            );
-                        }, 5000);
-
-                        setTimeout(() => {
-                            battle(
-                                extratoken,
-                                "StartUp",
-                                "Extra Token",
-                                extrachannelid
-                            );
-                        }, 7500);
-                    }
-                    if (settings.animals.enable) {
-                        setTimeout(() => {
-                            animals(
-                                extratoken,
-                                "Extra Token",
-                                extrachannelid,
-                                settings.animals.type
-                            );
-                        }, 9500);
-                        //coded   by @mid0aria on gi thub
-                    }
-                    if (settings.pray) {
-                        setTimeout(() => {
-                            pray(extratoken, "Extra Token", extrachannelid);
-                        }, 11000);
-                    }
-                    if (settings.curse) {
-                        setTimeout(() => {
-                            curse(extratoken, "Extra Token", extrachannelid);
-                        }, 14000);
-                    }
-                    if (settings.upgradeautohunt.enable) {
-                        setTimeout(() => {
-                            upgradeall(
-                                extratoken,
-                                "Extra Token",
-                                extrachannelid
-                            );
-                        }, 17000);
-                    }*/
                 }
             }
         }
@@ -439,104 +354,97 @@ if (extratokencheck) {
     global.etoken = false;
 }
 //--------------------------HUNT BATTLE-------------------------------------------------------//
-if (settings.times.enable) {
-    var timehuntbattleinterval = settings.times.intervals.huntbattle.time;
-} else {
-    var timehuntbattleinterval = 17000;
-}
-
-setInterval(() => {
+function triggerhunt() {
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
         var bigger_timehunt = settings.times.hunttop;
-        var timehunt = Math.floor(
-            Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
-                smaller_timehunt
-        );
-
-        var smaller_timebattle = settings.times.battlebottom;
-        var bigger_timebattle = settings.times.battletop;
-        var timebattle = Math.floor(
-            Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
-                smaller_timebattle
-        );
+		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
     } else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 
-    if (settings.banbypass) {
-        bancheck(maintoken, mainchannelid);
-        dmbancheck(maintoken, owodmmainchannelid);
-    }
     if (settings.huntandbattle) {
-        // if (global.mainbanc) {
-        hunt(maintoken, timehunt, "Main Token", mainchannelid);
-        if (settings.inventory.inventorycheck) {
-            setTimeout(() => {
-                checkinv(maintoken, mainchannelid, "Main Token");
-            }, 2500);
-        }
-        // }
-        setTimeout(() => {
-            if (settings.banbypass) {
-                bancheck(maintoken, mainchannelid);
-                dmbancheck(maintoken, owodmmainchannelid);
-            }
-            battle(maintoken, timebattle, "Main Token", mainchannelid);
-        }, timebattle);
+		if (global.mainhuntc) setTimeout(() => hunt(maintoken, timehunt, "Main Token", mainchannelid), timehunt);
+		else huntcheck(maintoken, "Main Token", mainchannelid, 3);
+		if (settings.inventory.inventorycheck) {
+			setTimeout(() => {
+				checkinv(maintoken, mainchannelid, "Main Token");
+			}, 2500);
+		}
+		if (settings.banbypass) {
+			bancheck(maintoken, mainchannelid);
+			dmbancheck(maintoken, owodmmainchannelid);
+		}	
     }
-}, timehuntbattleinterval);
+}
 
+function triggerbattle() {
+	if (settings.times.enable) {
+		var smaller_timebattle = settings.times.battlebottom;
+        var bigger_timebattle = settings.times.battletop;
+		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+	} else {
+        var timehunt = parseInt(rantime());
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
+        var timebattle = timehunt + 1000;
+    }
+	
+	if (settings.huntandbattle) {			
+		if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
+		else battlecheck(maintoken, "Main Token", mainchannelid, 3);
+	}
+}
+
+function triggerextrahunt() {
+	if (settings.times.enable) {
+        var smaller_timehunt = settings.times.huntbottom;
+        var bigger_timehunt = settings.times.hunttop;
+		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+    } else {
+        var timehunt = parseInt(rantime());
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
+        var timebattle = timehunt + 1000;
+    }
+
+	if (settings.huntandbattle) {
+		if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
+		else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
+		if (settings.inventory.inventorycheck) {
+			setTimeout(() => {
+				checkinv(extratoken, extrachannelid, "Extra Token");
+			}, 2500);
+		}
+		if (settings.banbypass) {
+			bancheck(extratoken, extrachannelid);
+			dmbancheck(extratoken, owodmextrachannelid);
+		}
+	}
+}
+
+function triggerextrabattle() {
+	if (settings.times.enable) {
+		var smaller_timebattle = settings.times.battlebottom;
+        var bigger_timebattle = settings.times.battletop;
+		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+	} else {
+        var timehunt = parseInt(rantime());
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
+        var timebattle = timehunt + 1000;
+    }
+	
+	if (settings.huntandbattle) {
+		if (global.extrabattlec) setTimeout(() => battle(extratoken, timebattle, "Extra Token", extrachannelid), timebattle);
+		else battlecheck(extratoken, "Extra Token", extrachannelid, 3);
+	}
+}
+
+triggerhunt();
+triggerbattle();
 if (global.etoken) {
-    setInterval(() => {
-        if (settings.times.enable) {
-            var smaller_timehunt = settings.times.huntbottom;
-            var bigger_timehunt = settings.times.hunttop;
-            var timehunt = Math.floor(
-                Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
-                    smaller_timehunt
-            );
-
-            var smaller_timebattle = settings.times.battlebottom;
-            var bigger_timebattle = settings.times.battletop;
-            var timebattle = Math.floor(
-                Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
-                    smaller_timebattle
-            );
-        } else {
-            var timehunt = parseInt(rantime());
-            if (timehunt <= 6000) {
-                timehunt = timehunt + 2000;
-            }
-            var timebattle = timehunt + 1000;
-        }
-
-        if (settings.banbypass) {
-            extrabancheck(extratoken, extrachannelid);
-            dmextrabancheck(extratoken, owodmextrachannelid);
-        }
-        if (settings.huntandbattle) {
-            // if (global.mainbanc) {
-            hunt(extratoken, timehunt, "Extra Token", extrachannelid);
-            if (settings.inventory.inventorycheck) {
-                setTimeout(() => {
-                    checkinv(extratoken, extrachannelid, "Extra Token");
-                }, 2500);
-            }
-            // }
-            setTimeout(() => {
-                if (settings.banbypass) {
-                    extrabancheck(extratoken, extrachannelid);
-                    dmextrabancheck(extratoken, owodmextrachannelid);
-                }
-                battle(extratoken, timebattle, "Extra Token", extrachannelid);
-            }, timebattle);
-        }
-    }, timehuntbattleinterval);
+	triggerextrahunt();
+	triggerextrabattle();
 }
 //-----------------------------------ANIMALS----------------------------------------------//
 if (settings.times.intervals.animals.enable) {
@@ -859,6 +767,14 @@ function hunt(token, timehunt, tokentype, channelid) {
             );
         }
     );
+	if (tokentype == "Extra Token") {
+		global.extrahuntc = false;
+		extrahuntcheck(token, tokentype, channelid, 3);
+	}
+	else {
+		global.mainhuntc = false;
+		huntcheck(token, tokentype, channelid, 3);
+	}
 }
 
 function battle(token, timebattle, tokentype, channelid) {
@@ -889,6 +805,14 @@ function battle(token, timebattle, tokentype, channelid) {
             );
         }
     );
+	if (tokentype == "Extra Token") {
+		global.extrabattlec = false;
+		extrabattlecheck(token, tokentype, channelid, 3);
+	}
+	else {
+		global.mainbattlec = false;
+		battlecheck(token, tokentype, channelid, 3);
+	}
 }
 
 function animals(token, tokentype, channelid, type) {
@@ -1068,50 +992,52 @@ function checklist(token, tokentype, channelid) {
                             var cont = bod[0].embeds;
                             var des = cont[0].description;
 
-                            chalk.magenta(` [${tokentype}]`) +
-                                chalk.yellow("Getting Checklist 🔎");
-                            if (des.includes("☑️ 🎉")) {
-                                updatechecklistsocket("all", "✅");
-                                return "checklist completed";
-                            }
-                            if (des.includes("☑️ 💎")) {
-                                updatechecklistsocket("lb", "✅");
-                            }
-                            if (des.includes("☑️ ⚔")) {
-                                updatechecklistsocket("crate", "✅");
-                            }
+							if (cont[0].author.name.includes("Checklist")) {
+								chalk.magenta(` [${tokentype}]`) +
+									chalk.yellow("Getting Checklist 🔎");
+								if (des.includes("☑️ 🎉")) {
+									updatechecklistsocket("all", "✅");
+									return "checklist completed";
+								}
+								if (des.includes("☑️ 💎")) {
+									updatechecklistsocket("lb", "✅");
+								}
+								if (des.includes("☑️ ⚔")) {
+									updatechecklistsocket("crate", "✅");
+								}
 
-                            if (des.includes("⬛ 🎁")) {
-                                daily(token, tokentype, channelid);
-                            } else {
-                                updatechecklistsocket("daily", "✅");
-                            }
-                            if (des.includes("⬛ 🍪")) {
-                                cookie(token, tokentype, channelid);
-                            } else {
-                                updatechecklistsocket("cookie", "✅");
-                            }
-                            if (des.includes("⬛ 📝")) {
-                                console.log(
-                                    chalk.magenta(`[${tokentype}] `) +
-                                        chalk.red(
-                                            "YOUR DAILY VOTE IS AVAILABLE!"
-                                        )
-                                );
-                            } else {
-                                updatechecklistsocket("vote", "✅");
-                            }
-                            if (des.includes("⬛ 📜")) {
-                                if (settings.autoquest) {
-                                    getquests(
-                                        maintoken,
-                                        mainautoquestchannelid,
-                                        "Main Token"
-                                    );
-                                }
-                            } else {
-                                updatechecklistsocket("quest", "✅");
-                            }
+								if (des.includes("⬛ 🎁")) {
+									daily(token, tokentype, channelid);
+								} else {
+									updatechecklistsocket("daily", "✅");
+								}
+								if (des.includes("⬛ 🍪")) {
+									cookie(token, tokentype, channelid);
+								} else {
+									updatechecklistsocket("cookie", "✅");
+								}
+								if (des.includes("⬛ 📝")) {
+									console.log(
+										chalk.magenta(`[${tokentype}] `) +
+											chalk.red(
+												"YOUR DAILY VOTE IS AVAILABLE!"
+											)
+									);
+								} else {
+									updatechecklistsocket("vote", "✅");
+								}
+								if (des.includes("⬛ 📜")) {
+									if (settings.autoquest) {
+										getquests(
+											maintoken,
+											mainautoquestchannelid,
+											"Main Token"
+										);
+									}
+								} else {
+									updatechecklistsocket("quest", "✅");
+								}
+							}
                         } catch (error) {
                             updateerrorsocket(
                                 "Unable to get Checklist (RESTART BOT!)"
@@ -1170,6 +1096,7 @@ function cookie(token, tokentype, channelid) {
                 authorization: token,
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+		//not suggested to cookie to OwO because it will always send a captcha
             json: {
                 content: `${prefix} cookie <@408785106942164992>`,
                 nonce: nonce(),
@@ -1581,27 +1508,24 @@ function checkinv(token, channelid, tokentype) {
                     if (!cont.includes("gem4")) {
                         collection.push("luckgem");
                     }
-                    if (
-                        cont.includes("gem1") &&
-                        cont.includes("gem3") &&
-                        cont.includes("gem4")
-                    ) {
-                        getinv(
-                            token,
-                            channelid,
-                            tokentype,
-                            "nogem",
-                            collect(["nocollection"])
-                        );
-                    } else {
-                        getinv(
+                    if (!cont.includes("gem1") || !cont.includes("gem3") || !cont.includes("gem4"))
+					{
+						getinv(
                             token,
                             channelid,
                             tokentype,
                             "gemvar",
                             collection
-                        );
-                    }
+						);
+						console.log(
+							chalk.red(
+								`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+							) +
+								chalk.magenta(` [${tokentype}]`) +
+								chalk.yellow(" inventory checking 🔍 (type-1)")
+							//cod ed by @mid0aria on github
+						);
+					}
                 }
             }
         );
@@ -2034,10 +1958,10 @@ async function getquests(token, channelid, tokentype) {
                         if (
                             cont[0].description.includes(
                                 "You finished all of your quests!"
-                            )
+                            ) && cont[0].author.name.includes("Quest Log")
                         ) {
                             global.quest = false;
-                        } else {
+                        } else if (cont[0].author.name.includes("Quest Log")) {
                             var quest = cont[0].description
                                 .split("**1. ")[1]
                                 .split("**")[0];
@@ -2748,4 +2672,151 @@ function elaina2(token, channelid, phrasesFilePath) {
             }
         }
     });
+}
+
+//----------------------------------------------------CHECK IF HUNTED OR BATTLED----------------------------------------------------//
+//little help from random guys
+//training myself, for better future, for the love for her <3
+function huntcheck(token, tokentype, channelid, checknumber)
+{
+	request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=${checknumber}`,
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error(error);
+            }
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].content;
+
+            if (
+                cont.includes("You found:") ||
+                cont.includes("and caught a")
+            ) {
+				global.mainhuntc = true;
+				triggerhunt();
+			} else {
+				checknumber = checknumber + 1;
+				if (checknumber >= 8) {
+					global.mainhuntc = true;
+					triggerhunt();
+					return;
+				} else setTimeout(() => huntcheck(token, tokentype, channelid, checknumber), 1600);
+			}
+        }
+    );
+}
+
+function battlecheck(token, tokentype, channelid, checknumber)
+{
+	request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=${checknumber}`,
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error(error);
+            }
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].embeds;
+			
+			if (
+			cont.length > 0 && (
+				cont[0].author.name.includes("goes into battle") ||
+				cont[0].footer.text.includes("your team gained")
+				)
+			) {
+				global.mainbattlec = true;
+				triggerbattle();
+			} else {
+				checknumber = checknumber + 1;
+				if (checknumber >= 8) {
+					global.mainbattlec = true;
+					triggerbattle();
+					return;
+				} else setTimeout(() => battlecheck(token, tokentype, channelid, checknumber), 1600);
+			}
+        }
+    );
+}
+
+function extrahuntcheck(token, tokentype, channelid, checknumber)
+{
+	request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=${checknumber}`,
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error(error);
+            }
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].content;
+
+            if (
+                cont.includes("You found:") ||
+                cont.includes("and caught a")
+            ) {
+				global.extrahuntc = true;
+				triggerextrahunt();
+			} else {
+				checknumber = checknumber + 1;
+				if (checknumber >= 8) {
+					global.extrahuntc = true;
+					triggerextrahunt();
+					return;
+				} else setTimeout(() => extrahuntcheck(token, tokentype, channelid, checknumber), 1600);
+			}
+        }
+    );
+}
+
+function extrabattlecheck(token, tokentype, channelid, checknumber)
+{
+	request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=${checknumber}`,
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error(error);
+            }
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].embeds;
+			
+			if (
+			cont.length > 0 && (
+				cont[0].author.name.includes("goes into battle") ||
+				cont[0].footer.text.includes("your team gained")
+				)
+			) {
+				global.extrabattlec = true;
+				triggerextrabattle();
+			} else {
+				checknumber = checknumber + 1;
+				if (checknumber >= 8) {
+					global.extrabattlec = true;
+					triggerextrabattle();
+					return;
+				} else setTimeout(() => extrabattlecheck(token, tokentype, channelid, checknumber), 1600);
+			}
+        }
+    );
 }

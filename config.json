@@ -9,10 +9,6 @@
             "battlebottom": 16000,
             "battletop": 32000,
             "intervals": {
-                "huntbattle": {
-                    "enable": true,
-                    "time": 17000
-                },
                 "animals": {
                     "enable": true,
                     "time": 1200000

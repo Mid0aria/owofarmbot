@@ -99,10 +99,6 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
             "battletop": 16000, / The time to be entered must be entered in milliseconds. Maximum time to run battle command.
 
             "intervals": {
-                "huntbattle": {
-                    "enable": true, true or false
-                    "time": 17000  / The time to be entered must be entered in milliseconds.
-                },
                 "animals": {
                     "enable": true, true or false
                     "time": 1200000  / The time to be entered must be entered in milliseconds.
