@@ -992,50 +992,52 @@ function checklist(token, tokentype, channelid) {
                             var cont = bod[0].embeds;
                             var des = cont[0].description;
 
-                            chalk.magenta(` [${tokentype}]`) +
-                                chalk.yellow("Getting Checklist 🔎");
-                            if (des.includes("☑️ 🎉")) {
-                                updatechecklistsocket("all", "✅");
-                                return "checklist completed";
-                            }
-                            if (des.includes("☑️ 💎")) {
-                                updatechecklistsocket("lb", "✅");
-                            }
-                            if (des.includes("☑️ ⚔")) {
-                                updatechecklistsocket("crate", "✅");
-                            }
+							if (cont[0].author.name.includes("Checklist")) {
+								chalk.magenta(` [${tokentype}]`) +
+									chalk.yellow("Getting Checklist 🔎");
+								if (des.includes("☑️ 🎉")) {
+									updatechecklistsocket("all", "✅");
+									return "checklist completed";
+								}
+								if (des.includes("☑️ 💎")) {
+									updatechecklistsocket("lb", "✅");
+								}
+								if (des.includes("☑️ ⚔")) {
+									updatechecklistsocket("crate", "✅");
+								}
 
-                            if (des.includes("⬛ 🎁")) {
-                                daily(token, tokentype, channelid);
-                            } else {
-                                updatechecklistsocket("daily", "✅");
-                            }
-                            if (des.includes("⬛ 🍪")) {
-                                cookie(token, tokentype, channelid);
-                            } else {
-                                updatechecklistsocket("cookie", "✅");
-                            }
-                            if (des.includes("⬛ 📝")) {
-                                console.log(
-                                    chalk.magenta(`[${tokentype}] `) +
-                                        chalk.red(
-                                            "YOUR DAILY VOTE IS AVAILABLE!"
-                                        )
-                                );
-                            } else {
-                                updatechecklistsocket("vote", "✅");
-                            }
-                            if (des.includes("⬛ 📜")) {
-                                if (settings.autoquest) {
-                                    getquests(
-                                        maintoken,
-                                        mainautoquestchannelid,
-                                        "Main Token"
-                                    );
-                                }
-                            } else {
-                                updatechecklistsocket("quest", "✅");
-                            }
+								if (des.includes("⬛ 🎁")) {
+									daily(token, tokentype, channelid);
+								} else {
+									updatechecklistsocket("daily", "✅");
+								}
+								if (des.includes("⬛ 🍪")) {
+									cookie(token, tokentype, channelid);
+								} else {
+									updatechecklistsocket("cookie", "✅");
+								}
+								if (des.includes("⬛ 📝")) {
+									console.log(
+										chalk.magenta(`[${tokentype}] `) +
+											chalk.red(
+												"YOUR DAILY VOTE IS AVAILABLE!"
+											)
+									);
+								} else {
+									updatechecklistsocket("vote", "✅");
+								}
+								if (des.includes("⬛ 📜")) {
+									if (settings.autoquest) {
+										getquests(
+											maintoken,
+											mainautoquestchannelid,
+											"Main Token"
+										);
+									}
+								} else {
+									updatechecklistsocket("quest", "✅");
+								}
+							}
                         } catch (error) {
                             updateerrorsocket(
                                 "Unable to get Checklist (RESTART BOT!)"
@@ -1956,10 +1958,10 @@ async function getquests(token, channelid, tokentype) {
                         if (
                             cont[0].description.includes(
                                 "You finished all of your quests!"
-                            )
+                            ) && cont[0].author.name.includes("Quest Log")
                         ) {
                             global.quest = false;
-                        } else {
+                        } else if (cont[0].author.name.includes("Quest Log")) {
                             var quest = cont[0].description
                                 .split("**1. ")[1]
                                 .split("**")[0];
