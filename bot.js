@@ -371,9 +371,7 @@ function triggerhunt() {
 		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
     } else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 	
@@ -420,9 +418,7 @@ function triggerbattle() {
 		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
 	} else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 		
@@ -460,9 +456,7 @@ function triggerextrahunt() {
 		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
     } else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 		
@@ -502,14 +496,12 @@ function triggerextrahunt() {
 
 function triggerextrabattle() {
 	if (settings.times.enable) {
-		var smaller_timebattle = settings.times.battlebottom;
+        var smaller_timebattle = settings.times.battlebottom;
         var bigger_timebattle = settings.times.battletop;
-		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+        var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
 	} else {
         var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) {
-            timehunt = timehunt + 2000;
-        }
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
 	
