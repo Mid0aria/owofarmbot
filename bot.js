@@ -376,7 +376,7 @@ function triggerhunt() {
     }
 	
 	if (mainctrl.stop_hunt_after_quest) {
-		if (global.mainquest && global.quest) {
+		if (global.mainquest && !global.quest) {
 			console.log(
 				chalk.magenta("[Main Token]") + 
 				chalk.white("Quest completed.\n") +
@@ -423,7 +423,7 @@ function triggerbattle() {
     }
 		
 	if (mainctrl.stop_battle_after_quest) {
-		if (global.mainquest && global.quest) {
+		if (global.mainquest && !global.quest) {
 			console.log(
 				chalk.magenta("[Main Token]") + 
 				chalk.white("Quest completed.\n") +
@@ -461,7 +461,7 @@ function triggerextrahunt() {
     }
 		
 	if (extractrl.stop_hunt_after_quest) {
-		if (global.extraquest && global.quest) {
+		if (global.extraquest && !global.quest) {
 			console.log(
 				chalk.magenta("[Extra Token]") + 
 				chalk.white("Quest completed.\n") +
@@ -506,7 +506,7 @@ function triggerextrabattle() {
     }
 	
 	if (extractrl.stop_battle_after_quest) {
-		if (global.extraquest && global.quest) {
+		if (global.extraquest && !global.quest) {
 			console.log(
 				chalk.magenta("[Extra Token]") + 
 				chalk.white("Quest completed.\n") +
@@ -2057,6 +2057,8 @@ async function getquests(token, channelid, tokentype) {
                             ) && cont[0].author.name.includes("Quest Log")
                         ) {
                             global.quest = false;
+                            if (tokentype == "Main token") global.mainquest = true;
+							else global.extraquest = true;
                         } else if (cont[0].author.name.includes("Quest Log")) {
                             var quest = cont[0].description
                                 .split("**1. ")[1]
@@ -2147,27 +2149,31 @@ async function getquests(token, channelid, tokentype) {
                                     ) {
                                         global.quest = false;
                                         if (tokentype == "Main Token") global.mainquest = false;
-										else global.extraquest = false;
+                                        else global.extraquest = false;
                                         return xpquests(token, channelid, tokentype);
-                                    } else if (quest.includes("Gamble")) {
-                                        global.quest = false;
-                                        return questgamble(
-                                            token,
-                                            channelid,
-                                            parseInt(progress1), //coded by @mid0aria on github
-                                            parseInt(progress2)
-                                        );
-                                    } else if (
-                                        quest.includes("Use an action")
-                                    ) {
-                                        global.quest = false;
-                                        return questuseactioncommand(
-                                            token,
-                                            channelid,
-                                            parseInt(progress1), //coded by @mid0aria on github
-                                            parseInt(progress2)
-                                        );
-                                    }
+                                    } else {
+										if (tokentype == "Main Token") global.mainquest = true;
+										else global.extraquest = true;
+										if (quest.includes("Gamble")) {
+                                            global.quest = false;
+                                            return questgamble(
+												token,
+												channelid,
+												parseInt(progress1), //coded by @mid0aria on github
+												parseInt(progress2)
+											);
+										} else if (
+											quest.includes("Use an action")
+										) {
+											global.quest = false;
+											return questuseactioncommand(
+												token,
+												channelid,
+												parseInt(progress1), //coded by @mid0aria on github
+												parseInt(progress2)
+											);
+										}
+									}
                                 } else {
                                     if (
                                         quest.includes(
