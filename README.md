@@ -3,7 +3,7 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.7.1(OPEN SOURCE)(EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.7.3(OPEN SOURCE)(EOL)</h1>
 <h1>I do not recommend using this bot until v2 is released</h1>
 <p align="center">
 
@@ -179,7 +179,21 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
                 "amount": "1"
             }
         },
-        "notifynumber": "5" //how many times to repeat the notification
+        "notifynumber": "1", //how many times to repeat the notification
+        "manualcontroller": { //some built-in automated workflow
+			"main": {
+				"stop_hunt_after_daily": false, //stop hunt after daily (daily lootbox) is completed
+				"stop_battle_after_daily": false, //stop battle after daily (daily crate) is completed
+				"stop_hunt_after_quest": false, //stop hunt after exp related quest is completed
+				"stop_battle_after_quest": false //stop battle after exp related quest is completed
+			},
+			"extra": {
+				"stop_hunt_after_daily": false,
+				"stop_battle_after_daily": false,
+				"stop_hunt_after_quest": false,
+				"stop_battle_after_quest": false
+			}
+		}
     },
     "main":{
         "token":"", main token (if you use replit please edit .env file)
