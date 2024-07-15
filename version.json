@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7.2",
+    "version": "1.0.7.3",
     "updater": "0.0.3",
-    "note": "V1.0.7.2: Mutiple update, mainly aim to avoid new OwO ban system (EOL)"
+    "note": "V1.0.7.3: Fix bug and new feature (EOL)"
 }
