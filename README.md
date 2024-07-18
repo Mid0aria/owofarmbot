@@ -286,7 +286,7 @@ Notify mode:
 
 Promt mode:
 
-![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchapromt.png)
+![](https://raw.githubusercontent.com/Random-629671/owofarmbot_ms_build_uwu/main/images/captchapromt.png)
 
 ## 📡・Socket Client
 
