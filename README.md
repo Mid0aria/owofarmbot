@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/6c20fe5c-3933-41a1-b8fb-63fa4a33879c)dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
+dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
 6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 💔
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
@@ -281,9 +281,11 @@ m)
 > If you want the captcha alert to work properly, turn off do not disturb, or you can use promt mode
 
 Notify mode:
+
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
 
 Promt mode:
+
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchapromt.png)
 
 ## 📡・Socket Client
