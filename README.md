@@ -1,9 +1,9 @@
-dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
+![image](https://github.com/user-attachments/assets/6c20fe5c-3933-41a1-b8fb-63fa4a33879c)dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
 6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 💔
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.7.3(OPEN SOURCE)(EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.7.4(OPEN SOURCE)(EOL)</h1>
 <h1>I do not recommend using this bot until v2 is released</h1>
 <p align="center">
 
@@ -62,7 +62,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
 -   Auto Hunt
 -   Auto Battle
 -   Inventory Check
-    -   Auto Gem Use (beta)
+    -   Auto Gem Use (beta) with limition
     -   Auto Lootbox Use
     -   Auto Fabled Lootbox Use
     -   Auto Crate Use
@@ -80,6 +80,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
 -   Captcha(Ban) Protection v0.1.10 (beta)
 -   Discord-RPC
 -   Typing Indicator
+-   Automated Workflow
 -   **Extra Token**
     -   All Main Token Features
     -   Auto Pray for Main Token
@@ -180,18 +181,23 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
             }
         },
         "notifynumber": "1", //how many times to repeat the notification
+        "notifymethod": "", //promt or notify, how the bot will notify you
+                            //promt only work on Windows 10 and up, default is notify
         "manualcontroller": { //some built-in automated workflow
 			"main": {
 				"stop_hunt_after_daily": false, //stop hunt after daily (daily lootbox) is completed
 				"stop_battle_after_daily": false, //stop battle after daily (daily crate) is completed
 				"stop_hunt_after_quest": false, //stop hunt after exp related quest is completed
-				"stop_battle_after_quest": false //stop battle after exp related quest is completed
+				"stop_battle_after_quest": false, //stop battle after exp related quest is completed
+                "maximum_gem_rarity": "" //common, uncommon, rare, epic, mythical, legendary
+                                         //blank or other will use highest gem possible
 			},
 			"extra": {
 				"stop_hunt_after_daily": false,
 				"stop_battle_after_daily": false,
 				"stop_hunt_after_quest": false,
-				"stop_battle_after_quest": false
+				"stop_battle_after_quest": false,
+                "maximum_gem_rarity": ""
 			}
 		}
     },
@@ -272,9 +278,13 @@ m)
 ## ⚠️・Captcha Alert
 
 > [!NOTE]
-> If you want the captcha alert to work properly, turn off do not disturb
+> If you want the captcha alert to work properly, turn off do not disturb, or you can use promt mode
 
+Notify mode:
 ![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchaalert.png)
+
+Promt mode:
+![](https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/images/captchapromt.png)
 
 ## 📡・Socket Client
 
