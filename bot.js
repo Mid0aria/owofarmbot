@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.3";
+var version = "1.0.7.4";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -283,6 +283,33 @@ global.mainquest = false;
 global.extrahuntdaily = false;
 global.extrabattledaily = false;
 global.extraquest = false;
+
+const mainrarity = mainctrl.maximum_gem_rarity;
+var mainmaxgemvalue;
+switch (mainrarity) {
+    case "legendary": mainmaxgemvalue = 6; break;
+    case "mythical": mainmaxgemvalue = 5; break;
+    case "epic": mainmaxgemvalue = 4; break;
+    case "rare": mainmaxgemvalue = 3; break;
+    case "uncommon": mainmaxgemvalue = 2; break;
+    case "common": mainmaxgemvalue = 1; break;
+    default: mainmaxgemvalue = 7; break;
+}
+
+const extrararity = extractrl.maximum_gem_rarity;
+var extramaxgemvalue;
+switch (extrararity) {
+    case "legendary": extramaxgemvalue = 6; break;
+    case "mythical": extramaxgemvalue = 5; break;
+    case "epic": extramaxgemvalue = 4; break;
+    case "rare": extramaxgemvalue = 3; break;
+    case "uncommon": extramaxgemvalue = 2; break;
+    case "common": extramaxgemvalue = 1; break;
+    default: extramaxgemvalue = 7; break;
+}
+
+var notifymethod = settings.notifymethod;
+if (notifymethod != "promt" || notifymethod != "notify") notifymethod = "notify";
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
 request.get(
@@ -1605,23 +1632,23 @@ function checkinv(token, channelid, tokentype) {
                         collection.push("luckgem");
                     }
                     if (!cont.includes("gem1") || !cont.includes("gem3") || !cont.includes("gem4"))
-					{
-						getinv(
+                    {
+                        getinv(
                             token,
                             channelid,
                             tokentype,
                             "gemvar",
                             collection
-						);
-						console.log(
-							chalk.red(
-								`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-							) +
-								chalk.magenta(` [${tokentype}]`) +
-								chalk.yellow(" inventory checking 🔍 (type-1)")
-							//cod ed by @mid0aria on github
-						);
-					}
+                        );
+                        console.log(
+                            chalk.red(
+                                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            ) +
+                                chalk.magenta(` [${tokentype}]`) +
+                                chalk.yellow(" inventory checking 🔍 (type-1)")
+                            //cod ed by @mid0aria on github
+                        );
+                    }
                 }
             }
         );
@@ -1687,31 +1714,52 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
 
                     if (collectc.contains("huntgem")) {
                         switch (true) {
-                            case cont.includes("`057`"):
+                            case (cont.includes("`057`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
+                            )):
                                 huntgem = "57";
                                 huntgemstatus = true;
                                 break;
-                            case cont.includes("`056`"):
+                            case (cont.includes("`056`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
+                            )):
                                 huntgem = "56";
                                 huntgemstatus = true;
                                 break;
-                            case cont.includes("`055`"):
+                            case (cont.includes("`055`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
+                            )):
                                 huntgem = "55";
                                 huntgemstatus = true;
                                 break;
-                            case cont.includes("`054`"):
+                            case (cont.includes("`054`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
+                            )):
                                 huntgem = "54";
                                 huntgemstatus = true;
                                 break;
-                            case cont.includes("`053`"):
+                            case (cont.includes("`053`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
+                            )):
                                 huntgem = "53";
                                 huntgemstatus = true;
                                 break;
-                            case cont.includes("`052`"):
+                            case (cont.includes("`052`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
+                            )):
                                 huntgem = "52";
                                 huntgemstatus = true;
                                 break;
-                            case cont.includes("`051`"):
+                            case (cont.includes("`051`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
+                            )):
                                 huntgem = "51";
                                 huntgemstatus = true;
                                 break;
@@ -1722,31 +1770,52 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                     if (collectc.contains("empgem")) {
                         switch (true) {
-                            case cont.includes("`071`"):
+                            case (cont.includes("`071`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
+                            )):
                                 empgem = "71";
                                 empgemstatus = true;
                                 break;
-                            case cont.includes("`070`"):
+                            case (cont.includes("`070`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
+                            )):
                                 empgem = "70";
                                 empgemstatus = true;
                                 break;
-                            case cont.includes("`069`"):
+                            case (cont.includes("`069`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
+                            )):
                                 empgem = "69";
                                 empgemstatus = true;
                                 break;
-                            case cont.includes("`068`"):
+                            case (cont.includes("`068`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
+                            )):
                                 empgem = "68";
                                 empgemstatus = true;
                                 break;
-                            case cont.includes("`067`"):
+                            case (cont.includes("`067`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
+                            )):
                                 empgem = "67";
                                 empgemstatus = true;
                                 break;
-                            case cont.includes("`066`"):
+                            case (cont.includes("`066`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
+                            )):
                                 empgem = "66";
                                 empgemstatus = true;
                                 break;
-                            case cont.includes("`065`"):
+                            case (cont.includes("`065`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
+                            )):
                                 empgem = "65";
                                 empgemstatus = true;
                                 break;
@@ -1757,31 +1826,52 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                     if (collectc.contains("luckgem")) {
                         switch (true) {
-                            case cont.includes("`078`"):
+                            case (cont.includes("`078`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
+                            )):
                                 luckgem = "78";
                                 luckgemstatus = true;
                                 break;
-                            case cont.includes("`077`"):
+                            case (cont.includes("`077`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
+                            )):
                                 luckgem = "77";
                                 luckgemstatus = true;
                                 break;
-                            case cont.includes("`076`"):
+                            case (cont.includes("`076`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
+                            )):
                                 luckgem = "76";
                                 luckgemstatus = true;
                                 break;
-                            case cont.includes("`075`"):
+                            case (cont.includes("`075`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
+                            )):
                                 luckgem = "75";
                                 luckgemstatus = true;
                                 break;
-                            case cont.includes("`074`"):
+                            case (cont.includes("`074`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
+                            )):
                                 luckgem = "74";
                                 luckgemstatus = true;
                                 break;
-                            case cont.includes("`073`"):
+                            case (cont.includes("`073`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
+                            )):
                                 luckgem = "73";
                                 luckgemstatus = true;
                                 break;
-                            case cont.includes("`072`"):
+                            case (cont.includes("`072`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
+                            )):
                                 luckgem = "72";
                                 luckgemstatus = true;
                                 break;
@@ -1793,31 +1883,52 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
 
                     if (collectc.contains("specialgem")) {
                         switch (true) {
-                            case cont.includes("`085`"):
+                            case (cont.includes("`085`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
+                            )):
                                 specialgem = "85";
                                 specialgemstatus = true;
                                 break;
-                            case cont.includes("`084`"):
+                            case (cont.includes("`084`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
+                            )):
                                 specialgem = "84";
                                 specialgemstatus = true;
                                 break;
-                            case cont.includes("`083`"):
+                            case (cont.includes("`083`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
+                            )):
                                 specialgem = "83";
                                 specialgemstatus = true;
                                 break;
-                            case cont.includes("`082`"):
+                            case (cont.includes("`082`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
+                            )):
                                 specialgem = "82";
                                 specialgemstatus = true;
                                 break;
-                            case cont.includes("`081`"):
+                            case (cont.includes("`081`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
+                            )):
                                 specialgem = "81";
                                 specialgemstatus = true;
                                 break;
-                            case cont.includes("`080`"):
+                            case (cont.includes("`080`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
+                            )):
                                 specialgem = "80";
                                 specialgemstatus = true;
                                 break;
-                            case cont.includes("`079`"):
+                            case (cont.includes("`079`") && (
+                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
+                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
+                            )):
                                 specialgem = "79";
                                 specialgemstatus = true;
                                 break;
@@ -2054,12 +2165,12 @@ async function getquests(token, channelid, tokentype) {
                         if (
                             cont[0].description.includes(
                                 "You finished all of your quests!"
-                            ) && cont[0].author.name.includes("Quest Log")
+                            )
                         ) {
                             global.quest = false;
                             if (tokentype == "Main token") global.mainquest = true;
-							else global.extraquest = true;
-                        } else if (cont[0].author.name.includes("Quest Log")) {
+                            else global.extraquest = true;
+                        } else {
                             var quest = cont[0].description
                                 .split("**1. ")[1]
                                 .split("**")[0];
@@ -2088,10 +2199,10 @@ async function getquests(token, channelid, tokentype) {
                                         .split("**")[0];
                                     global.questtitle = `${quest}`;
                                     var progress1 = cont[0].description
-                                        .split("Progress: [")[1]
+                                        .split("Progress: [")[2]
                                         .split("/")[0];
                                     var progress2 = cont[0].description
-                                        .split("/")[1]
+                                        .split("/")[2]
                                         .split("]")[0];
                                 } catch (error) {
                                     global.quest = false;
@@ -2115,10 +2226,10 @@ async function getquests(token, channelid, tokentype) {
                                             .split("**")[0];
                                         global.questtitle = `${quest}`;
                                         var progress1 = cont[0].description
-                                            .split("Progress: [")[1]
+                                            .split("Progress: [")[3]
                                             .split("/")[0];
                                         var progress2 = cont[0].description
-                                            .split("/")[1]
+                                            .split("/")[3]
                                             .split("]")[0];
                                     } catch (error) {
                                         global.quest = false;
@@ -2152,28 +2263,28 @@ async function getquests(token, channelid, tokentype) {
                                         else global.extraquest = false;
                                         return xpquests(token, channelid, tokentype);
                                     } else {
-										if (tokentype == "Main Token") global.mainquest = true;
-										else global.extraquest = true;
-										if (quest.includes("Gamble")) {
+                                            if (tokentype == "Main Token") global.mainquest = true;
+                                            else global.extraquest = true;
+                                            if (quest.includes("Gamble")) {
                                             global.quest = false;
                                             return questgamble(
-												token,
-												channelid,
-												parseInt(progress1), //coded by @mid0aria on github
-												parseInt(progress2)
-											);
-										} else if (
-											quest.includes("Use an action")
-										) {
-											global.quest = false;
-											return questuseactioncommand(
-												token,
-												channelid,
-												parseInt(progress1), //coded by @mid0aria on github
-												parseInt(progress2)
-											);
-										}
-									}
+                                                token,
+                                                channelid,
+                                                parseInt(progress1), //coded by @mid0aria on github
+                                                parseInt(progress2)
+                                            );
+                                        } else if (
+                                            quest.includes("Use an action")
+                                        ) {
+                                            global.quest = false;
+                                            return questuseactioncommand(
+                                                token,
+                                                channelid,
+                                                parseInt(progress1), //coded by @mid0aria on github
+                                                parseInt(progress2)
+                                            );
+                                        }
+                                    }
                                 } else {
                                     if (
                                         quest.includes(
@@ -2476,16 +2587,21 @@ function bancheck(token, channelid) {
                         chalk.magenta(" [Main Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                for (let i = 0; i < notifynumber; i++) {
-					notifier.notify({
-						title: "(Main Token) Captcha Detected!",
-						message: "Solve the captcha and restart the bot!",
-						icon: "./utils/captcha.png",
-						sound: true,
-						wait: true,
-						appID: "OwO Farm Bot",
-					});
-				}
+                if (notifymethod == "notify") { 
+                    for (let i = 0; i < notifynumber; i++) {
+                        notifier.notify({
+                            title: "(Main Token) Captcha Detected!",
+                            message: "Solve the captcha and restart the bot!",
+                            icon: "./utils/captcha.png",
+                            sound: true,
+                            wait: true,
+                            appID: "OwO Farm Bot",
+                        });
+                    }
+                }
+                if (notifymethod == "promt") {
+                    for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Main Token"), 1600);
+                }
                 setTimeout(() => {
                     updateerrorsocket("(Main Token) Solve Captcha!");
                     process.exit(0);
@@ -2540,16 +2656,21 @@ function extrabancheck(token, channelid) {
                         chalk.magenta(" [Extra Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                for (let i = 0; i < notifynumber; i++) {
-						notifier.notify({
-						title: "(Extra Token) Captcha Detected!",
-						message: "Solve the captcha and restart the bot!",
-						icon: "./utils/captcha.png",
-						sound: true,
-						wait: true,
-						appID: "OwO Farm Bot",
-					});
-				}
+                if (notifymethod == "notify") { 
+                    for (let i = 0; i < notifynumber; i++) {
+                        notifier.notify({
+                            title: "(Extra Token) Captcha Detected!",
+                            message: "Solve the captcha and restart the bot!",
+                            icon: "./utils/captcha.png",
+                            sound: true,
+                            wait: true,
+                            appID: "OwO Farm Bot",
+                        });
+                    }
+                }
+                if (notifymethod == "promt") {
+                    for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Extra Token"), 1600);
+                }
                 setTimeout(() => {
                     updateerrorsocket("(Extra Token) Solve Captcha!");
                     process.exit(0);
@@ -2607,16 +2728,21 @@ function dmbancheck(token, channelid) {
                             chalk.magenta(" [Main Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    for (let i = 0; i < notifynumber; i++) {
-						notifier.notify({
-							title: "(Main Token) Captcha Detected!",
-							message: "Solve the captcha and restart the bot!",
-							icon: "./utils/captcha.png",
-							sound: true,
-							wait: true,
-							appID: "OwO Farm Bot",
-						});
-					}
+                    if (notifymethod == "notify") { 
+                        for (let i = 0; i < notifynumber; i++) {
+                            notifier.notify({
+                                title: "(Main Token) Captcha Detected!",
+                                message: "Solve the captcha and restart the bot!",
+                                icon: "./utils/captcha.png",
+                                sound: true,
+                                wait: true,
+                                appID: "OwO Farm Bot",
+                            });
+                        }
+                    }
+                    if (notifymethod == "promt") {
+                        for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Main Token"), 1600);
+                    }
 					setTimeout(() => {
 						updateerrorsocket("(Main Token) Solve DM Captcha!");
 						process.exit(0);
@@ -2674,16 +2800,21 @@ function dmextrabancheck(token, channelid) {
                             chalk.magenta(" [Extra Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    for (let i = 0; i < notifynumber; i++) {
-						notifier.notify({
-							title: "(Extra Token) Captcha Detected!",
-							message: "Solve the captcha and restart the bot!",
-							icon: "./utils/captcha.png",
-							sound: true,
-							wait: true,
-							appID: "OwO Farm Bot",
-						});
-					}
+                    if (notifymethod == "notify") { 
+                        for (let i = 0; i < notifynumber; i++) {
+                            notifier.notify({
+                                title: "(Extra Token) Captcha Detected!",
+                                message: "Solve the captcha and restart the bot!",
+                                icon: "./utils/captcha.png",
+                                sound: true,
+                                wait: true,
+                                appID: "OwO Farm Bot",
+                            });
+                        }
+                    }
+                    if (notifymethod == "promt") {
+                        for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Extra Token"), 1600);
+                    }
 					setTimeout(() => {
 						updateerrorsocket("(Extra Token) Solve DM Captcha!");
 						process.exit(0);
@@ -2778,6 +2909,16 @@ function elaina2(token, channelid, phrasesFilePath) {
             }
         }
     });
+}
+
+function createpromt(tokentype) {
+    const psCommands = [
+        'Add-Type -AssemblyName PresentationFramework',
+        '[System.Windows.MessageBox]::' +
+        `Show(\'Captcha detected on ${tokentype}! App Aborted!\', \'OwO Farm Bot\', \'OK\', \'Warning\')`
+    ];
+    const psScript = psCommands.join("; ");
+    cp.exec(`powershell.exe -ExecutionPolicy Bypass -Command "${psScript}"`);
 }
 
 //----------------------------------------------------CHECK IF HUNTED OR BATTLED----------------------------------------------------//
