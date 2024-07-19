@@ -184,22 +184,23 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
         "notifymethod": "", //promt or notify, how the bot will notify you
                             //promt only work on Windows 10 and up, default is notify
         "manualcontroller": { //some built-in automated workflow
-			"main": {
-				"stop_hunt_after_daily": false, //stop hunt after daily (daily lootbox) is completed
-				"stop_battle_after_daily": false, //stop battle after daily (daily crate) is completed
-				"stop_hunt_after_quest": false, //stop hunt after exp related quest is completed
-				"stop_battle_after_quest": false, //stop battle after exp related quest is completed
+            "main": {
+                "stop_hunt_after_daily": false,   //stop hunt after daily (daily lootbox) is completed
+                "stop_battle_after_daily": false, //stop battle after daily (daily crate) is completed
+                "stop_hunt_after_quest": false,   //stop hunt after exp related quest is completed
+                "stop_battle_after_quest": false, //stop battle after exp related quest is completed
+                                                  //if enable both daily and quest, bot will prefer to complete daily first
                 "maximum_gem_rarity": "" //common, uncommon, rare, epic, mythical, legendary
                                          //blank or other will use highest gem possible
-			},
-			"extra": {
-				"stop_hunt_after_daily": false,
-				"stop_battle_after_daily": false,
-				"stop_hunt_after_quest": false,
-				"stop_battle_after_quest": false,
+            },
+            "extra": {
+                "stop_hunt_after_daily": false,
+                "stop_battle_after_daily": false,
+                "stop_hunt_after_quest": false,
+                "stop_battle_after_quest": false,
                 "maximum_gem_rarity": ""
-			}
-		}
+            }
+        }
     },
     "main":{
         "token":"", main token (if you use replit please edit .env file)
