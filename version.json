@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7.4",
+    "version": "1.0.7.5",
     "updater": "0.0.3",
-    "note": "V1.0.7.4: Fix quest progress bug and new max gem tier feature (EOL)"
+    "note": "V1.0.7.5: Fix bugs and improvments (EOL)"
 }
