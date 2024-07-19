@@ -189,7 +189,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
                 "stop_battle_after_daily": false, //stop battle after daily (daily crate) is completed
                 "stop_hunt_after_quest": false,   //stop hunt after exp related quest is completed
                 "stop_battle_after_quest": false, //stop battle after exp related quest is completed
-                                                  //if enable both, quest control will override
+                                                  //if enable both daily and quest, bot will prefer to complete daily first
                 "maximum_gem_rarity": "" //common, uncommon, rare, epic, mythical, legendary
                                          //blank or other will use highest gem possible
             },
