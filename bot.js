@@ -382,7 +382,7 @@ if (extratokencheck) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
                         global.extrafirstrun = true;
-            if (settings.autoquest) setTimeout(() => getquests(extratoken, extraautoquestchannelid, "Extra Token"), 6100);
+                        if (settings.autoquest) setTimeout(() => getquests(extratoken, extraautoquestchannelid, "Extra Token"), 6100);
                         setTimeout(() => {
                             sleepy("Extra", "CheckList");
                         }, 5000);
@@ -424,7 +424,7 @@ function triggerhunt() {
                 chalk.white("Daily hunt completed.\n") +
                 chalk.red("STOPPED HUNTING ON [Main Token]")
             );
-			global.mainhuntpaused = true;
+            global.mainhuntpaused = true;
             return;
         }
     }
@@ -496,7 +496,7 @@ function triggerextrahunt() {
                 chalk.white("Quest completed.\n") +
                 chalk.red("STOPPED HUNTING ON [Extra Token]")
             );
-			global.extrahuntpaused = true;
+            global.extrahuntpaused = true;
             return; 
         }
     }
@@ -507,18 +507,18 @@ function triggerextrahunt() {
                 chalk.white("Daily hunt completed.\n") +
                 chalk.red("STOPPED HUNTING ON [Extra Token]")
             );
-			global.extrahuntpaused = true;
+            global.extrahuntpaused = true;
             return;
         }
     }
 
-	if (settings.huntandbattle) {
- 	    if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
- 	    else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
-  	    if (settings.inventory.inventorycheck) {
-  	        setTimeout(() => {
-	            checkinv(extratoken, extrachannelid, "Extra Token");
- 	        }, 2500);
+    if (settings.huntandbattle) {
+        if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
+        else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
+        if (settings.inventory.inventorycheck) {
+            setTimeout(() => {
+            checkinv(extratoken, extrachannelid, "Extra Token");
+            }, 2500);
         }
     }
 }
