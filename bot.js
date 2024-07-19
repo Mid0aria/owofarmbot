@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.4";
+var version = "1.0.7.5";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -258,15 +258,15 @@ if (settings.banbypass) {
 var notifynumber = config.settings.notifynumber;
 
 if (notifynumber < 0) {
-	console.log(
-		chalk.red(" Invalid notify number!"),
-		chalk.white("\n Defaulting to 1."),
-		chalk.gray("\n Why on earth you think you can use a negative value for a notify repeating number?"));
-	notifynumber = 1;
+    console.log(
+        chalk.red(" Invalid notify number!"),
+        chalk.white("\n Defaulting to 1."),
+        chalk.gray("\n Why on earth you think you can use a negative value for a notify repeating number?"));
+    notifynumber = 1;
 }
-if (notifynumber > 6)	
+if (notifynumber > 6)    
 {
-    console.log(	chalk.white(" Look like your number of notify is quite big, are you sure?"));
+    console.log(    chalk.white(" Look like your number of notify is quite big, are you sure?"));
 }
 
 global.mainhuntc = true;
@@ -279,9 +279,11 @@ const extractrl = settings.manualcontroller.extra;
 
 global.mainhuntdaily = false;
 global.mainbattledaily = false;
+global.mainhuntpaused = false;
 global.mainquest = false;
 global.extrahuntdaily = false;
 global.extrabattledaily = false;
+global.extrahuntpaused = false;
 global.extraquest = false;
 
 const mainrarity = mainctrl.maximum_gem_rarity;
@@ -342,7 +344,8 @@ request.get(
             );
 
             checklist(maintoken, "Main Token", mainchannelid);
-	    if (settings.autoquest) setTimeout(() => getquests(maintoken, mainautoquestchannelid, "Main Token"), 6100);
+            global.mainfirstrun = true;
+        if (settings.autoquest) setTimeout(() => getquests(maintoken, mainautoquestchannelid, "Main Token"), 6100);
             sleepy("Main", "CheckList");
         }
     }
@@ -378,7 +381,8 @@ if (extratokencheck) {
                 if (global.etoken) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
-			if (settings.autoquest) setTimeout(() => getquests(extratoken, extraautoquestchannelid, "Extra Token"), 6100);
+                        global.extrafirstrun = true;
+            if (settings.autoquest) setTimeout(() => getquests(extratoken, extraautoquestchannelid, "Extra Token"), 6100);
                         setTimeout(() => {
                             sleepy("Extra", "CheckList");
                         }, 5000);
@@ -395,175 +399,173 @@ function triggerhunt() {
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
         var bigger_timehunt = settings.times.hunttop;
-		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+        var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-	
-	if (mainctrl.stop_hunt_after_quest) {
-		if (global.mainquest && !global.quest) {
-			console.log(
-				chalk.magenta("[Main Token]") + 
-				chalk.white("Quest completed.\n") +
-				chalk.red("STOPPED HUNTING ON [Main Token]")
-			);
-			return; 
-		}
-	}
-	else if (mainctrl.stop_hunt_after_daily) {
-		if (global.mainhuntdaily) {
-			console.log(
-				chalk.magenta("[Main Token]") + 
-				chalk.white("Daily hunt completed.\n") +
-				chalk.red("STOPPED HUNTING ON [Main Token]")
-			);
-			return;
-		}
-	}
-	
+    
+    if (mainctrl.stop_hunt_after_quest && global.mainhuntdaily) {
+        if (global.mainquest && !global.quest) {
+            console.log(
+                chalk.magenta("[Main Token]") + 
+                chalk.white("Quest completed.\n") +
+                chalk.red("STOPPED HUNTING ON [Main Token]")
+            );
+            global.mainhuntpaused = true;
+            return; 
+        }
+    }
+    else if (mainctrl.stop_hunt_after_daily) {
+        if (global.mainhuntdaily) {
+            console.log(
+                chalk.magenta("[Main Token]") + 
+                chalk.white("Daily hunt completed.\n") +
+                chalk.red("STOPPED HUNTING ON [Main Token]")
+            );
+			global.mainhuntpaused = true;
+            return;
+        }
+    }
+    
     if (settings.huntandbattle) {
-		if (global.mainhuntc) setTimeout(() => hunt(maintoken, timehunt, "Main Token", mainchannelid), timehunt);
-		else huntcheck(maintoken, "Main Token", mainchannelid, 3);
-		if (settings.inventory.inventorycheck) {
-			setTimeout(() => {
-				checkinv(maintoken, mainchannelid, "Main Token");
-			}, 2500);
-		}
-		if (settings.banbypass) {
-			bancheck(maintoken, mainchannelid);
-			dmbancheck(maintoken, owodmmainchannelid);
-		}	
+        if (global.mainhuntc) setTimeout(() => hunt(maintoken, timehunt, "Main Token", mainchannelid), timehunt);
+        else huntcheck(maintoken, "Main Token", mainchannelid, 3);
+        if (settings.inventory.inventorycheck) {
+            setTimeout(() => {
+                checkinv(maintoken, mainchannelid, "Main Token");
+            }, 2500);
+        }  
     }
 }
 
 function triggerbattle() {
-	if (settings.times.enable) {
-		var smaller_timebattle = settings.times.battlebottom;
+    if (settings.times.enable) {
+        var smaller_timebattle = settings.times.battlebottom;
         var bigger_timebattle = settings.times.battletop;
-		var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
-	} else {
-        var timehunt = parseInt(rantime());
-        if (timehunt <= 6000) timehunt = timehunt + 2000;
-        var timebattle = timehunt + 1000;
-    }
-		
-	if (mainctrl.stop_battle_after_quest) {
-		if (global.mainquest && !global.quest) {
-			console.log(
-				chalk.magenta("[Main Token]") + 
-				chalk.white("Quest completed.\n") +
-				chalk.red("STOPPED BATTLING ON [Main Token]")
-			);
-			return; 
-		}
-	}
-	else if (mainctrl.stop_battle_after_daily) {
-		if (global.mainbattledaily) {
-			console.log(
-				chalk.magenta("[Main Token]") + 
-				chalk.white("Daily battle completed.\n") +
-				chalk.red("STOPPED BATTLING ON [Main Token]")
-			);
-			return;
-		}
-	}
-	
-	if (settings.huntandbattle) {			
-		if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
-		else battlecheck(maintoken, "Main Token", mainchannelid, 3);
-	}
-}
-
-function triggerextrahunt() {
-	if (settings.times.enable) {
-        var smaller_timehunt = settings.times.huntbottom;
-        var bigger_timehunt = settings.times.hunttop;
-		var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+        var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-		
-	if (extractrl.stop_hunt_after_quest) {
-		if (global.extraquest && !global.quest) {
-			console.log(
-				chalk.magenta("[Extra Token]") + 
-				chalk.white("Quest completed.\n") +
-				chalk.red("STOPPED HUNTING ON [Extra Token]")
-			);
-			return; 
-		}
-	}
-	else if (extractrl.stop_hunt_after_daily) {
-		if (global.extrahuntdaily) {
-			console.log(
-				chalk.magenta("[Extra Token]") + 
-				chalk.white("Daily hunt completed.\n") +
-				chalk.red("STOPPED HUNTING ON [Extra Token]")
-			);
-			return;
-		}
-	}
-	
-	if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
-	else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
-	if (settings.inventory.inventorycheck) {
-		setTimeout(() => {
-			checkinv(extratoken, extrachannelid, "Extra Token");
-		}, 2500);
-	}
-	if (settings.banbypass) {
-		bancheck(extratoken, extrachannelid);
-		dmbancheck(extratoken, owodmextrachannelid);
-	}
+        
+    if (mainctrl.stop_battle_after_quest && global.mainbattledaily) {
+        if (global.mainquest && !global.quest) {
+            console.log(
+                chalk.magenta("[Main Token]") + 
+                chalk.white("Quest completed.\n") +
+                chalk.red("STOPPED BATTLING ON [Main Token]")
+            );
+            return; 
+        }
+    }
+    else if (mainctrl.stop_battle_after_daily) {
+        if (global.mainbattledaily) {
+            console.log(
+                chalk.magenta("[Main Token]") + 
+                chalk.white("Daily battle completed.\n") +
+                chalk.red("STOPPED BATTLING ON [Main Token]")
+            );
+            return;
+        }
+    }
+    
+    if (settings.huntandbattle) {            
+        if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
+        else battlecheck(maintoken, "Main Token", mainchannelid, 3);
+    }
 }
 
-function triggerextrabattle() {
-	if (settings.times.enable) {
-        var smaller_timebattle = settings.times.battlebottom;
-        var bigger_timebattle = settings.times.battletop;
-        var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
-	} else {
+function triggerextrahunt() {
+    if (settings.times.enable) {
+        var smaller_timehunt = settings.times.huntbottom;
+        var bigger_timehunt = settings.times.hunttop;
+        var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+    } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-	
-	if (extractrl.stop_battle_after_quest) {
-		if (global.extraquest && !global.quest) {
-			console.log(
-				chalk.magenta("[Extra Token]") + 
-				chalk.white("Quest completed.\n") +
-				chalk.red("STOPPED BATTLING ON [Extra Token]")
-			);
-			return;
-		}
-	}
-	else if (extractrl.stop_battle_after_daily) {
-		if (global.extrabattledaily) {
-			console.log(
-				chalk.magenta("[Extra Token]") + 
-				chalk.white("Daily battle completed.\n") +
-				chalk.red("STOPPED BATTLING ON [Extra Token]")
-			);
-			return;
-		}
-	}
-	
+        
+    if (extractrl.stop_hunt_after_quest  && global.extrahuntdaily) {
+        if (global.extraquest && !global.quest) {
+            console.log(
+                chalk.magenta("[Extra Token]") + 
+                chalk.white("Quest completed.\n") +
+                chalk.red("STOPPED HUNTING ON [Extra Token]")
+            );
+			global.extrahuntpaused = true;
+            return; 
+        }
+    }
+    else if (extractrl.stop_hunt_after_daily) {
+        if (global.extrahuntdaily) {
+            console.log(
+                chalk.magenta("[Extra Token]") + 
+                chalk.white("Daily hunt completed.\n") +
+                chalk.red("STOPPED HUNTING ON [Extra Token]")
+            );
+			global.extrahuntpaused = true;
+            return;
+        }
+    }
+
 	if (settings.huntandbattle) {
-		if (global.extrabattlec) setTimeout(() => battle(extratoken, timebattle, "Extra Token", extrachannelid), timebattle);
-		else battlecheck(extratoken, "Extra Token", extrachannelid, 3);
-	}
+ 	    if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
+ 	    else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
+  	    if (settings.inventory.inventorycheck) {
+  	        setTimeout(() => {
+	            checkinv(extratoken, extrachannelid, "Extra Token");
+ 	        }, 2500);
+        }
+    }
+}
+
+function triggerextrabattle() {
+    if (settings.times.enable) {
+        var smaller_timebattle = settings.times.battlebottom;
+        var bigger_timebattle = settings.times.battletop;
+        var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+    } else {
+        var timehunt = parseInt(rantime());
+        if (timehunt <= 6000) timehunt = timehunt + 2000;
+        var timebattle = timehunt + 1000;
+    }
+    
+    if (extractrl.stop_battle_after_quest && global.extrabattledaily) {
+        if (global.extraquest && !global.quest) {
+            console.log(
+                chalk.magenta("[Extra Token]") + 
+                chalk.white("Quest completed.\n") +
+                chalk.red("STOPPED BATTLING ON [Extra Token]")
+            );
+            return;
+        }
+    }
+    else if (extractrl.stop_battle_after_daily) {
+        if (global.extrabattledaily) {
+            console.log(
+                chalk.magenta("[Extra Token]") + 
+                chalk.white("Daily battle completed.\n") +
+                chalk.red("STOPPED BATTLING ON [Extra Token]")
+            );
+            return;
+        }
+    }
+    
+    if (settings.huntandbattle) {
+        if (global.extrabattlec) setTimeout(() => battle(extratoken, timebattle, "Extra Token", extrachannelid), timebattle);
+        else battlecheck(extratoken, "Extra Token", extrachannelid, 3);
+    }
 }
 
 triggerhunt();
 triggerbattle();
 if (global.etoken) {
-	triggerextrahunt();
-	triggerextrabattle();
+    triggerextrahunt();
+    triggerextrabattle();
 }
 //-----------------------------------ANIMALS----------------------------------------------//
 if (settings.times.intervals.animals.enable) {
@@ -886,14 +888,14 @@ function hunt(token, timehunt, tokentype, channelid) {
             );
         }
     );
-	if (tokentype == "Extra Token") {
-		global.extrahuntc = false;
-		extrahuntcheck(token, tokentype, channelid, 3);
-	}
-	else {
-		global.mainhuntc = false;
-		huntcheck(token, tokentype, channelid, 3);
-	}
+    if (tokentype == "Extra Token") {
+        global.extrahuntc = false;
+        extrahuntcheck(token, tokentype, channelid, 3);
+    }
+    else {
+        global.mainhuntc = false;
+        huntcheck(token, tokentype, channelid, 3);
+    }
 }
 
 function battle(token, timebattle, tokentype, channelid) {
@@ -924,14 +926,14 @@ function battle(token, timebattle, tokentype, channelid) {
             );
         }
     );
-	if (tokentype == "Extra Token") {
-		global.extrabattlec = false;
-		extrabattlecheck(token, tokentype, channelid, 3);
-	}
-	else {
-		global.mainbattlec = false;
-		battlecheck(token, tokentype, channelid, 3);
-	}
+    if (tokentype == "Extra Token") {
+        global.extrabattlec = false;
+        extrabattlecheck(token, tokentype, channelid, 3);
+    }
+    else {
+        global.mainbattlec = false;
+        battlecheck(token, tokentype, channelid, 3);
+    }
 }
 
 function animals(token, tokentype, channelid, type) {
@@ -1111,56 +1113,56 @@ function checklist(token, tokentype, channelid) {
                             var cont = bod[0].embeds;
                             var des = cont[0].description;
 
-							if (cont[0].author.name.includes("Checklist")) {
-								chalk.magenta(` [${tokentype}]`) +
-									chalk.yellow("Getting Checklist 🔎");
-								if (des.includes("☑️ 🎉")) {
-									updatechecklistsocket("all", "✅");
-									return "checklist completed";
-								}
-								if (des.includes("☑️ 💎")) {
-									updatechecklistsocket("lb", "✅");
-									if (tokentype == "Main Token") global.mainhuntdaily = true;
-									else global.extrahuntdaily = true;
-								}
-								if (des.includes("☑️ ⚔")) {
-									updatechecklistsocket("crate", "✅");
-									if (tokentype == "Main Token") global.mainbattledaily = true;
-									else global.extrabattledaily = true;
-								}
+                            if (cont[0].author.name.includes("Checklist")) {
+                                chalk.magenta(` [${tokentype}]`) +
+                                    chalk.yellow("Getting Checklist 🔎");
+                                if (des.includes("☑️ 🎉")) {
+                                    updatechecklistsocket("all", "✅");
+                                    return "checklist completed";
+                                }
+                                if (des.includes("☑️ 💎")) {
+                                    updatechecklistsocket("lb", "✅");
+                                    if (tokentype == "Main Token") global.mainhuntdaily = true;
+                                    else global.extrahuntdaily = true;
+                                }
+                                if (des.includes("☑️ ⚔")) {
+                                    updatechecklistsocket("crate", "✅");
+                                    if (tokentype == "Main Token") global.mainbattledaily = true;
+                                    else global.extrabattledaily = true;
+                                }
 
-								if (des.includes("⬛ 🎁")) {
-									daily(token, tokentype, channelid);
-								} else {
-									updatechecklistsocket("daily", "✅");
-								}
-								if (des.includes("⬛ 🍪")) {
-									cookie(token, tokentype, channelid);
-								} else {
-									updatechecklistsocket("cookie", "✅");
-								}
-								if (des.includes("⬛ 📝")) {
-									console.log(
-										chalk.magenta(`[${tokentype}] `) +
-											chalk.red(
-												"YOUR DAILY VOTE IS AVAILABLE!"
-											)
-									);
-								} else {
-									updatechecklistsocket("vote", "✅");
-								}
-								if (des.includes("⬛ 📜")) {
-									if (settings.autoquest) {
-										getquests(
-											maintoken,
-											mainautoquestchannelid,
-											"Main Token"
-										);
-									}
-								} else {
-									updatechecklistsocket("quest", "✅");
-								}
-							}
+                                if (des.includes("⬛ 🎁")) {
+                                    daily(token, tokentype, channelid);
+                                } else {
+                                    updatechecklistsocket("daily", "✅");
+                                }
+                                if (des.includes("⬛ 🍪")) {
+                                    cookie(token, tokentype, channelid);
+                                } else {
+                                    updatechecklistsocket("cookie", "✅");
+                                }
+                                if (des.includes("⬛ 📝")) {
+                                    console.log(
+                                        chalk.magenta(`[${tokentype}] `) +
+                                            chalk.red(
+                                                "YOUR DAILY VOTE IS AVAILABLE!"
+                                            )
+                                    );
+                                } else {
+                                    updatechecklistsocket("vote", "✅");
+                                }
+                                if (des.includes("⬛ 📜")) {
+                                    if (settings.autoquest) {
+                                        getquests(
+                                            maintoken,
+                                            mainautoquestchannelid,
+                                            "Main Token"
+                                        );
+                                    }
+                                } else {
+                                    updatechecklistsocket("quest", "✅");
+                                }
+                            }
                         } catch (error) {
                             updateerrorsocket(
                                 "Unable to get Checklist (RESTART BOT!)"
@@ -1219,7 +1221,7 @@ function cookie(token, tokentype, channelid) {
                 authorization: token,
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-		//not suggested to cookie to OwO because it will always send a captcha
+        //not suggested to cookie to OwO because it will always send a captcha
             json: {
                 content: `${prefix} cookie <@408785106942164992>`,
                 nonce: nonce(),
@@ -2389,8 +2391,8 @@ async function questsayowo(token, channelid, pro1, pro2) {
 async function xpquests(token, channelid, tokentype) {
     await delay(540000);
     global.quest = true;
-	if (tokentype == "Main Token") global.mainquest = true;
-	else global.extraquest = true;
+    if (tokentype == "Main Token") global.mainquest = true;
+    else global.extraquest = true;
     getquests(token, channelid, tokentype);
 }
 
@@ -2699,7 +2701,7 @@ function dmbancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
         },
         function (error, response, body) {
             if (error) {
@@ -2743,10 +2745,10 @@ function dmbancheck(token, channelid) {
                     if (notifymethod == "promt") {
                         for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Main Token"), 1600);
                     }
-					setTimeout(() => {
-						updateerrorsocket("(Main Token) Solve DM Captcha!");
-						process.exit(0);
-					}, 1600);
+                    setTimeout(() => {
+                        updateerrorsocket("(Main Token) Solve DM Captcha!");
+                        process.exit(0);
+                    }, 1600);
                 } else {
                     global.mainbanc = true;
                     console.log(
@@ -2772,7 +2774,7 @@ function dmextrabancheck(token, channelid) {
             headers: {
                 authorization: token,
             },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
         },
         function (error, response, body) {
             if (error) {
@@ -2815,10 +2817,10 @@ function dmextrabancheck(token, channelid) {
                     if (notifymethod == "promt") {
                         for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Extra Token"), 1600);
                     }
-					setTimeout(() => {
-						updateerrorsocket("(Extra Token) Solve DM Captcha!");
-						process.exit(0);
-					}, 1600);
+                    setTimeout(() => {
+                        updateerrorsocket("(Extra Token) Solve DM Captcha!");
+                        process.exit(0);
+                    }, 1600);
                 } else {
                     global.extrabanc = true;
                     console.log(
@@ -2926,7 +2928,7 @@ function createpromt(tokentype) {
 //training myself, for better future, for the love for her <3
 function huntcheck(token, tokentype, channelid, checknumber)
 {
-	request.get(
+    request.get(
         {
             headers: {
                 authorization: token,
@@ -2945,25 +2947,32 @@ function huntcheck(token, tokentype, channelid, checknumber)
                 cont.includes("You found:") ||
                 cont.includes("and caught a")
             ) {
-				global.mainhuntc = true;
-				triggerhunt();
+                global.mainhuntc = true;
+                triggerhunt();
+                if (settings.banbypass && !global.mainhuntpaused) {
+                    if (global.mainfirstrun) global.mainfirstrun = false;
+                    else {
+                        bancheck(maintoken, mainchannelid);
+                        dmbancheck(maintoken, owodmmainchannelid);
+                    }
+                }
 
-				if (cont.includes("3/3") && cont.includes("lootbox")) global.mainhuntdaily = true;
-			} else {
-				checknumber = checknumber + 1;
-				if (checknumber >= 8) {
-					global.mainhuntc = true;
-					triggerhunt();
-					return;
-				} else setTimeout(() => huntcheck(token, tokentype, channelid, checknumber), 1600);
-			}
+                if (cont.includes("3/3") && cont.includes("lootbox")) global.mainhuntdaily = true;
+            } else {
+                checknumber = checknumber + 1;
+                if (checknumber >= 8) {
+                    global.mainhuntc = true;
+                    triggerhunt();
+                    return;
+                } else setTimeout(() => huntcheck(token, tokentype, channelid, checknumber), 1600);
+            }
         }
     );
 }
 
 function battlecheck(token, tokentype, channelid, checknumber)
 {
-	request.get(
+    request.get(
         {
             headers: {
                 authorization: token,
@@ -2977,32 +2986,39 @@ function battlecheck(token, tokentype, channelid, checknumber)
             var bod = JSON.parse(body);
             if (!bod[0]) return;
             var cont = bod[0].embeds;
-			
-			if (
-			cont.length > 0 && (
-				cont[0].author.name.includes("goes into battle") ||
-				cont[0].footer.text.includes("your team gained")
-				)
-			) {
-				global.mainbattlec = true;
-				triggerbattle();
+            
+            if (
+            cont.length > 0 && (
+                cont[0].author.name.includes("goes into battle") ||
+                cont[0].footer.text.includes("your team gained")
+                )
+            ) {
+                global.mainbattlec = true;
+                triggerbattle();
+                if (settings.banbypass && global.mainhuntpaused) {
+                    if (global.mainfirstrun) global.mainfirstrun = false;
+                    else {
+                        bancheck(maintoken, mainchannelid);
+                        dmbancheck(maintoken, owodmmainchannelid);
+                    }
+                }
 
-				if (bod[0].content.includes("weapon crate") && bod[0].content.includes("3/3")) global.mainbattledaily = true;
-			} else {
-				checknumber = checknumber + 1;
-				if (checknumber >= 8) {
-					global.mainbattlec = true;
-					triggerbattle();
-					return;
-				} else setTimeout(() => battlecheck(token, tokentype, channelid, checknumber), 1600);
-			}
+                if (bod[0].content.includes("weapon crate") && bod[0].content.includes("3/3")) global.mainbattledaily = true;
+            } else {
+                checknumber = checknumber + 1;
+                if (checknumber >= 8) {
+                    global.mainbattlec = true;
+                    triggerbattle();
+                    return;
+                } else setTimeout(() => battlecheck(token, tokentype, channelid, checknumber), 1600);
+            }
         }
     );
 }
 
 function extrahuntcheck(token, tokentype, channelid, checknumber)
 {
-	request.get(
+    request.get(
         {
             headers: {
                 authorization: token,
@@ -3021,25 +3037,32 @@ function extrahuntcheck(token, tokentype, channelid, checknumber)
                 cont.includes("You found:") ||
                 cont.includes("and caught a")
             ) {
-				global.extrahuntc = true;
-				triggerextrahunt();
+                global.extrahuntc = true;
+                triggerextrahunt();
+                if (settings.banbypass && !global.extrahuntpaused) {
+                    if (global.extrafirstrun) global.extrafirstrun = false;
+                    else {
+                        bancheck(extratoken, extrachannelid);
+                        dmbancheck(extratoken, owodmextrachannelid);
+                    }
+                }
 
-				if (cont.includes("3/3") && cont.includes("lootbox")) global.extrahuntdaily = true;
-			} else {
-				checknumber = checknumber + 1;
-				if (checknumber >= 8) {
-					global.extrahuntc = true;
-					triggerextrahunt();
-					return;
-				} else setTimeout(() => extrahuntcheck(token, tokentype, channelid, checknumber), 1600);
-			}
+                if (cont.includes("3/3") && cont.includes("lootbox")) global.extrahuntdaily = true;
+            } else {
+                checknumber = checknumber + 1;
+                if (checknumber >= 8) {
+                    global.extrahuntc = true;
+                    triggerextrahunt();
+                    return;
+                } else setTimeout(() => extrahuntcheck(token, tokentype, channelid, checknumber), 1600);
+            }
         }
     );
 }
 
 function extrabattlecheck(token, tokentype, channelid, checknumber)
 {
-	request.get(
+    request.get(
         {
             headers: {
                 authorization: token,
@@ -3053,25 +3076,32 @@ function extrabattlecheck(token, tokentype, channelid, checknumber)
             var bod = JSON.parse(body);
             if (!bod[0]) return;
             var cont = bod[0].embeds;
-			
-			if (
-			cont.length > 0 && (
-				cont[0].author.name.includes("goes into battle") ||
-				cont[0].footer.text.includes("your team gained")
-				)
-			) {
-				global.extrabattlec = true;
-				triggerextrabattle();
+            
+            if (
+            cont.length > 0 && (
+                cont[0].author.name.includes("goes into battle") ||
+                cont[0].footer.text.includes("your team gained")
+                )
+            ) {
+                global.extrabattlec = true;
+                triggerextrabattle();
+                if (settings.banbypass && global.extrahuntpaused) {
+                    if (global.extrafirstrun) global.extrafirstrun = false;
+                    else {
+                        bancheck(extratoken, extrachannelid);
+                        dmbancheck(extratoken, owodmextrachannelid);
+                    }
+                }
 
-				if (bod[0].content.includes("weapon crate") && bod[0].content.includes("3/3")) global.extrabattledaily = true;
-			} else {
-				checknumber = checknumber + 1;
-				if (checknumber >= 8) {
-					global.extrabattlec = true;
-					triggerextrabattle();
-					return;
-				} else setTimeout(() => extrabattlecheck(token, tokentype, channelid, checknumber), 1600);
-			}
+                if (bod[0].content.includes("weapon crate") && bod[0].content.includes("3/3")) global.extrabattledaily = true;
+            } else {
+                checknumber = checknumber + 1;
+                if (checknumber >= 8) {
+                    global.extrabattlec = true;
+                    triggerextrabattle();
+                    return;
+                } else setTimeout(() => extrabattlecheck(token, tokentype, channelid, checknumber), 1600);
+            }
         }
     );
 }
