@@ -261,12 +261,18 @@ if (notifynumber < 0) {
     console.log(
         chalk.red(" Invalid notify number!"),
         chalk.white("\n Defaulting to 1."),
-        chalk.gray("\n Why on earth you think you can use a negative value for a notify repeating number?"));
+        chalk.gray(
+            "\n Why on earth you think you can use a negative value for a notify repeating number?"
+        )
+    );
     notifynumber = 1;
 }
-if (notifynumber > 6)    
-{
-    console.log(    chalk.white(" Look like your number of notify is quite big, are you sure?"));
+if (notifynumber > 6) {
+    console.log(
+        chalk.white(
+            " Look like your number of notify is quite big, are you sure?"
+        )
+    );
 }
 
 global.mainhuntc = true;
@@ -289,29 +295,58 @@ global.extraquest = false;
 const mainrarity = mainctrl.maximum_gem_rarity;
 var mainmaxgemvalue;
 switch (mainrarity) {
-    case "legendary": mainmaxgemvalue = 6; break;
-    case "mythical": mainmaxgemvalue = 5; break;
-    case "epic": mainmaxgemvalue = 4; break;
-    case "rare": mainmaxgemvalue = 3; break;
-    case "uncommon": mainmaxgemvalue = 2; break;
-    case "common": mainmaxgemvalue = 1; break;
-    default: mainmaxgemvalue = 7; break;
+    case "legendary":
+        mainmaxgemvalue = 6;
+        break;
+    case "mythical":
+        mainmaxgemvalue = 5;
+        break;
+    case "epic":
+        mainmaxgemvalue = 4;
+        break;
+    case "rare":
+        mainmaxgemvalue = 3;
+        break;
+    case "uncommon":
+        mainmaxgemvalue = 2;
+        break;
+    case "common":
+        mainmaxgemvalue = 1;
+        break;
+    default:
+        mainmaxgemvalue = 7;
+        break;
 }
 
 const extrararity = extractrl.maximum_gem_rarity;
 var extramaxgemvalue;
 switch (extrararity) {
-    case "legendary": extramaxgemvalue = 6; break;
-    case "mythical": extramaxgemvalue = 5; break;
-    case "epic": extramaxgemvalue = 4; break;
-    case "rare": extramaxgemvalue = 3; break;
-    case "uncommon": extramaxgemvalue = 2; break;
-    case "common": extramaxgemvalue = 1; break;
-    default: extramaxgemvalue = 7; break;
+    case "legendary":
+        extramaxgemvalue = 6;
+        break;
+    case "mythical":
+        extramaxgemvalue = 5;
+        break;
+    case "epic":
+        extramaxgemvalue = 4;
+        break;
+    case "rare":
+        extramaxgemvalue = 3;
+        break;
+    case "uncommon":
+        extramaxgemvalue = 2;
+        break;
+    case "common":
+        extramaxgemvalue = 1;
+        break;
+    default:
+        extramaxgemvalue = 7;
+        break;
 }
 
 var notifymethod = settings.notifymethod;
-if (notifymethod != "promt" || notifymethod != "notify") notifymethod = "notify";
+if (notifymethod != "promt" || notifymethod != "notify")
+    notifymethod = "notify";
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
 request.get(
@@ -345,7 +380,16 @@ request.get(
 
             checklist(maintoken, "Main Token", mainchannelid);
             global.mainfirstrun = true;
-        if (settings.autoquest) setTimeout(() => getquests(maintoken, mainautoquestchannelid, "Main Token"), 6100);
+            if (settings.autoquest)
+                setTimeout(
+                    () =>
+                        getquests(
+                            maintoken,
+                            mainautoquestchannelid,
+                            "Main Token"
+                        ),
+                    6100
+                );
             sleepy("Main", "CheckList");
         }
     }
@@ -382,7 +426,16 @@ if (extratokencheck) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
                         global.extrafirstrun = true;
-                        if (settings.autoquest) setTimeout(() => getquests(extratoken, extraautoquestchannelid, "Extra Token"), 6100);
+                        if (settings.autoquest)
+                            setTimeout(
+                                () =>
+                                    getquests(
+                                        extratoken,
+                                        extraautoquestchannelid,
+                                        "Extra Token"
+                                    ),
+                                6100
+                            );
                         setTimeout(() => {
                             sleepy("Extra", "CheckList");
                         }, 5000);
@@ -399,44 +452,50 @@ function triggerhunt() {
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
         var bigger_timehunt = settings.times.hunttop;
-        var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+        var timehunt = Math.floor(
+            Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
+                smaller_timehunt
+        );
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-    
+
     if (mainctrl.stop_hunt_after_quest && global.mainhuntdaily) {
         if (global.mainquest && !global.quest) {
             console.log(
-                chalk.magenta("[Main Token]") + 
-                chalk.white("Quest completed.\n") +
-                chalk.red("STOPPED HUNTING ON [Main Token]")
+                chalk.magenta("[Main Token]") +
+                    chalk.white("Quest completed.\n") +
+                    chalk.red("STOPPED HUNTING ON [Main Token]")
             );
             global.mainhuntpaused = true;
-            return; 
+            return;
         }
-    }
-    else if (mainctrl.stop_hunt_after_daily) {
+    } else if (mainctrl.stop_hunt_after_daily) {
         if (global.mainhuntdaily) {
             console.log(
-                chalk.magenta("[Main Token]") + 
-                chalk.white("Daily hunt completed.\n") +
-                chalk.red("STOPPED HUNTING ON [Main Token]")
+                chalk.magenta("[Main Token]") +
+                    chalk.white("Daily hunt completed.\n") +
+                    chalk.red("STOPPED HUNTING ON [Main Token]")
             );
             global.mainhuntpaused = true;
             return;
         }
     }
-    
+
     if (settings.huntandbattle) {
-        if (global.mainhuntc) setTimeout(() => hunt(maintoken, timehunt, "Main Token", mainchannelid), timehunt);
+        if (global.mainhuntc)
+            setTimeout(
+                () => hunt(maintoken, timehunt, "Main Token", mainchannelid),
+                timehunt
+            );
         else huntcheck(maintoken, "Main Token", mainchannelid, 3);
         if (settings.inventory.inventorycheck) {
             setTimeout(() => {
                 checkinv(maintoken, mainchannelid, "Main Token");
             }, 2500);
-        }  
+        }
     }
 }
 
@@ -444,36 +503,43 @@ function triggerbattle() {
     if (settings.times.enable) {
         var smaller_timebattle = settings.times.battlebottom;
         var bigger_timebattle = settings.times.battletop;
-        var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+        var timebattle = Math.floor(
+            Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
+                smaller_timebattle
+        );
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-        
+
     if (mainctrl.stop_battle_after_quest && global.mainbattledaily) {
         if (global.mainquest && !global.quest) {
             console.log(
-                chalk.magenta("[Main Token]") + 
-                chalk.white("Quest completed.\n") +
-                chalk.red("STOPPED BATTLING ON [Main Token]")
+                chalk.magenta("[Main Token]") +
+                    chalk.white("Quest completed.\n") +
+                    chalk.red("STOPPED BATTLING ON [Main Token]")
             );
-            return; 
+            return;
         }
-    }
-    else if (mainctrl.stop_battle_after_daily) {
+    } else if (mainctrl.stop_battle_after_daily) {
         if (global.mainbattledaily) {
             console.log(
-                chalk.magenta("[Main Token]") + 
-                chalk.white("Daily battle completed.\n") +
-                chalk.red("STOPPED BATTLING ON [Main Token]")
+                chalk.magenta("[Main Token]") +
+                    chalk.white("Daily battle completed.\n") +
+                    chalk.red("STOPPED BATTLING ON [Main Token]")
             );
             return;
         }
     }
-    
-    if (settings.huntandbattle) {            
-        if (global.mainbattlec) setTimeout(() => battle(maintoken, timebattle, "Main Token", mainchannelid), timebattle);
+
+    if (settings.huntandbattle) {
+        if (global.mainbattlec)
+            setTimeout(
+                () =>
+                    battle(maintoken, timebattle, "Main Token", mainchannelid),
+                timebattle
+            );
         else battlecheck(maintoken, "Main Token", mainchannelid, 3);
     }
 }
@@ -482,30 +548,32 @@ function triggerextrahunt() {
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
         var bigger_timehunt = settings.times.hunttop;
-        var timehunt = Math.floor(Math.random() * (bigger_timehunt - smaller_timehunt + 1) + smaller_timehunt);
+        var timehunt = Math.floor(
+            Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
+                smaller_timehunt
+        );
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-        
-    if (extractrl.stop_hunt_after_quest  && global.extrahuntdaily) {
+
+    if (extractrl.stop_hunt_after_quest && global.extrahuntdaily) {
         if (global.extraquest && !global.quest) {
             console.log(
-                chalk.magenta("[Extra Token]") + 
-                chalk.white("Quest completed.\n") +
-                chalk.red("STOPPED HUNTING ON [Extra Token]")
+                chalk.magenta("[Extra Token]") +
+                    chalk.white("Quest completed.\n") +
+                    chalk.red("STOPPED HUNTING ON [Extra Token]")
             );
             global.extrahuntpaused = true;
-            return; 
+            return;
         }
-    }
-    else if (extractrl.stop_hunt_after_daily) {
+    } else if (extractrl.stop_hunt_after_daily) {
         if (global.extrahuntdaily) {
             console.log(
-                chalk.magenta("[Extra Token]") + 
-                chalk.white("Daily hunt completed.\n") +
-                chalk.red("STOPPED HUNTING ON [Extra Token]")
+                chalk.magenta("[Extra Token]") +
+                    chalk.white("Daily hunt completed.\n") +
+                    chalk.red("STOPPED HUNTING ON [Extra Token]")
             );
             global.extrahuntpaused = true;
             return;
@@ -513,11 +581,15 @@ function triggerextrahunt() {
     }
 
     if (settings.huntandbattle) {
-        if (global.extrahuntc) setTimeout(() => hunt(extratoken, timehunt, "Extra Token", extrachannelid), timehunt);
+        if (global.extrahuntc)
+            setTimeout(
+                () => hunt(extratoken, timehunt, "Extra Token", extrachannelid),
+                timehunt
+            );
         else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
         if (settings.inventory.inventorycheck) {
             setTimeout(() => {
-            checkinv(extratoken, extrachannelid, "Extra Token");
+                checkinv(extratoken, extrachannelid, "Extra Token");
             }, 2500);
         }
     }
@@ -527,36 +599,48 @@ function triggerextrabattle() {
     if (settings.times.enable) {
         var smaller_timebattle = settings.times.battlebottom;
         var bigger_timebattle = settings.times.battletop;
-        var timebattle = Math.floor(Math.random() * (bigger_timebattle - smaller_timebattle + 1) + smaller_timebattle);
+        var timebattle = Math.floor(
+            Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
+                smaller_timebattle
+        );
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
     }
-    
+
     if (extractrl.stop_battle_after_quest && global.extrabattledaily) {
         if (global.extraquest && !global.quest) {
             console.log(
-                chalk.magenta("[Extra Token]") + 
-                chalk.white("Quest completed.\n") +
-                chalk.red("STOPPED BATTLING ON [Extra Token]")
+                chalk.magenta("[Extra Token]") +
+                    chalk.white("Quest completed.\n") +
+                    chalk.red("STOPPED BATTLING ON [Extra Token]")
             );
             return;
         }
-    }
-    else if (extractrl.stop_battle_after_daily) {
+    } else if (extractrl.stop_battle_after_daily) {
         if (global.extrabattledaily) {
             console.log(
-                chalk.magenta("[Extra Token]") + 
-                chalk.white("Daily battle completed.\n") +
-                chalk.red("STOPPED BATTLING ON [Extra Token]")
+                chalk.magenta("[Extra Token]") +
+                    chalk.white("Daily battle completed.\n") +
+                    chalk.red("STOPPED BATTLING ON [Extra Token]")
             );
             return;
         }
     }
-    
+
     if (settings.huntandbattle) {
-        if (global.extrabattlec) setTimeout(() => battle(extratoken, timebattle, "Extra Token", extrachannelid), timebattle);
+        if (global.extrabattlec)
+            setTimeout(
+                () =>
+                    battle(
+                        extratoken,
+                        timebattle,
+                        "Extra Token",
+                        extrachannelid
+                    ),
+                timebattle
+            );
         else battlecheck(extratoken, "Extra Token", extrachannelid, 3);
     }
 }
@@ -891,8 +975,7 @@ function hunt(token, timehunt, tokentype, channelid) {
     if (tokentype == "Extra Token") {
         global.extrahuntc = false;
         extrahuntcheck(token, tokentype, channelid, 3);
-    }
-    else {
+    } else {
         global.mainhuntc = false;
         huntcheck(token, tokentype, channelid, 3);
     }
@@ -929,8 +1012,7 @@ function battle(token, timebattle, tokentype, channelid) {
     if (tokentype == "Extra Token") {
         global.extrabattlec = false;
         extrabattlecheck(token, tokentype, channelid, 3);
-    }
-    else {
+    } else {
         global.mainbattlec = false;
         battlecheck(token, tokentype, channelid, 3);
     }
@@ -1122,12 +1204,14 @@ function checklist(token, tokentype, channelid) {
                                 }
                                 if (des.includes("☑️ 💎")) {
                                     updatechecklistsocket("lb", "✅");
-                                    if (tokentype == "Main Token") global.mainhuntdaily = true;
+                                    if (tokentype == "Main Token")
+                                        global.mainhuntdaily = true;
                                     else global.extrahuntdaily = true;
                                 }
                                 if (des.includes("☑️ ⚔")) {
                                     updatechecklistsocket("crate", "✅");
-                                    if (tokentype == "Main Token") global.mainbattledaily = true;
+                                    if (tokentype == "Main Token")
+                                        global.mainbattledaily = true;
                                     else global.extrabattledaily = true;
                                 }
 
@@ -1221,7 +1305,7 @@ function cookie(token, tokentype, channelid) {
                 authorization: token,
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-        //not suggested to cookie to OwO because it will always send a captcha
+            //not suggested to cookie to OwO because it will always send a captcha
             json: {
                 content: `${prefix} cookie <@408785106942164992>`,
                 nonce: nonce(),
@@ -1633,8 +1717,11 @@ function checkinv(token, channelid, tokentype) {
                     if (!cont.includes("gem4")) {
                         collection.push("luckgem");
                     }
-                    if (!cont.includes("gem1") || !cont.includes("gem3") || !cont.includes("gem4"))
-                    {
+                    if (
+                        !cont.includes("gem1") ||
+                        !cont.includes("gem3") ||
+                        !cont.includes("gem4")
+                    ) {
                         getinv(
                             token,
                             channelid,
@@ -1716,52 +1803,59 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
 
                     if (collectc.contains("huntgem")) {
                         switch (true) {
-                            case (cont.includes("`057`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
-                            )):
+                            case cont.includes("`057`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 7) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 7)):
                                 huntgem = "57";
                                 huntgemstatus = true;
                                 break;
-                            case (cont.includes("`056`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
-                            )):
+                            case cont.includes("`056`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 6) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 6)):
                                 huntgem = "56";
                                 huntgemstatus = true;
                                 break;
-                            case (cont.includes("`055`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
-                            )):
+                            case cont.includes("`055`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 5) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 5)):
                                 huntgem = "55";
                                 huntgemstatus = true;
                                 break;
-                            case (cont.includes("`054`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
-                            )):
+                            case cont.includes("`054`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 4) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 4)):
                                 huntgem = "54";
                                 huntgemstatus = true;
                                 break;
-                            case (cont.includes("`053`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
-                            )):
+                            case cont.includes("`053`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 3) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 3)):
                                 huntgem = "53";
                                 huntgemstatus = true;
                                 break;
-                            case (cont.includes("`052`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
-                            )):
+                            case cont.includes("`052`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 2) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 2)):
                                 huntgem = "52";
                                 huntgemstatus = true;
                                 break;
-                            case (cont.includes("`051`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
-                            )):
+                            case cont.includes("`051`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 1) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 1)):
                                 huntgem = "51";
                                 huntgemstatus = true;
                                 break;
@@ -1772,52 +1866,59 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                     if (collectc.contains("empgem")) {
                         switch (true) {
-                            case (cont.includes("`071`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
-                            )):
+                            case cont.includes("`071`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 7) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 7)):
                                 empgem = "71";
                                 empgemstatus = true;
                                 break;
-                            case (cont.includes("`070`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
-                            )):
+                            case cont.includes("`070`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 6) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 6)):
                                 empgem = "70";
                                 empgemstatus = true;
                                 break;
-                            case (cont.includes("`069`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
-                            )):
+                            case cont.includes("`069`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 5) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 5)):
                                 empgem = "69";
                                 empgemstatus = true;
                                 break;
-                            case (cont.includes("`068`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
-                            )):
+                            case cont.includes("`068`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 4) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 4)):
                                 empgem = "68";
                                 empgemstatus = true;
                                 break;
-                            case (cont.includes("`067`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
-                            )):
+                            case cont.includes("`067`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 3) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 3)):
                                 empgem = "67";
                                 empgemstatus = true;
                                 break;
-                            case (cont.includes("`066`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
-                            )):
+                            case cont.includes("`066`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 2) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 2)):
                                 empgem = "66";
                                 empgemstatus = true;
                                 break;
-                            case (cont.includes("`065`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
-                            )):
+                            case cont.includes("`065`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 1) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 1)):
                                 empgem = "65";
                                 empgemstatus = true;
                                 break;
@@ -1828,52 +1929,59 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                     }
                     if (collectc.contains("luckgem")) {
                         switch (true) {
-                            case (cont.includes("`078`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
-                            )):
+                            case cont.includes("`078`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 7) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 7)):
                                 luckgem = "78";
                                 luckgemstatus = true;
                                 break;
-                            case (cont.includes("`077`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
-                            )):
+                            case cont.includes("`077`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 6) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 6)):
                                 luckgem = "77";
                                 luckgemstatus = true;
                                 break;
-                            case (cont.includes("`076`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
-                            )):
+                            case cont.includes("`076`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 5) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 5)):
                                 luckgem = "76";
                                 luckgemstatus = true;
                                 break;
-                            case (cont.includes("`075`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
-                            )):
+                            case cont.includes("`075`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 4) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 4)):
                                 luckgem = "75";
                                 luckgemstatus = true;
                                 break;
-                            case (cont.includes("`074`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
-                            )):
+                            case cont.includes("`074`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 3) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 3)):
                                 luckgem = "74";
                                 luckgemstatus = true;
                                 break;
-                            case (cont.includes("`073`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
-                            )):
+                            case cont.includes("`073`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 2) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 2)):
                                 luckgem = "73";
                                 luckgemstatus = true;
                                 break;
-                            case (cont.includes("`072`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
-                            )):
+                            case cont.includes("`072`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 1) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 1)):
                                 luckgem = "72";
                                 luckgemstatus = true;
                                 break;
@@ -1885,52 +1993,59 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
 
                     if (collectc.contains("specialgem")) {
                         switch (true) {
-                            case (cont.includes("`085`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 7) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 7)
-                            )):
+                            case cont.includes("`085`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 7) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 7)):
                                 specialgem = "85";
                                 specialgemstatus = true;
                                 break;
-                            case (cont.includes("`084`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 6) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 6)
-                            )):
+                            case cont.includes("`084`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 6) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 6)):
                                 specialgem = "84";
                                 specialgemstatus = true;
                                 break;
-                            case (cont.includes("`083`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 5) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 5)
-                            )):
+                            case cont.includes("`083`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 5) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 5)):
                                 specialgem = "83";
                                 specialgemstatus = true;
                                 break;
-                            case (cont.includes("`082`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 4) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 4)
-                            )):
+                            case cont.includes("`082`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 4) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 4)):
                                 specialgem = "82";
                                 specialgemstatus = true;
                                 break;
-                            case (cont.includes("`081`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 3) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 3)
-                            )):
+                            case cont.includes("`081`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 3) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 3)):
                                 specialgem = "81";
                                 specialgemstatus = true;
                                 break;
-                            case (cont.includes("`080`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 2) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 2)
-                            )):
+                            case cont.includes("`080`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 2) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 2)):
                                 specialgem = "80";
                                 specialgemstatus = true;
                                 break;
-                            case (cont.includes("`079`") && (
-                            (tokentype == "Main Token" && mainmaxgemvalue >= 1) ||
-                            (tokentype == "Extra Token" && extramaxgemvalue >= 1)
-                            )):
+                            case cont.includes("`079`") &&
+                                ((tokentype == "Main Token" &&
+                                    mainmaxgemvalue >= 1) ||
+                                    (tokentype == "Extra Token" &&
+                                        extramaxgemvalue >= 1)):
                                 specialgem = "79";
                                 specialgemstatus = true;
                                 break;
@@ -2170,7 +2285,8 @@ async function getquests(token, channelid, tokentype) {
                             )
                         ) {
                             global.quest = false;
-                            if (tokentype == "Main token") global.mainquest = true;
+                            if (tokentype == "Main token")
+                                global.mainquest = true;
                             else global.extraquest = true;
                         } else {
                             var quest = cont[0].description
@@ -2261,13 +2377,19 @@ async function getquests(token, channelid, tokentype) {
                                         )
                                     ) {
                                         global.quest = false;
-                                        if (tokentype == "Main Token") global.mainquest = false;
+                                        if (tokentype == "Main Token")
+                                            global.mainquest = false;
                                         else global.extraquest = false;
-                                        return xpquests(token, channelid, tokentype);
+                                        return xpquests(
+                                            token,
+                                            channelid,
+                                            tokentype
+                                        );
                                     } else {
-                                            if (tokentype == "Main Token") global.mainquest = true;
-                                            else global.extraquest = true;
-                                            if (quest.includes("Gamble")) {
+                                        if (tokentype == "Main Token")
+                                            global.mainquest = true;
+                                        else global.extraquest = true;
+                                        if (quest.includes("Gamble")) {
                                             global.quest = false;
                                             return questgamble(
                                                 token,
@@ -2589,7 +2711,7 @@ function bancheck(token, channelid) {
                         chalk.magenta(" [Main Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                if (notifymethod == "notify") { 
+                if (notifymethod == "notify") {
                     for (let i = 0; i < notifynumber; i++) {
                         notifier.notify({
                             title: "(Main Token) Captcha Detected!",
@@ -2602,7 +2724,8 @@ function bancheck(token, channelid) {
                     }
                 }
                 if (notifymethod == "promt") {
-                    for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Main Token"), 1600);
+                    for (let i = 0; i < notifynumber; i++)
+                        setTimeout(() => createpromt("Main Token"), 1600);
                 }
                 setTimeout(() => {
                     updateerrorsocket("(Main Token) Solve Captcha!");
@@ -2658,7 +2781,7 @@ function extrabancheck(token, channelid) {
                         chalk.magenta(" [Extra Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                if (notifymethod == "notify") { 
+                if (notifymethod == "notify") {
                     for (let i = 0; i < notifynumber; i++) {
                         notifier.notify({
                             title: "(Extra Token) Captcha Detected!",
@@ -2671,7 +2794,8 @@ function extrabancheck(token, channelid) {
                     }
                 }
                 if (notifymethod == "promt") {
-                    for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Extra Token"), 1600);
+                    for (let i = 0; i < notifynumber; i++)
+                        setTimeout(() => createpromt("Extra Token"), 1600);
                 }
                 setTimeout(() => {
                     updateerrorsocket("(Extra Token) Solve Captcha!");
@@ -2730,11 +2854,12 @@ function dmbancheck(token, channelid) {
                             chalk.magenta(" [Main Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    if (notifymethod == "notify") { 
+                    if (notifymethod == "notify") {
                         for (let i = 0; i < notifynumber; i++) {
                             notifier.notify({
                                 title: "(Main Token) Captcha Detected!",
-                                message: "Solve the captcha and restart the bot!",
+                                message:
+                                    "Solve the captcha and restart the bot!",
                                 icon: "./utils/captcha.png",
                                 sound: true,
                                 wait: true,
@@ -2743,7 +2868,8 @@ function dmbancheck(token, channelid) {
                         }
                     }
                     if (notifymethod == "promt") {
-                        for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Main Token"), 1600);
+                        for (let i = 0; i < notifynumber; i++)
+                            setTimeout(() => createpromt("Main Token"), 1600);
                     }
                     setTimeout(() => {
                         updateerrorsocket("(Main Token) Solve DM Captcha!");
@@ -2802,11 +2928,12 @@ function dmextrabancheck(token, channelid) {
                             chalk.magenta(" [Extra Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    if (notifymethod == "notify") { 
+                    if (notifymethod == "notify") {
                         for (let i = 0; i < notifynumber; i++) {
                             notifier.notify({
                                 title: "(Extra Token) Captcha Detected!",
-                                message: "Solve the captcha and restart the bot!",
+                                message:
+                                    "Solve the captcha and restart the bot!",
                                 icon: "./utils/captcha.png",
                                 sound: true,
                                 wait: true,
@@ -2815,7 +2942,8 @@ function dmextrabancheck(token, channelid) {
                         }
                     }
                     if (notifymethod == "promt") {
-                        for (let i = 0; i < notifynumber; i++) setTimeout(() => createpromt("Extra Token"), 1600);
+                        for (let i = 0; i < notifynumber; i++)
+                            setTimeout(() => createpromt("Extra Token"), 1600);
                     }
                     setTimeout(() => {
                         updateerrorsocket("(Extra Token) Solve DM Captcha!");
@@ -2915,9 +3043,9 @@ function elaina2(token, channelid, phrasesFilePath) {
 
 function createpromt(tokentype) {
     const psCommands = [
-        'Add-Type -AssemblyName PresentationFramework',
-        '[System.Windows.MessageBox]::' +
-        `Show(\'Captcha detected on ${tokentype}! App Aborted!\', \'OwO Farm Bot\', \'OK\', \'Warning\')`
+        "Add-Type -AssemblyName PresentationFramework",
+        "[System.Windows.MessageBox]::" +
+            `Show(\'Captcha detected on ${tokentype}! App Aborted!\', \'OwO Farm Bot\', \'OK\', \'Warning\')`,
     ];
     const psScript = psCommands.join("; ");
     cp.exec(`powershell.exe -ExecutionPolicy Bypass -Command "${psScript}"`);
@@ -2926,8 +3054,7 @@ function createpromt(tokentype) {
 //----------------------------------------------------CHECK IF HUNTED OR BATTLED----------------------------------------------------//
 //little help from random guys
 //training myself, for better future, for the love for her <3
-function huntcheck(token, tokentype, channelid, checknumber)
-{
+function huntcheck(token, tokentype, channelid, checknumber) {
     request.get(
         {
             headers: {
@@ -2943,10 +3070,7 @@ function huntcheck(token, tokentype, channelid, checknumber)
             if (!bod[0]) return;
             var cont = bod[0].content;
 
-            if (
-                cont.includes("You found:") ||
-                cont.includes("and caught a")
-            ) {
+            if (cont.includes("You found:") || cont.includes("and caught a")) {
                 global.mainhuntc = true;
                 triggerhunt();
                 if (settings.banbypass && !global.mainhuntpaused) {
@@ -2957,7 +3081,8 @@ function huntcheck(token, tokentype, channelid, checknumber)
                     }
                 }
 
-                if (cont.includes("3/3") && cont.includes("lootbox")) global.mainhuntdaily = true;
+                if (cont.includes("3/3") && cont.includes("lootbox"))
+                    global.mainhuntdaily = true;
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
@@ -2971,14 +3096,18 @@ function huntcheck(token, tokentype, channelid, checknumber)
                         }
                     }
                     return;
-                } else setTimeout(() => huntcheck(token, tokentype, channelid, checknumber), 1600);
+                } else
+                    setTimeout(
+                        () =>
+                            huntcheck(token, tokentype, channelid, checknumber),
+                        1600
+                    );
             }
         }
     );
 }
 
-function battlecheck(token, tokentype, channelid, checknumber)
-{
+function battlecheck(token, tokentype, channelid, checknumber) {
     request.get(
         {
             headers: {
@@ -2993,12 +3122,11 @@ function battlecheck(token, tokentype, channelid, checknumber)
             var bod = JSON.parse(body);
             if (!bod[0]) return;
             var cont = bod[0].embeds;
-            
+
             if (
-            cont.length > 0 && (
-                cont[0].author.name.includes("goes into battle") ||
-                cont[0].footer.text.includes("your team gained")
-                )
+                cont.length > 0 &&
+                (cont[0].author.name.includes("goes into battle") ||
+                    cont[0].footer.text.includes("your team gained"))
             ) {
                 global.mainbattlec = true;
                 triggerbattle();
@@ -3010,13 +3138,17 @@ function battlecheck(token, tokentype, channelid, checknumber)
                     }
                 }
 
-                if (bod[0].content.includes("weapon crate") && bod[0].content.includes("3/3")) global.mainbattledaily = true;
+                if (
+                    bod[0].content.includes("weapon crate") &&
+                    bod[0].content.includes("3/3")
+                )
+                    global.mainbattledaily = true;
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
                     global.mainbattlec = true;
                     triggerbattle();
-                    if (settings.banbypass && !global.mainhuntpaused) {
+                    if (settings.banbypass && global.mainhuntpaused) {
                         if (global.mainfirstrun) global.mainfirstrun = false;
                         else {
                             bancheck(maintoken, mainchannelid);
@@ -3024,14 +3156,23 @@ function battlecheck(token, tokentype, channelid, checknumber)
                         }
                     }
                     return;
-                } else setTimeout(() => battlecheck(token, tokentype, channelid, checknumber), 1600);
+                } else
+                    setTimeout(
+                        () =>
+                            battlecheck(
+                                token,
+                                tokentype,
+                                channelid,
+                                checknumber
+                            ),
+                        1600
+                    );
             }
         }
     );
 }
 
-function extrahuntcheck(token, tokentype, channelid, checknumber)
-{
+function extrahuntcheck(token, tokentype, channelid, checknumber) {
     request.get(
         {
             headers: {
@@ -3047,13 +3188,10 @@ function extrahuntcheck(token, tokentype, channelid, checknumber)
             if (!bod[0]) return;
             var cont = bod[0].content;
 
-            if (
-                cont.includes("You found:") ||
-                cont.includes("and caught a")
-            ) {
+            if (cont.includes("You found:") || cont.includes("and caught a")) {
                 global.extrahuntc = true;
                 triggerextrahunt();
-                if (settings.banbypass && !global.extrahuntpaused) {
+                if (settings.banbypass && global.extrahuntpaused) {
                     if (global.extrafirstrun) global.extrafirstrun = false;
                     else {
                         bancheck(extratoken, extrachannelid);
@@ -3061,13 +3199,14 @@ function extrahuntcheck(token, tokentype, channelid, checknumber)
                     }
                 }
 
-                if (cont.includes("3/3") && cont.includes("lootbox")) global.extrahuntdaily = true;
+                if (cont.includes("3/3") && cont.includes("lootbox"))
+                    global.extrahuntdaily = true;
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
                     global.extrahuntc = true;
                     triggerextrahunt();
-                    if (settings.banbypass && !global.extrahuntpaused) {
+                    if (settings.banbypass && global.extrahuntpaused) {
                         if (global.extrafirstrun) global.extrafirstrun = false;
                         else {
                             bancheck(extratoken, extrachannelid);
@@ -3075,14 +3214,23 @@ function extrahuntcheck(token, tokentype, channelid, checknumber)
                         }
                     }
                     return;
-                } else setTimeout(() => extrahuntcheck(token, tokentype, channelid, checknumber), 1600);
+                } else
+                    setTimeout(
+                        () =>
+                            extrahuntcheck(
+                                token,
+                                tokentype,
+                                channelid,
+                                checknumber
+                            ),
+                        1600
+                    );
             }
         }
     );
 }
 
-function extrabattlecheck(token, tokentype, channelid, checknumber)
-{
+function extrabattlecheck(token, tokentype, channelid, checknumber) {
     request.get(
         {
             headers: {
@@ -3097,12 +3245,11 @@ function extrabattlecheck(token, tokentype, channelid, checknumber)
             var bod = JSON.parse(body);
             if (!bod[0]) return;
             var cont = bod[0].embeds;
-            
+
             if (
-            cont.length > 0 && (
-                cont[0].author.name.includes("goes into battle") ||
-                cont[0].footer.text.includes("your team gained")
-                )
+                cont.length > 0 &&
+                (cont[0].author.name.includes("goes into battle") ||
+                    cont[0].footer.text.includes("your team gained"))
             ) {
                 global.extrabattlec = true;
                 triggerextrabattle();
@@ -3114,7 +3261,11 @@ function extrabattlecheck(token, tokentype, channelid, checknumber)
                     }
                 }
 
-                if (bod[0].content.includes("weapon crate") && bod[0].content.includes("3/3")) global.extrabattledaily = true;
+                if (
+                    bod[0].content.includes("weapon crate") &&
+                    bod[0].content.includes("3/3")
+                )
+                    global.extrabattledaily = true;
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
@@ -3128,7 +3279,17 @@ function extrabattlecheck(token, tokentype, channelid, checknumber)
                         }
                     }
                     return;
-                } else setTimeout(() => extrabattlecheck(token, tokentype, channelid, checknumber), 1600);
+                } else
+                    setTimeout(
+                        () =>
+                            extrabattlecheck(
+                                token,
+                                tokentype,
+                                channelid,
+                                checknumber
+                            ),
+                        1600
+                    );
             }
         }
     );
