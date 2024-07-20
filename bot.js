@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.5";
+var version = "1.0.7.6";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -2963,6 +2963,13 @@ function huntcheck(token, tokentype, channelid, checknumber)
                 if (checknumber >= 8) {
                     global.mainhuntc = true;
                     triggerhunt();
+                    if (settings.banbypass && !global.mainhuntpaused) {
+                        if (global.mainfirstrun) global.mainfirstrun = false;
+                        else {
+                            bancheck(maintoken, mainchannelid);
+                            dmbancheck(maintoken, owodmmainchannelid);
+                        }
+                    }
                     return;
                 } else setTimeout(() => huntcheck(token, tokentype, channelid, checknumber), 1600);
             }
@@ -3009,6 +3016,13 @@ function battlecheck(token, tokentype, channelid, checknumber)
                 if (checknumber >= 8) {
                     global.mainbattlec = true;
                     triggerbattle();
+                    if (settings.banbypass && !global.mainhuntpaused) {
+                        if (global.mainfirstrun) global.mainfirstrun = false;
+                        else {
+                            bancheck(maintoken, mainchannelid);
+                            dmbancheck(maintoken, owodmmainchannelid);
+                        }
+                    }
                     return;
                 } else setTimeout(() => battlecheck(token, tokentype, channelid, checknumber), 1600);
             }
@@ -3053,6 +3067,13 @@ function extrahuntcheck(token, tokentype, channelid, checknumber)
                 if (checknumber >= 8) {
                     global.extrahuntc = true;
                     triggerextrahunt();
+                    if (settings.banbypass && !global.extrahuntpaused) {
+                        if (global.extrafirstrun) global.extrafirstrun = false;
+                        else {
+                            bancheck(extratoken, extrachannelid);
+                            dmbancheck(extratoken, owodmextrachannelid);
+                        }
+                    }
                     return;
                 } else setTimeout(() => extrahuntcheck(token, tokentype, channelid, checknumber), 1600);
             }
@@ -3099,6 +3120,13 @@ function extrabattlecheck(token, tokentype, channelid, checknumber)
                 if (checknumber >= 8) {
                     global.extrabattlec = true;
                     triggerextrabattle();
+                    if (settings.banbypass && !global.extrahuntpaused) {
+                        if (global.extrafirstrun) global.extrafirstrun = false;
+                        else {
+                            bancheck(extratoken, extrachannelid);
+                            dmbancheck(extratoken, owodmextrachannelid);
+                        }
+                    }
                     return;
                 } else setTimeout(() => extrabattlecheck(token, tokentype, channelid, checknumber), 1600);
             }

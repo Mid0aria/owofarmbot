@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7.5",
+    "version": "1.0.7.6",
     "updater": "0.0.3",
-    "note": "V1.0.7.5: Fix bugs and improvments (EOL)"
+    "note": "V1.0.7.6: Critical bug fix, must update if using V1.0.7.5 (EOL)"
 }
