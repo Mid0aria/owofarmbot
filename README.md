@@ -3,7 +3,7 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.7.6(OPEN SOURCE)(EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.7.7(OPEN SOURCE)(EOL)</h1>
 <h1>I do not recommend using this bot until v2 is released</h1>
 <p align="center">
 
@@ -81,6 +81,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
 -   Discord-RPC
 -   Typing Indicator
 -   Automated Workflow
+-   Pause when OwO bot down
 -   **Extra Token**
     -   All Main Token Features
     -   Auto Pray for Main Token
@@ -183,6 +184,10 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
         "notifynumber": "1", //how many times to repeat the notification
         "notifymethod": "", //promt or notify, how the bot will notify you
                             //promt only work on Windows 10 and up, default is notify
+        "notresponsewarning": {
+            "enable": false, //true or false
+            "value": "6" //how name time to pause when not getting response
+        },
         "manualcontroller": { //some built-in automated workflow
             "main": {
                 "stop_hunt_after_daily": false,   //stop hunt after daily (daily lootbox) is completed
