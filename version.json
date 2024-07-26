@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7.6",
+    "version": "1.0.7.7",
     "updater": "0.0.3",
-    "note": "V1.0.7.6: Critical bug fix, must update if using V1.0.7.5 (EOL)"
+    "note": "V1.0.7.7: Bug fixes and exit when OwO not responsing feature (EOL)"
 }
