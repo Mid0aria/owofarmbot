@@ -1809,7 +1809,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
             }
         }
     ); //coded by @mid0aria on github
-    function getinvdata() {
+    setTimeout(() => {
         request.get(
             {
                 headers: {
@@ -2168,7 +2168,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 }
             }
         );
-    }
+    }, 3200);
 }
 
 function gemuse(token, gem, channelid, tokentype) {
