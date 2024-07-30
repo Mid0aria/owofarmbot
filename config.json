@@ -92,6 +92,10 @@
         },
         "notifynumber": "1",
         "notifymethod": "",
+        "notresponsewarning": {
+            "enable": false,
+            "value": "6"
+        },
         "manualcontroller": {
             "main": {
                 "stop_hunt_after_daily": false,

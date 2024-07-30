@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.6";
+var version = "1.0.7.7";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -253,8 +253,6 @@ if (settings.banbypass) {
     console.log(chalk.red(`{/__/}\n( • . •)\n/ > 🥒`));
 }
 
-//notify related
-//sorry i dont know about javascript very much
 var notifynumber = config.settings.notifynumber;
 
 if (notifynumber < 0) {
@@ -274,11 +272,6 @@ if (notifynumber > 6) {
         )
     );
 }
-
-global.mainhuntc = true;
-global.mainbattlec = true;
-global.extrahuntc = true;
-global.extrabattlec = true;
 
 const mainctrl = settings.manualcontroller.main;
 const extractrl = settings.manualcontroller.extra;
@@ -345,8 +338,17 @@ switch (extrararity) {
 }
 
 var notifymethod = settings.notifymethod;
-if (notifymethod != "promt" || notifymethod != "notify")
+if (notifymethod != "promt" && notifymethod != "notify")
     notifymethod = "notify";
+
+const notrespwarn = settings.notresponsewarning.enable;
+var respwarnvalue = settings.notresponsewarning.value;
+if (respwarnvalue < 6 && notrespwarn) {
+    console.log("Not response warning value is too low!/nDefaulting to 6!");
+    respwarnvalue = 6;
+}
+var mainwarning = 0;
+var extrawarning = 0;
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
 request.get(
@@ -375,7 +377,7 @@ request.get(
         } else {
             console.log(chalk.green("Main Token ✅"));
             console.log(
-                `[Main Token] User: ${bod.username}#${bod.discriminator}`
+                `[Main Token] User: ${bod.username}`
             );
 
             checklist(maintoken, "Main Token", mainchannelid);
@@ -419,7 +421,7 @@ if (extratokencheck) {
                 global.etoken = true;
                 console.log(chalk.green("Extra Token ✅"));
                 console.log(
-                    `[Extra Token] User: ${bod.username}#${bod.discriminator}`
+                    `[Extra Token] User: ${bod.username}`
                 );
 
                 if (global.etoken) {
@@ -449,6 +451,20 @@ if (extratokencheck) {
 }
 //--------------------------HUNT BATTLE-------------------------------------------------------//
 function triggerhunt() {
+    if (notrespwarn && (mainwarning > respwarnvalue)) {
+        console.clear();
+        console.log(
+            chalk.red(
+                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+            ) +
+                chalk.magenta(` [Main Token]`) +
+                chalk.red(` Cannot receive OwO response! Bot stopped`)
+        );
+        warninguser("Main Token", false);
+        updateerrorsocket("[Global] Cannot receive OwO response (Require manual check)!");
+        setTimeout(() => process.exit(0), 1600);
+    }
+    
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
         var bigger_timehunt = settings.times.hunttop;
@@ -485,12 +501,10 @@ function triggerhunt() {
     }
 
     if (settings.huntandbattle) {
-        if (global.mainhuntc)
-            setTimeout(
-                () => hunt(maintoken, timehunt, "Main Token", mainchannelid),
-                timehunt
-            );
-        else huntcheck(maintoken, "Main Token", mainchannelid, 3);
+        setTimeout(
+            () => hunt(maintoken, timehunt, "Main Token", mainchannelid),
+            timehunt
+        );
         if (settings.inventory.inventorycheck) {
             setTimeout(() => {
                 checkinv(maintoken, mainchannelid, "Main Token");
@@ -500,6 +514,20 @@ function triggerhunt() {
 }
 
 function triggerbattle() {
+    if (notrespwarn && (mainwarning > respwarnvalue)) {
+        console.clear();
+        console.log(
+            chalk.red(
+                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+            ) +
+                chalk.magenta(` [Main Token]`) +
+                chalk.red(` Cannot receive OwO response! Bot stopped`)
+        );
+        warninguser("Main Token", false);
+        updateerrorsocket("[Global] Cannot receive OwO response (Require manual check)!");
+        setTimeout(() => process.exit(0), 1600);
+    }
+    
     if (settings.times.enable) {
         var smaller_timebattle = settings.times.battlebottom;
         var bigger_timebattle = settings.times.battletop;
@@ -534,17 +562,29 @@ function triggerbattle() {
     }
 
     if (settings.huntandbattle) {
-        if (global.mainbattlec)
-            setTimeout(
-                () =>
-                    battle(maintoken, timebattle, "Main Token", mainchannelid),
-                timebattle
-            );
-        else battlecheck(maintoken, "Main Token", mainchannelid, 3);
+        setTimeout(
+            () =>
+                battle(maintoken, timebattle, "Main Token", mainchannelid),
+            timebattle
+        );
     }
 }
 
 function triggerextrahunt() {
+    if (notrespwarn && (extrawarning > respwarnvalue)) {
+        console.clear();
+        console.log(
+            chalk.red(
+                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+            ) +
+                chalk.magenta(` [Extra Token]`) +
+                chalk.red(` Cannot receive OwO response! Bot stopped`)
+        );
+        warninguser("Extra Token", false);
+        updateerrorsocket("[Global] Cannot receive OwO response (Require manual check)!");
+        setTimeout(() => process.exit(0), 1600);
+    }
+    
     if (settings.times.enable) {
         var smaller_timehunt = settings.times.huntbottom;
         var bigger_timehunt = settings.times.hunttop;
@@ -581,12 +621,10 @@ function triggerextrahunt() {
     }
 
     if (settings.huntandbattle) {
-        if (global.extrahuntc)
-            setTimeout(
-                () => hunt(extratoken, timehunt, "Extra Token", extrachannelid),
-                timehunt
-            );
-        else huntcheck(extratoken, "Extra Token", extrachannelid, 3);
+        setTimeout(
+            () => hunt(extratoken, timehunt, "Extra Token", extrachannelid),
+            timehunt
+        );
         if (settings.inventory.inventorycheck) {
             setTimeout(() => {
                 checkinv(extratoken, extrachannelid, "Extra Token");
@@ -596,6 +634,20 @@ function triggerextrahunt() {
 }
 
 function triggerextrabattle() {
+    if (notrespwarn && (extrawarning > respwarnvalue)) {
+        console.clear();
+        console.log(
+            chalk.red(
+                `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+            ) +
+                chalk.magenta(` [Extra Token]`) +
+                chalk.red(` Cannot receive OwO response! Bot stopped`)
+        );
+        warninguser("Extra Token", false);
+        updateerrorsocket("[Global] Cannot receive OwO response (Require manual check)!");
+        setTimeout(() => process.exit(0), 1600);
+    }
+    
     if (settings.times.enable) {
         var smaller_timebattle = settings.times.battlebottom;
         var bigger_timebattle = settings.times.battletop;
@@ -630,18 +682,16 @@ function triggerextrabattle() {
     }
 
     if (settings.huntandbattle) {
-        if (global.extrabattlec)
-            setTimeout(
-                () =>
-                    battle(
-                        extratoken,
-                        timebattle,
-                        "Extra Token",
-                        extrachannelid
-                    ),
-                timebattle
-            );
-        else battlecheck(extratoken, "Extra Token", extrachannelid, 3);
+        setTimeout(
+            () =>
+                battle(
+                    extratoken,
+                    timebattle,
+                    "Extra Token",
+                    extrachannelid
+                ),
+            timebattle
+        );
     }
 }
 
@@ -972,13 +1022,8 @@ function hunt(token, timehunt, tokentype, channelid) {
             );
         }
     );
-    if (tokentype == "Extra Token") {
-        global.extrahuntc = false;
-        extrahuntcheck(token, tokentype, channelid, 3);
-    } else {
-        global.mainhuntc = false;
-        huntcheck(token, tokentype, channelid, 3);
-    }
+    if (tokentype == "Extra Token") extrahuntcheck(token, tokentype, channelid, 3);
+    else huntcheck(token, tokentype, channelid, 3);
 }
 
 function battle(token, timebattle, tokentype, channelid) {
@@ -1009,13 +1054,8 @@ function battle(token, timebattle, tokentype, channelid) {
             );
         }
     );
-    if (tokentype == "Extra Token") {
-        global.extrabattlec = false;
-        extrabattlecheck(token, tokentype, channelid, 3);
-    } else {
-        global.mainbattlec = false;
-        battlecheck(token, tokentype, channelid, 3);
-    }
+    if (tokentype == "Extra Token") extrabattlecheck(token, tokentype, channelid, 3);
+    else battlecheck(token, tokentype, channelid, 3);
 }
 
 function animals(token, tokentype, channelid, type) {
@@ -1175,7 +1215,7 @@ function checklist(token, tokentype, channelid) {
                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                 ) +
                     chalk.magenta(` [${tokentype}]`) +
-                    chalk.yellow("Sending Checklist📜 ...")
+                    chalk.yellow(" Sending Checklist📜 ...")
             );
             setTimeout(() => {
                 request.get(
@@ -1197,7 +1237,7 @@ function checklist(token, tokentype, channelid) {
 
                             if (cont[0].author.name.includes("Checklist")) {
                                 chalk.magenta(` [${tokentype}]`) +
-                                    chalk.yellow("Getting Checklist 🔎");
+                                    chalk.yellow(" Getting Checklist 🔎");
                                 if (des.includes("☑️ 🎉")) {
                                     updatechecklistsocket("all", "✅");
                                     return "checklist completed";
@@ -1235,17 +1275,7 @@ function checklist(token, tokentype, channelid) {
                                 } else {
                                     updatechecklistsocket("vote", "✅");
                                 }
-                                if (des.includes("⬛ 📜")) {
-                                    if (settings.autoquest) {
-                                        getquests(
-                                            maintoken,
-                                            mainautoquestchannelid,
-                                            "Main Token"
-                                        );
-                                    }
-                                } else {
-                                    updatechecklistsocket("quest", "✅");
-                                }
+                                if (!des.includes("⬛ 📜")) updatechecklistsocket("quest", "✅");
                             }
                         } catch (error) {
                             updateerrorsocket(
@@ -1256,7 +1286,7 @@ function checklist(token, tokentype, channelid) {
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                                 ) +
                                     chalk.magenta(` [${tokentype}]`) +
-                                    chalk.red("Unable to get Checklist❗")
+                                    chalk.red(" Unable to get Checklist❗")
                             );
                         }
                     }
@@ -1371,7 +1401,8 @@ function coinflip(token, tokentype, channelid) {
                     try {
                         const bod = JSON.parse(body);
                         if (!bod[0]) return;
-                        const cont = bod[0].content;
+                        var cont;
+                        for (let i = 0; i < 3; i++) cont += bod[i].content;
 
                         if (cont.includes("and you lost it all... :c")) {
                             currentBet *= settings.gamble.coinflip.multipler;
@@ -1426,7 +1457,9 @@ function coinflip(token, tokentype, channelid) {
                                     try {
                                         const bod = JSON.parse(body);
                                         if (!bod[0]) return;
-                                        const cont = bod[0].content;
+                                        var cont;
+                                        for (let i = 0; i < 3; i++) cont += bod[i].content;
+
 
                                         if (
                                             cont.includes(
@@ -1552,7 +1585,8 @@ function extra_coinflip(token, tokentype, channelid) {
                     try {
                         const bod = JSON.parse(body);
                         if (!bod[0]) return;
-                        const cont = bod[0].content;
+                        var cont;
+                        for (let i = 0; i < 3; i++) cont += bod[i].content;
 
                         if (cont.includes("and you lost it all... :c")) {
                             extra_currentBet *=
@@ -1694,7 +1728,8 @@ function checkinv(token, channelid, tokentype) {
                 }
                 var bod = JSON.parse(body);
                 if (!bod[0]) return;
-                var cont = bod[0].content;
+                var cont;
+                for (let i = 0; i < 3; i++) cont += bod[i].content;
                 if (
                     cont.includes("You found:") ||
                     cont.includes("and caught a")
@@ -1788,7 +1823,8 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 }
                 var bod = JSON.parse(body);
                 if (!bod[0]) return;
-                var cont = bod[0].content;
+                var cont;
+                for (let i = 0; i < checknumber; i++) cont += bod[i].content;
                 if (gemc == "gemvar") {
                     var empgem = "";
                     var empgemstatus = false;
@@ -2132,7 +2168,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 }
             }
         );
-    }, 3000);
+    }, 3200);
 }
 
 function gemuse(token, gem, channelid, tokentype) {
@@ -2277,7 +2313,7 @@ async function getquests(token, channelid, tokentype) {
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                             ) +
                                 chalk.magenta(` [${tokentype}]`) +
-                                chalk.yellow("Checking quest 🔎")
+                                chalk.yellow(" Checking quest 🔎")
                         );
                         if (
                             cont[0].description.includes(
@@ -2692,7 +2728,8 @@ function bancheck(token, channelid) {
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
-            var cont = bod[0].content;
+            var cont;
+            for (let i = 0; i < 5; i++) cont += bod[i].content;
 
             if (
                 cont.toLowerCase().includes("captcha") ||
@@ -2711,24 +2748,10 @@ function bancheck(token, channelid) {
                         chalk.magenta(" [Main Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                if (notifymethod == "notify") {
-                    for (let i = 0; i < notifynumber; i++) {
-                        notifier.notify({
-                            title: "(Main Token) Captcha Detected!",
-                            message: "Solve the captcha and restart the bot!",
-                            icon: "./utils/captcha.png",
-                            sound: true,
-                            wait: true,
-                            appID: "OwO Farm Bot",
-                        });
-                    }
-                }
-                if (notifymethod == "promt") {
-                    for (let i = 0; i < notifynumber; i++)
-                        setTimeout(() => createpromt("Main Token"), 1600);
-                }
+                
+                warninguser("Main Token", true);
+                updateerrorsocket("(Main Token) Solve Captcha!");
                 setTimeout(() => {
-                    updateerrorsocket("(Main Token) Solve Captcha!");
                     process.exit(0);
                 }, 1600);
             } else {
@@ -2763,7 +2786,8 @@ function extrabancheck(token, channelid) {
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
-            var cont = bod[0].content;
+            var cont;
+            for (let i = 0; i < 5; i++) cont += bod[i].content;
             if (
                 cont.toLowerCase().includes("captcha") ||
                 cont
@@ -2781,24 +2805,10 @@ function extrabancheck(token, channelid) {
                         chalk.magenta(" [Extra Token]") +
                         chalk.red(" Chat Captcha! ❌")
                 );
-                if (notifymethod == "notify") {
-                    for (let i = 0; i < notifynumber; i++) {
-                        notifier.notify({
-                            title: "(Extra Token) Captcha Detected!",
-                            message: "Solve the captcha and restart the bot!",
-                            icon: "./utils/captcha.png",
-                            sound: true,
-                            wait: true,
-                            appID: "OwO Farm Bot",
-                        });
-                    }
-                }
-                if (notifymethod == "promt") {
-                    for (let i = 0; i < notifynumber; i++)
-                        setTimeout(() => createpromt("Extra Token"), 1600);
-                }
+                
+                warninguser("Extra Token", true);
+                updateerrorsocket("(Extra Token) Solve Captcha!");
                 setTimeout(() => {
-                    updateerrorsocket("(Extra Token) Solve Captcha!");
                     process.exit(0);
                 }, 1600);
             } else {
@@ -2854,25 +2864,9 @@ function dmbancheck(token, channelid) {
                             chalk.magenta(" [Main Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    if (notifymethod == "notify") {
-                        for (let i = 0; i < notifynumber; i++) {
-                            notifier.notify({
-                                title: "(Main Token) Captcha Detected!",
-                                message:
-                                    "Solve the captcha and restart the bot!",
-                                icon: "./utils/captcha.png",
-                                sound: true,
-                                wait: true,
-                                appID: "OwO Farm Bot",
-                            });
-                        }
-                    }
-                    if (notifymethod == "promt") {
-                        for (let i = 0; i < notifynumber; i++)
-                            setTimeout(() => createpromt("Main Token"), 1600);
-                    }
+                    warninguser("Main Token", true);
+                    updateerrorsocket("(Main Token) Solve DM Captcha!");
                     setTimeout(() => {
-                        updateerrorsocket("(Main Token) Solve DM Captcha!");
                         process.exit(0);
                     }, 1600);
                 } else {
@@ -2928,25 +2922,9 @@ function dmextrabancheck(token, channelid) {
                             chalk.magenta(" [Extra Token]") +
                             chalk.red(" DM Captcha! ❌")
                     );
-                    if (notifymethod == "notify") {
-                        for (let i = 0; i < notifynumber; i++) {
-                            notifier.notify({
-                                title: "(Extra Token) Captcha Detected!",
-                                message:
-                                    "Solve the captcha and restart the bot!",
-                                icon: "./utils/captcha.png",
-                                sound: true,
-                                wait: true,
-                                appID: "OwO Farm Bot",
-                            });
-                        }
-                    }
-                    if (notifymethod == "promt") {
-                        for (let i = 0; i < notifynumber; i++)
-                            setTimeout(() => createpromt("Extra Token"), 1600);
-                    }
+                    warninguser("Extra Token", true);
+                    updateerrorsocket("(Extra Token) Solve DM Captcha!");
                     setTimeout(() => {
-                        updateerrorsocket("(Extra Token) Solve DM Captcha!");
                         process.exit(0);
                     }, 1600);
                 } else {
@@ -3041,11 +3019,42 @@ function elaina2(token, channelid, phrasesFilePath) {
     });
 }
 
-function createpromt(tokentype) {
+function warninguser(tokentype, iscaptcha) {
+    var title, message, icon;
+    if (iscaptcha) {
+        title = `${tokentype} Captcha Detected!`;
+        message = `Solve the captcha and restart the bot!`;
+        icon = "./utils/captcha.png";
+    } else {
+        title = `Cannot receive OwO response`;
+        message = `Manual check OwO status and restart the bot!`;
+        icon = "./utils/connect.jpg";
+    }
+    if (notifymethod == "notify") {
+        for (let i = 0; i < notifynumber; i++) {
+            notifier.notify({
+                title: `${title}`,
+                message: `${message}`,
+                icon: `${icon}`,
+                sound: true,
+                wait: true,
+                appID: "OwO Farm Bot",
+            });
+        }
+    }
+    if (notifymethod == "promt") {
+        for (let i = 0; i < notifynumber; i++)
+            setTimeout(() => createpromt(tokentype, iscaptcha), 1600 * i);
+    }
+}
+
+function createpromt(tokentype, iscaptcha) {
+    var message = `Captcha detected on ${tokentype}! App aborted!`;
+    if (!iscaptcha) message = `Cannot receive OwO response! App aborted!`;
     const psCommands = [
         "Add-Type -AssemblyName PresentationFramework",
         "[System.Windows.MessageBox]::" +
-            `Show(\'Captcha detected on ${tokentype}! App Aborted!\', \'OwO Farm Bot\', \'OK\', \'Warning\')`,
+            `Show(\'${message}\', \'OwO Farm Bot\', \'OK\', \'Warning\')`,
     ];
     const psScript = psCommands.join("; ");
     cp.exec(`powershell.exe -ExecutionPolicy Bypass -Command "${psScript}"`);
@@ -3068,10 +3077,11 @@ function huntcheck(token, tokentype, channelid, checknumber) {
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
-            var cont = bod[0].content;
+            var cont;
+            for (let i = 0; i < checknumber; i++) cont += bod[i].content;
 
             if (cont.includes("You found:") || cont.includes("and caught a")) {
-                global.mainhuntc = true;
+                if (mainwarning > 0) mainwarning -= 1;
                 triggerhunt();
                 if (settings.banbypass && !global.mainhuntpaused) {
                     if (global.mainfirstrun) global.mainfirstrun = false;
@@ -3086,7 +3096,7 @@ function huntcheck(token, tokentype, channelid, checknumber) {
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
-                    global.mainhuntc = true;
+                    mainwarning += 1;
                     triggerhunt();
                     if (settings.banbypass && !global.mainhuntpaused) {
                         if (global.mainfirstrun) global.mainfirstrun = false;
@@ -3128,7 +3138,7 @@ function battlecheck(token, tokentype, channelid, checknumber) {
                 (cont[0].author.name.includes("goes into battle") ||
                     cont[0].footer.text.includes("your team gained"))
             ) {
-                global.mainbattlec = true;
+                if (mainwarning > 0) mainwarning -= 1;
                 triggerbattle();
                 if (settings.banbypass && global.mainhuntpaused) {
                     if (global.mainfirstrun) global.mainfirstrun = false;
@@ -3146,7 +3156,7 @@ function battlecheck(token, tokentype, channelid, checknumber) {
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
-                    global.mainbattlec = true;
+                    mainwarning += 1;
                     triggerbattle();
                     if (settings.banbypass && global.mainhuntpaused) {
                         if (global.mainfirstrun) global.mainfirstrun = false;
@@ -3186,10 +3196,11 @@ function extrahuntcheck(token, tokentype, channelid, checknumber) {
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
-            var cont = bod[0].content;
+            var cont;
+            for (let i = 0; i < checknumber; i++) cont += bod[i].content;
 
             if (cont.includes("You found:") || cont.includes("and caught a")) {
-                global.extrahuntc = true;
+                if (extrawarning > 0) extrawarning -= 1;
                 triggerextrahunt();
                 if (settings.banbypass && global.extrahuntpaused) {
                     if (global.extrafirstrun) global.extrafirstrun = false;
@@ -3204,7 +3215,7 @@ function extrahuntcheck(token, tokentype, channelid, checknumber) {
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
-                    global.extrahuntc = true;
+                    extrawarning += 1;
                     triggerextrahunt();
                     if (settings.banbypass && global.extrahuntpaused) {
                         if (global.extrafirstrun) global.extrafirstrun = false;
@@ -3251,7 +3262,7 @@ function extrabattlecheck(token, tokentype, channelid, checknumber) {
                 (cont[0].author.name.includes("goes into battle") ||
                     cont[0].footer.text.includes("your team gained"))
             ) {
-                global.extrabattlec = true;
+                if (extrawarning > 0) extrawarning -= 1;
                 triggerextrabattle();
                 if (settings.banbypass && global.extrahuntpaused) {
                     if (global.extrafirstrun) global.extrafirstrun = false;
@@ -3269,7 +3280,7 @@ function extrabattlecheck(token, tokentype, channelid, checknumber) {
             } else {
                 checknumber = checknumber + 1;
                 if (checknumber >= 8) {
-                    global.extrabattlec = true;
+                    extrawarning += 1;
                     triggerextrabattle();
                     if (settings.banbypass && !global.extrahuntpaused) {
                         if (global.extrafirstrun) global.extrafirstrun = false;
