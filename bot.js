@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.8";
+var version = "1.0.7.9";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -1261,7 +1261,9 @@ function checklist(token, tokentype, channelid) {
                                     updatechecklistsocket("daily", "✅");
                                 }
                                 if (des.includes("⬛ 🍪")) {
-                                    cookie(token, tokentype, channelid);
+                                    if (settings.cookie)
+                                    setTimeout (() =>
+                                        cookie(token, tokentype, channelid), 61000);
                                 } else {
                                     updatechecklistsocket("cookie", "✅");
                                 }
