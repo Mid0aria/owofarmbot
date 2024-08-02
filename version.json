@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7.8",
+    "version": "1.0.7.9",
     "updater": "0.0.3",
-    "note": "V1.0.7.8: Bug fixes and improvments (again) (EOL)"
+    "note": "V1.0.7.9: Prevent first time run captcha (EOL)"
 }
