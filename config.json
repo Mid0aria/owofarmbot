@@ -43,6 +43,7 @@
         "typingindicator": true,
         "pray": false,
         "curse": false,
+        "cookie": false,
         "autoquest": false,
         "extratoken": false,
         "inventory": {

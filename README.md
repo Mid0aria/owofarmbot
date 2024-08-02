@@ -3,7 +3,7 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.7.8(OPEN SOURCE)(EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.7.9(OPEN SOURCE)(EOL)</h1>
 <h1>I do not recommend using this bot until v2 is released</h1>
 <p align="center">
 
@@ -134,6 +134,8 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
         "discordrpc": "", true or false
         "typingindicator": "", true or false
         "pray": "", true or false
+        "curse": "", true or false
+        "cookie": "", true or false, auto send cookie to OwO on startup or not
         "extratoken": "", true or false
         "autoquest": "", true or false
         "inventory": {
