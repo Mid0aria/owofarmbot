@@ -1,5 +1,5 @@
 global.love = "e<3"; // 💔
-var version = "1.0.7.7";
+var version = "1.0.7.8";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -1824,7 +1824,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                 var bod = JSON.parse(body);
                 if (!bod[0]) return;
                 var cont;
-                for (let i = 0; i < checknumber; i++) cont += bod[i].content;
+                for (let i = 0; i < 3; i++) cont += bod[i].content;
                 if (gemc == "gemvar") {
                     var empgem = "";
                     var empgemstatus = false;
@@ -2297,7 +2297,7 @@ async function getquests(token, channelid, tokentype) {
                     headers: {
                         authorization: token,
                     },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=5`,
                 },
                 async function (error, response, body) {
                     if (error) {
@@ -2306,8 +2306,15 @@ async function getquests(token, channelid, tokentype) {
                     try {
                         var bod = JSON.parse(body);
                         if (!bod[0]) return;
-                        var cont = bod[0].embeds;
-                        await delay(2500);
+                        var cont;
+                        for (let i = 0; i < 5; i++) {
+                            try {
+                                if (bod[i].embeds[0].author.name.includes("Quest Log"))
+                                    cont = bod[i].embeds;
+                            }
+                            catch (error) {
+                            }
+                        }
                         console.log(
                             chalk.red(
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -2315,6 +2322,7 @@ async function getquests(token, channelid, tokentype) {
                                 chalk.magenta(` [${tokentype}]`) +
                                 chalk.yellow(" Checking quest 🔎")
                         );
+                        await delay(3500);
                         if (
                             cont[0].description.includes(
                                 "You finished all of your quests!"
@@ -2405,7 +2413,8 @@ async function getquests(token, channelid, tokentype) {
                                             token,
                                             channelid,
                                             parseInt(progress1),
-                                            parseInt(progress2)
+                                            parseInt(progress2),
+                                            tokentype
                                         );
                                     } else if (
                                         quest.includes(
@@ -2431,7 +2440,8 @@ async function getquests(token, channelid, tokentype) {
                                                 token,
                                                 channelid,
                                                 parseInt(progress1), //coded by @mid0aria on github
-                                                parseInt(progress2)
+                                                parseInt(progress2),
+                                                tokentype
                                             );
                                         } else if (
                                             quest.includes("Use an action")
@@ -2441,7 +2451,8 @@ async function getquests(token, channelid, tokentype) {
                                                 token,
                                                 channelid,
                                                 parseInt(progress1), //coded by @mid0aria on github
-                                                parseInt(progress2)
+                                                parseInt(progress2),
+                                                tokentype
                                             );
                                         }
                                     }
@@ -2457,7 +2468,8 @@ async function getquests(token, channelid, tokentype) {
                                             maintokenuserid,
                                             channelid,
                                             parseInt(progress1),
-                                            parseInt(progress2)
+                                            parseInt(progress2),
+                                            tokentype
                                         );
                                     } else if (
                                         quest.includes(
@@ -2470,7 +2482,8 @@ async function getquests(token, channelid, tokentype) {
                                             maintokenuserid,
                                             channelid,
                                             parseInt(progress1),
-                                            parseInt(progress2)
+                                            parseInt(progress2),
+                                            tokentype
                                         );
                                     } else if (
                                         quest.includes("Battle with a friend")
@@ -2482,7 +2495,8 @@ async function getquests(token, channelid, tokentype) {
                                             maintokenuserid,
                                             channelid,
                                             parseInt(progress1),
-                                            parseInt(progress2)
+                                            parseInt(progress2),
+                                            tokentype
                                         );
                                     } else if (
                                         quest.includes(
@@ -2495,7 +2509,8 @@ async function getquests(token, channelid, tokentype) {
                                             maintokenuserid,
                                             channelid,
                                             parseInt(progress1),
-                                            parseInt(progress2)
+                                            parseInt(progress2),
+                                            tokentype
                                         );
                                     }
                                 }
@@ -2508,8 +2523,11 @@ async function getquests(token, channelid, tokentype) {
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                             ) +
                                 chalk.magenta(` [${tokentype}]`) +
-                                chalk.red("Unable to check quest❗")
+                                chalk.red("Unable to check quest❗") +
+                                chalk.white("Rechecking after 61 secs...")
                         );
+                        setTimeout(() => updateerrorsocket("Rechecking Quest..."), 55000);
+                        setTimeout(() => getquests(token, channelid, tokentype), 61000);
 
                         console.error(error);
                     }
@@ -2519,7 +2537,7 @@ async function getquests(token, channelid, tokentype) {
     );
 }
 
-async function questsayowo(token, channelid, pro1, pro2) {
+async function questsayowo(token, channelid, pro1, pro2, tokentype) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
             headers: {
@@ -2543,7 +2561,7 @@ async function questsayowo(token, channelid, pro1, pro2) {
         }
     }
     global.quest = true;
-    getquests(token, channelid);
+    getquests(token, channelid, tokentype);
 }
 
 async function xpquests(token, channelid, tokentype) {
@@ -2554,7 +2572,7 @@ async function xpquests(token, channelid, tokentype) {
     getquests(token, channelid, tokentype);
 }
 
-async function questcurseme(token, userid, channelid, pro1, pro2) {
+async function questcurseme(token, userid, channelid, pro1, pro2, tokentype) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
             headers: {
@@ -2574,10 +2592,10 @@ async function questcurseme(token, userid, channelid, pro1, pro2) {
         await delay(302000);
     }
     global.quest = true;
-    getquests(token, channelid);
+    getquests(token, channelid, tokentype);
 }
 
-async function questprayme(token, userid, channelid, pro1, pro2) {
+async function questprayme(token, userid, channelid, pro1, pro2, tokentype) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
             headers: {
@@ -2597,7 +2615,7 @@ async function questprayme(token, userid, channelid, pro1, pro2) {
         await delay(302000);
     }
     global.quest = true;
-    getquests(token, channelid);
+    getquests(token, channelid, tokentype);
 }
 
 async function questbattlefriend(
@@ -2606,7 +2624,8 @@ async function questbattlefriend(
     mainuserid,
     channelid,
     pro1,
-    pro2
+    pro2,
+    tokentype
 ) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
@@ -2640,10 +2659,10 @@ async function questbattlefriend(
         await delay(15000);
     }
     global.quest = true;
-    getquests(maintoken, channelid);
+    getquests(maintoken, channelid, tokentype);
 }
 
-async function questgamble(token, channelid, pro1, pro2) {
+async function questgamble(token, channelid, pro1, pro2, tokentype) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
             headers: {
@@ -2663,10 +2682,10 @@ async function questgamble(token, channelid, pro1, pro2) {
         await delay(16000);
     }
     global.quest = true;
-    getquests(token, channelid);
+    getquests(token, channelid, tokentype);
 }
 
-async function questcookiefriend(token, userid, channelid, pro1, pro2) {
+async function questcookiefriend(token, userid, channelid, pro1, pro2, tokentype) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
             headers: {
@@ -2686,10 +2705,10 @@ async function questcookiefriend(token, userid, channelid, pro1, pro2) {
         await delay(302000);
     }
     global.quest = true;
-    getquests(token, channelid);
+    getquests(token, channelid, tokentype);
 }
 
-async function questuseactioncommand(token, userid, channelid, pro1, pro2) {
+async function questuseactioncommand(token, userid, channelid, pro1, pro2, tokentype) {
     for (let np = pro2 - pro1; np > 0; np--) {
         request.post({
             headers: {
@@ -2709,7 +2728,7 @@ async function questuseactioncommand(token, userid, channelid, pro1, pro2) {
         await delay(7800);
     }
     global.quest = true;
-    getquests(token, channelid);
+    getquests(token, channelid, tokentype);
 }
 
 //----------------------------------------------------BanCheck + Similar Bypass----------------------------------------------------//
@@ -3131,14 +3150,39 @@ function battlecheck(token, tokentype, channelid, checknumber) {
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
-            var cont = bod[0].embeds;
-
+            var cont;
+            for (let i = 0; i < checknumber; i++) cont += bod[i].content;
             if (
-                cont.length > 0 &&
-                (cont[0].author.name.includes("goes into battle") ||
-                    cont[0].footer.text.includes("your team gained"))
-            ) {
-                if (mainwarning > 0) mainwarning -= 1;
+                cont.includes("weapon crate") &&
+                cont.includes("3/3")
+                )
+                    global.mainbattledaily = true;
+            
+            for (let i = 0; i < checknumber; i++) {
+                try {
+                    if (
+                        bod[i].embeds[0].author.name.includes("goes into battle") ||
+                        bod[i].embeds[0].footer.text.includes("your team gained")
+                        ) {
+                        if (mainwarning > 0) mainwarning -= 1;
+                        triggerbattle();
+                        if (settings.banbypass && global.mainhuntpaused) {
+                            if (global.mainfirstrun) global.mainfirstrun = false;
+                            else {
+                                bancheck(maintoken, mainchannelid);
+                                dmbancheck(maintoken, owodmmainchannelid);
+                            }
+                        }
+                        return;
+                    }
+                }
+                catch (error) {
+                }
+            }
+            
+            checknumber = checknumber + 1;
+            if (checknumber >= 8) {
+                mainwarning += 1;
                 triggerbattle();
                 if (settings.banbypass && global.mainhuntpaused) {
                     if (global.mainfirstrun) global.mainfirstrun = false;
@@ -3147,36 +3191,18 @@ function battlecheck(token, tokentype, channelid, checknumber) {
                         dmbancheck(maintoken, owodmmainchannelid);
                     }
                 }
-
-                if (
-                    bod[0].content.includes("weapon crate") &&
-                    bod[0].content.includes("3/3")
-                )
-                    global.mainbattledaily = true;
+                return;
             } else {
-                checknumber = checknumber + 1;
-                if (checknumber >= 8) {
-                    mainwarning += 1;
-                    triggerbattle();
-                    if (settings.banbypass && global.mainhuntpaused) {
-                        if (global.mainfirstrun) global.mainfirstrun = false;
-                        else {
-                            bancheck(maintoken, mainchannelid);
-                            dmbancheck(maintoken, owodmmainchannelid);
-                        }
-                    }
-                    return;
-                } else
-                    setTimeout(
-                        () =>
-                            battlecheck(
-                                token,
-                                tokentype,
-                                channelid,
-                                checknumber
-                            ),
-                        1600
-                    );
+                setTimeout(
+                    () =>
+                        battlecheck(
+                            token,
+                            tokentype,
+                            channelid,
+                            checknumber
+                        ),
+                    1600
+                );
             }
         }
     );
@@ -3255,52 +3281,58 @@ function extrabattlecheck(token, tokentype, channelid, checknumber) {
             }
             var bod = JSON.parse(body);
             if (!bod[0]) return;
-            var cont = bod[0].embeds;
-
+            var cont;
+            for (let i = 0; i < checknumber; i++) cont += bod[i].content;
             if (
-                cont.length > 0 &&
-                (cont[0].author.name.includes("goes into battle") ||
-                    cont[0].footer.text.includes("your team gained"))
-            ) {
-                if (extrawarning > 0) extrawarning -= 1;
+                cont.includes("weapon crate") &&
+                cont.includes("3/3")
+                ) global.extrabattledaily = true;
+
+            for (let i = 0; i < checknumber; i++) {
+                try {
+                    if (
+                        bod[i].embeds[0].author.name.includes("goes into battle") ||
+                        bod[i].embeds[0].footer.text.includes("your team gained")
+                        ) {
+                        if (extrawarning > 0) extrawarning -= 1;
+                        triggerextrabattle();
+                        if (settings.banbypass && global.extrahuntpaused) {
+                            if (global.extrafirstrun) global.extrafirstrun = false;
+                            else {
+                                bancheck(extratoken, extrachannelid);
+                                dmbancheck(extratoken, owodmextrachannelid);
+                            }
+                        }
+                        return;
+                    }
+                }
+                catch (error) {
+                }
+            }
+            
+            checknumber = checknumber + 1;
+            if (checknumber >= 8) {
+                extrawarning += 1;
                 triggerextrabattle();
-                if (settings.banbypass && global.extrahuntpaused) {
+                if (settings.banbypass && !global.extrahuntpaused) {
                     if (global.extrafirstrun) global.extrafirstrun = false;
                     else {
                         bancheck(extratoken, extrachannelid);
                         dmbancheck(extratoken, owodmextrachannelid);
                     }
                 }
-
-                if (
-                    bod[0].content.includes("weapon crate") &&
-                    bod[0].content.includes("3/3")
-                )
-                    global.extrabattledaily = true;
+                return;
             } else {
-                checknumber = checknumber + 1;
-                if (checknumber >= 8) {
-                    extrawarning += 1;
-                    triggerextrabattle();
-                    if (settings.banbypass && !global.extrahuntpaused) {
-                        if (global.extrafirstrun) global.extrafirstrun = false;
-                        else {
-                            bancheck(extratoken, extrachannelid);
-                            dmbancheck(extratoken, owodmextrachannelid);
-                        }
-                    }
-                    return;
-                } else
-                    setTimeout(
-                        () =>
-                            extrabattlecheck(
-                                token,
-                                tokentype,
-                                channelid,
-                                checknumber
-                            ),
-                        1600
-                    );
+                setTimeout(
+                    () =>
+                        extrabattlecheck(
+                            token,
+                            tokentype,
+                            channelid,
+                            checknumber
+                        ),
+                    1600
+                );
             }
         }
     );
