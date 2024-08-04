@@ -1,3 +1,5 @@
+[OwO Farm Bot Stable RELEASED!!!](https://github.com/mid0aria/owofarmbot_stable)<br>
+
 dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
 6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 💔
 
@@ -48,7 +50,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
 <h2 align="center">Goal: <a href="https://github.com/Mid0aria/owofarmbot/stargazers"><img src="https://img.shields.io/github/stars/Mid0aria/owofarmbot" /></a> / 512</h2>
 ⭐⭐⭐ You can also give this repository a star so that others know we're trusted!<br>
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Mid0aria/owofarmbot,mid0aria/owofarmbot_ui&type=Date)](https://star-history.com/#Mid0aria/owofarmbot&mid0aria/owofarmbot_ui&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Mid0aria/owofarmbot,mid0aria/owofarmbot_stable&type=Date)](https://star-history.com/#Mid0aria/owofarmbot&mid0aria/owofarmbot_stable&Date)
 
 ## ❗・Important (Anyone using the bot is deemed to have read and accepted these)
 
