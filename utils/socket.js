@@ -120,43 +120,50 @@ io.on("times", (e) => {
 });
 setInterval(() => {
     console.clear();
-    var currenttime = chalk.red(
+    let currenttime = chalk.red(
         `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
     );
-    var state = global.state;
-    var cd = global.checklistdaily;
-    var cv = global.checklistvote;
-    var cc = global.checklistcookie;
-    var cq = global.checklistquest;
-    var cl = global.checklistlb;
-    var gc = global.checklistcrate;
-    var qst = chalk.red("[Main] ") + chalk.blue("Start time: ") + chalk.red(global.questdate);
-    var qq = chalk.yellow("Quest: ") + chalk.magenta(`${global.quest}`);
-    var qpr = chalk.green("Progress: ") + chalk.yellow(global.questpr);
-    
-    var ecd = global.extrachecklistdaily;
-    var ecv = global.extrachecklistvote;
-    var ecc = global.extrachecklistcookie;
-    var ecq = global.extrachecklistquest;
-    var ecl = global.extrachecklistlb;
-    var egc = global.extrachecklistcrate;
-    var eqst = chalk.red("[Extra] ") + chalk.blue("Start time: ") + chalk.red(global.extraquestdate);
-    var eqq = chalk.yellow("Quest: ") + chalk.magenta(`${global.extraquest}`);
-    var eqpr = chalk.green("Progress: ") + chalk.yellow(global.extraquestpr);
-    
-    var tms = global.times;
+    let state = global.state;
+    let cd = global.checklistdaily;
+    let cv = global.checklistvote;
+    let cc = global.checklistcookie;
+    let cq = global.checklistquest;
+    let cl = global.checklistlb;
+    let gc = global.checklistcrate;
+    let qst =
+        chalk.red("[Main] ") +
+        chalk.blue("Start time: ") +
+        chalk.red(global.questdate);
+    let qq = chalk.yellow("Quest: ") + chalk.magenta(`${global.quest}`);
+    let qpr = chalk.green("Progress: ") + chalk.yellow(global.questpr);
+
+    let ecd = global.extrachecklistdaily;
+    let ecv = global.extrachecklistvote;
+    let ecc = global.extrachecklistcookie;
+    let ecq = global.extrachecklistquest;
+    let ecl = global.extrachecklistlb;
+    let egc = global.extrachecklistcrate;
+    let eqst =
+        chalk.red("[Extra] ") +
+        chalk.blue("Start time: ") +
+        chalk.red(global.extraquestdate);
+    let eqq = chalk.yellow("Quest: ") + chalk.magenta(`${global.extraquest}`);
+    let eqpr = chalk.green("Progress: ") + chalk.yellow(global.extraquestpr);
+
+    let tms = global.times;
+    let eyl;
     if (global.eyl === "Everything okay") {
-        var eyl = chalk.yellow(global.eyl);
+        eyl = chalk.yellow(global.eyl);
     } else {
-        var eyl = chalk.red(global.eyl);
+        eyl = chalk.red(global.eyl);
     }
-    
+
     if (global.type == "duo") global.sockettype = "Double Threaded Farm Bot!";
     else global.sockettype = "Single Threaded Farm Bot!";
 
-    if(global.type == "duo") {
+    if (global.type == "duo") {
         console.log(
-        `
+            `
 ╔═══════════════════════════════════════════════════════════════════════════════
 ║ > Clock: ${currenttime}                                                              
 ║ > Settings: ${state} 
@@ -185,7 +192,7 @@ setInterval(() => {
         );
     } else {
         console.log(
-        `
+            `
 ╔═══════════════════════════════════════════════════════════════════════════════
 ║ > Clock: ${currenttime}                                                              
 ║ > Settings: ${state} 

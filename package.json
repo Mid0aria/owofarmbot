@@ -1,6 +1,6 @@
 {
     "name": "owofarmbot",
-    "version": "0.0.0",
+    "version": "1.0.8.1",
     "description": "Discord OwO farm bot with CAPTCHA(BAN) protection",
     "main": "bot.js",
     "repository": {
@@ -32,20 +32,25 @@
     },
     "dependencies": {
         "chalk": "^4.1.2",
-        "collect.js": "^4.34.3",
-        "delay": "^5.0.0",
+        "collect.js": "^4.36.1",
+        "delay": "^6.0.0",
         "discord-rpc": "^4.0.1",
-        "dotenv": "^16.3.1",
-        "follow-redirects": "^1.15.2",
+        "dotenv": "^16.4.5",
+        "follow-redirects": "^1.15.6",
         "node-notifier": "^10.0.1",
         "request": "^2.88.2",
         "seedrandom": "^3.0.5",
-        "socket.io": "^4.6.2",
-        "socket.io-client": "^4.6.2",
-        "systeminformation": "^5.22.7"
+        "socket.io": "^4.7.5",
+        "socket.io-client": "^4.7.5",
+        "systeminformation": "^5.23.5"
     },
     "bugs": {
         "url": "https://github.com/Mid0aria/owofarmbot/issues"
     },
-    "homepage": "https://github.com/Mid0aria/owofarmbot#readme"
+    "homepage": "https://github.com/Mid0aria/owofarmbot#readme",
+    "devDependencies": {
+        "@eslint/js": "^9.9.1",
+        "eslint": "^9.9.1",
+        "globals": "^15.9.0"
+    }
 }
