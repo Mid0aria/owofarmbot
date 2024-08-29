@@ -2448,7 +2448,8 @@ async function getquests(token, channelid, tokentype) {
                                 }
 
                                 if (quest.includes("Say 'owo'")) {
-                                    global.quest = false;
+                                    if (tokentype == "Main Token") global.checkquest = false;
+                                    else global.extracheckquest = false;
                                     return questsayowo(
                                         token,
                                         channelid,
@@ -2462,7 +2463,8 @@ async function getquests(token, channelid, tokentype) {
                                         "xp from hunting and battling"
                                     )
                                 ) {
-                                    global.quest = false;
+                                    if (tokentype == "Main Token") global.checkquest = false;
+                                    else global.extracheckquest = false;
                                     if (tokentype == "Main Token") global.mainquest = true;
                                     else global.extraquest = true;
                                     return xpquests(
@@ -2472,7 +2474,8 @@ async function getquests(token, channelid, tokentype) {
                                     );
                                 } else {
                                     if (quest.includes("Gamble")) {
-                                        global.quest = false;
+                                        if (tokentype == "Main Token") global.checkquest = false;
+                                        else global.extracheckquest = false;
                                         return questgamble(
                                             token,
                                             channelid,
@@ -2484,7 +2487,8 @@ async function getquests(token, channelid, tokentype) {
                                     } else if (
                                         quest.includes("Use an action command on someone")
                                     ) {
-                                        global.quest = false;
+                                        if (tokentype == "Main Token") global.checkquest = false;
+                                        else global.extracheckquest = false;
                                         return questuseactioncommand(
                                             token,
                                             channelid,
@@ -2504,7 +2508,8 @@ async function getquests(token, channelid, tokentype) {
                                             "Have a friend curse you"
                                         )
                                     ) {
-                                        global.quest = false;
+                                        if (tokentype == "Main Token") global.checkquest = false;
+                                        else global.extracheckquest = false;
                                         global.manualcurse = false;
                                         return questcurseme(
                                             extratoken,
@@ -2520,7 +2525,8 @@ async function getquests(token, channelid, tokentype) {
                                             "Have a friend pray to you"
                                         )
                                     ) {
-                                        global.quest = false; //coded by @mid0aria on github
+                                        if (tokentype == "Main Token") global.checkquest = false;
+                                        else global.extracheckquest = false; //coded by @mid0aria on github
                                         global.manualpray = false;
                                         return questprayme(
                                             extratoken,
@@ -2534,7 +2540,8 @@ async function getquests(token, channelid, tokentype) {
                                     } else if (
                                         quest.includes("Battle with a friend")
                                     ) {
-                                        global.quest = false;
+                                        if (tokentype == "Main Token") global.checkquest = false;
+                                        else global.extracheckquest = false;
                                         return questbattlefriend(
                                             token,
                                             extratoken,
@@ -2550,7 +2557,8 @@ async function getquests(token, channelid, tokentype) {
                                             "Receive a cookie from 1 friends"
                                         ) && global.cookieactive
                                     ) {
-                                        global.quest = false;
+                                        if (tokentype == "Main Token") global.checkquest = false;
+                                        else global.extracheckquest = false;
                                         return questcookiefriend(
                                             extratoken,
                                             maintokenuserid,
@@ -2565,7 +2573,8 @@ async function getquests(token, channelid, tokentype) {
                                             "Have a friend use an action command"
                                         )
                                     ) {
-                                        global.quest = false;
+                                        if (tokentype == "Main Token") global.checkquest = false;
+                                        else global.extracheckquest = false;
                                         return questactionme(
                                             extratoken,
                                             maintokenuserid,
@@ -2649,7 +2658,8 @@ async function questsayowo(token, channelid, pro1, pro2, tokentype, questtitle) 
 
 async function xpquests(token, channelid, tokentype) {
     await delay(540000);
-    global.quest = true;
+    if (tokentype == "Main Token") global.checkquest = false;
+    else global.extracheckquest = false;
     if (tokentype == "Main Token") global.mainquest = true;
     else global.extraquest = true;
     getquests(token, channelid, tokentype);
