@@ -2403,8 +2403,9 @@ async function getquests(token, channelid, tokentype) {
                                     )
                                 )
                                     cont = bod[i].embeds;
+                                    break; //make sure it will exit to avoid get old quest list
                             } catch (error) {
-                                console.error(error);
+                                //console.error(error);
                             }
                         }
                         console.log(
