@@ -3,7 +3,7 @@ var io = socket.connect("http://localhost:1337");
 const chalk = require("chalk");
 
 console.clear();
-process.title = `Socket Client V3 / e.`;
+process.title = `Socket Client V0.0.3 / e.`;
 global.state = "";
 global.quest = "";
 global.questpr = "";
