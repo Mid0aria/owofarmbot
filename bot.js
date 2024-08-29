@@ -3352,11 +3352,11 @@ function extrahuntcheck(token, tokentype, channelid, checknumber) {
             if (cont.includes("You found:") || cont.includes("and caught a")) {
                 if (extrawarning > 0) extrawarning -= 1;
                 triggerextrahunt();
-                if (settings.banbypass && global.extrahuntpaused) {
+                if (settings.banbypass && !global.extrahuntpaused) {
                     if (global.extrafirstrun) global.extrafirstrun = false;
                     else {
-                        bancheck(extratoken, extrachannelid);
-                        dmbancheck(extratoken, owodmextrachannelid);
+                        extrabancheck(extratoken, extrachannelid);
+                        dmextrabancheck(extratoken, owodmextrachannelid);
                     }
                 }
 
@@ -3367,11 +3367,11 @@ function extrahuntcheck(token, tokentype, channelid, checknumber) {
                 if (checknumber >= 8) {
                     extrawarning += 1;
                     triggerextrahunt();
-                    if (settings.banbypass && global.extrahuntpaused) {
+                    if (settings.banbypass && !global.extrahuntpaused) {
                         if (global.extrafirstrun) global.extrafirstrun = false;
                         else {
-                            bancheck(extratoken, extrachannelid);
-                            dmbancheck(extratoken, owodmextrachannelid);
+                            extrabancheck(extratoken, extrachannelid);
+                            dmextrabancheck(extratoken, owodmextrachannelid);
                         }
                     }
                     return;
@@ -3423,8 +3423,8 @@ function extrabattlecheck(token, tokentype, channelid, checknumber) {
                         if (settings.banbypass && global.extrahuntpaused) {
                             if (global.extrafirstrun) global.extrafirstrun = false;
                             else {
-                                bancheck(extratoken, extrachannelid);
-                                dmbancheck(extratoken, owodmextrachannelid);
+                                extrabancheck(extratoken, extrachannelid);
+                                dmextrabancheck(extratoken, owodmextrachannelid);
                             }
                         }
                         return;
@@ -3438,11 +3438,11 @@ function extrabattlecheck(token, tokentype, channelid, checknumber) {
             if (checknumber >= 8) {
                 extrawarning += 1;
                 triggerextrabattle();
-                if (settings.banbypass && !global.extrahuntpaused) {
+                if (settings.banbypass && global.extrahuntpaused) {
                     if (global.extrafirstrun) global.extrafirstrun = false;
                     else {
-                        bancheck(extratoken, extrachannelid);
-                        dmbancheck(extratoken, owodmextrachannelid);
+                        extrabancheck(extratoken, extrachannelid);
+                        dmextrabancheck(extratoken, owodmextrachannelid);
                     }
                 }
                 return;
