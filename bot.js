@@ -1141,42 +1141,55 @@ function animals(token, tokentype, channelid, type) {
     }
 }
 
-function pray(token, tokentype, channelid) {
-    if (tokentype == "Extra Token") {
-        var ct = `${prefix} pray <@${maintokenuserid}>`;
+async function pray(token, tokentype, channelid) {
+    let ct;
+    if (tokentype === "Extra Token") {
+        ct = `${prefix} pray <@${maintokenuserid}>`;
     } else {
-        var ct = `${prefix} pray`;
+        ct = `${prefix} pray`;
     }
+
     typing(token, channelid);
-    request.post(
-        {
-            headers: {
-                authorization: token,
-            },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-            json: {
-                content: ct,
-                nonce: nonce(),
-                tts: false,
-                flags: 0,
-            },
-        },
-        function (error, response, body) {
-            if (error) {
-                console.error(error);
-            }
-            console.log(
-                chalk.red(
-                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                ) +
-                    chalk.magenta(` [${tokentype}]`) +
-                    chalk.yellow(" Pray ✅")
+
+    try {
+        await new Promise((resolve, reject) => {
+            request.post(
+                {
+                    headers: {
+                        authorization: token,
+                    },
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+                    json: {
+                        content: ct,
+                        nonce: nonce(),
+                        tts: false,
+                        flags: 0,
+                    },
+                },
+                (error, response, body) => {
+                    if (error) {
+                        console.error(error);
+                        return reject(error);
+                    }
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(` [${tokentype}]`) +
+                            chalk.yellow(" Pray ✅")
+                    );
+                    resolve();
+                }
             );
-        }
-    );
-    await delay(timeprayinterval);
-    checkpray();
+        });
+
+        await delay(timeprayinterval);
+        checkpray();
+    } catch (error) {
+        console.error("Error during pray:", error);
+    }
 }
+
 
 function curse(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
