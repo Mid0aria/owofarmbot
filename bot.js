@@ -1,7 +1,7 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
 global.love = "e<3"; // 💔
-var version = "1.0.8.0";
+var version = "1.0.8.2";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -744,7 +744,7 @@ if (settings.times.intervals.pray.enable) {
     var timeprayinterval = 303000;
 }
 global.manualpray = settings.pray;
-setTimeout(() => checkpray(), timeprayinterval);
+setTimeout(() => checkpray(), 16000);
 
 function checkpray() {
     if (global.manualpray) {
@@ -769,7 +769,7 @@ if (settings.times.intervals.curse.enable) {
     var timecurseinterval = 303500;
 }
 global.manualcurse = settings.curse;
-setTimeout(() => checkcurse(), timecurseinterval);
+setTimeout(() => checkcurse(), 16000);
 
 function checkcurse() {
     if (global.manualcurse) {
@@ -1158,44 +1158,34 @@ async function pray(token, tokentype, channelid) {
     }
 
     typing(token, channelid);
-
-    try {
-        await new Promise((resolve, reject) => {
-            request.post(
-                {
-                    headers: {
-                        authorization: token,
-                    },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-                    json: {
-                        content: ct,
-                        nonce: nonce(),
-                        tts: false,
-                        flags: 0,
-                    },
-                },
-                (error, response, body) => {
-                    if (error) {
-                        console.error(error);
-                        return reject(error);
-                    }
-                    console.log(
-                        chalk.red(
-                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        ) +
-                            chalk.magenta(` [${tokentype}]`) +
-                            chalk.yellow(" Pray ✅")
-                    );
-                    resolve();
-                }
+    request.post(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+            json: {
+                content: ct,
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error(error);
+            }
+            console.log(
+                chalk.red(
+                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                ) +
+                    chalk.magenta(` [${tokentype}]`) +
+                    chalk.yellow(" Pray ✅")
             );
-        });
-
-        await delay(timeprayinterval);
-        checkpray();
-    } catch (error) {
-        console.error("Error during pray:", error);
-    }
+        }
+    );
+    await delay(timeprayinterval);
+    if (tokentype == "Main Token") checkpray();
 }
 
 async function curse(token, tokentype, channelid) {
@@ -1232,7 +1222,7 @@ async function curse(token, tokentype, channelid) {
         }
     );
     await delay(timecurseinterval);
-    checkcurse();
+    if (tokentype == "Main Token") checkcurse();
 }
 
 function checklist(token, tokentype, channelid) {
@@ -2403,8 +2393,9 @@ async function getquests(token, channelid, tokentype) {
                                     )
                                 )
                                     cont = bod[i].embeds;
+                                    break; //make sure it will exit to avoid get old quest list
                             } catch (error) {
-                                console.error(error);
+                                //console.error(error);
                             }
                         }
                         console.log(
@@ -2704,15 +2695,7 @@ async function getquests(token, channelid, tokentype) {
 
 async function autocompletequests(token, channelid, tokentype) {
     await delay(610000);
-    if (tokentype == "Main Token") {
-        getquests(token, channelid, tokentype);
-    }
-    /**
-     * ! Where is extragetquests function
-     */
-    /*else {
-        extragetquests(token, channelid, tokentype);
-    }*/
+    getquests(token, channelid, tokentype);
 }
 
 async function questsayowo(
@@ -3337,7 +3320,7 @@ function createpromt(tokentype, iscaptcha) {
     const psCommands = [
         "Add-Type -AssemblyName PresentationFramework",
         "[System.Windows.MessageBox]::" +
-            `Show(\\'${message}\\', \\'OwO Farm Bot\\', \\'OK\\', \\'Warning\\')`,
+            `Show(\'${message}\', \'OwO Farm Bot\', \'OK\', \'Warning\')`,
     ];
     const psScript = psCommands.join("; ");
     cp.exec(`powershell.exe -ExecutionPolicy Bypass -Command "${psScript}"`);
@@ -3442,7 +3425,7 @@ function battlecheck(token, tokentype, channelid, checknumber) {
                         return;
                     }
                 } catch (error) {
-                    console.error(error);
+                    //console.error(error);
                 }
             }
 
@@ -3572,7 +3555,7 @@ function extrabattlecheck(token, tokentype, channelid, checknumber) {
                         return;
                     }
                 } catch (error) {
-                    console.error(error);
+                    //console.error(error);
                 }
             }
 
