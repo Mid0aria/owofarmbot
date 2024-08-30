@@ -2695,15 +2695,7 @@ async function getquests(token, channelid, tokentype) {
 
 async function autocompletequests(token, channelid, tokentype) {
     await delay(610000);
-    if (tokentype == "Main Token") {
-        getquests(token, channelid, tokentype);
-    }
-    /**
-     * ! Where is extragetquests function
-     */
-    /*else {
-        extragetquests(token, channelid, tokentype);
-    }*/
+    getquests(token, channelid, tokentype);
 }
 
 async function questsayowo(
@@ -3328,7 +3320,7 @@ function createpromt(tokentype, iscaptcha) {
     const psCommands = [
         "Add-Type -AssemblyName PresentationFramework",
         "[System.Windows.MessageBox]::" +
-            `Show(\\'${message}\\', \\'OwO Farm Bot\\', \\'OK\\', \\'Warning\\')`,
+            `Show(\'${message}\', \'OwO Farm Bot\', \'OK\', \'Warning\')`,
     ];
     const psScript = psCommands.join("; ");
     cp.exec(`powershell.exe -ExecutionPolicy Bypass -Command "${psScript}"`);
