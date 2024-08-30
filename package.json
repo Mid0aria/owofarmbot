@@ -1,6 +1,6 @@
 {
     "name": "owofarmbot",
-    "version": "1.0.8.1",
+    "version": "1.0.8.3",
     "description": "Discord OwO farm bot with CAPTCHA(BAN) protection",
     "main": "bot.js",
     "repository": {
@@ -33,7 +33,7 @@
     "dependencies": {
         "chalk": "^4.1.2",
         "collect.js": "^4.36.1",
-        "delay": "^6.0.0",
+        "delay": "^5.0.0",
         "discord-rpc": "^4.0.1",
         "dotenv": "^16.4.5",
         "follow-redirects": "^1.15.6",

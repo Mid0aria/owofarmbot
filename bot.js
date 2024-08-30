@@ -1,7 +1,7 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
 global.love = "e<3"; // 💔
-var version = "1.0.8.2";
+var version = "1.0.8.3";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
@@ -2393,7 +2393,7 @@ async function getquests(token, channelid, tokentype) {
                                     )
                                 )
                                     cont = bod[i].embeds;
-                                    break; //make sure it will exit to avoid get old quest list
+                                break; //make sure it will exit to avoid get old quest list
                             } catch (error) {
                                 //console.error(error);
                             }
@@ -3320,6 +3320,7 @@ function createpromt(tokentype, iscaptcha) {
     const psCommands = [
         "Add-Type -AssemblyName PresentationFramework",
         "[System.Windows.MessageBox]::" +
+            // eslint-disable-next-line no-useless-escape
             `Show(\'${message}\', \'OwO Farm Bot\', \'OK\', \'Warning\')`,
     ];
     const psScript = psCommands.join("; ");
