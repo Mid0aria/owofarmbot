@@ -1185,7 +1185,7 @@ async function pray(token, tokentype, channelid) {
         }
     );
     await delay(timeprayinterval);
-    checkpray();
+    if (tokentype == "Main Token") checkpray();
 }
 
 async function curse(token, tokentype, channelid) {
@@ -1222,7 +1222,7 @@ async function curse(token, tokentype, channelid) {
         }
     );
     await delay(timecurseinterval);
-    checkcurse();
+    if (tokentype == "Main Token") checkcurse();
 }
 
 function checklist(token, tokentype, channelid) {
