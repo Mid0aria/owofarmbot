@@ -746,7 +746,7 @@ if (settings.times.intervals.pray.enable) {
     var timeprayinterval = 303000;
 }
 global.manualpray = settings.pray;
-setTimeout(() => checkpray(), 16000);
+setTimeout(() => checkpray(), 30016);
 
 function checkpray() {
     if (global.manualpray) {
@@ -777,7 +777,7 @@ if (settings.times.intervals.curse.enable) {
     var timecurseinterval = 303500;
 }
 global.manualcurse = settings.curse;
-setTimeout(() => checkcurse(), 16000);
+setTimeout(() => checkcurse(), 30016);
 
 function checkcurse() {
     if (global.manualcurse) {
@@ -1335,16 +1335,18 @@ function checklist(token, tokentype, channelid) {
                                                 ),
                                             61000
                                         );
-                                    if (tokentype == "Extra Token")
+                                    if (tokentype == "Main Token")
                                         global.cookieactive = true;
+                                    else global.extracookieactive = true;
                                 } else {
                                     updatechecklistsocket(
                                         "cookie",
                                         "✅",
                                         tokentype
                                     );
-                                    if (tokentype == "Extra Token")
+                                    if (tokentype == "Main Token")
                                         global.cookieactive = false;
+                                    else global.extracookieactive = false;
                                 }
                                 if (des.includes("⬛ 📝")) {
                                     console.log(
@@ -2442,6 +2444,14 @@ async function getquests(token, channelid, tokentype) {
                             var progress2 = cont[0].description
                                 .split("/")[1]
                                 .split("]")[0];
+                            try {
+                                var total = cont[0].description
+                                    .split("1.")[1]
+                                    .split("\`")[5];
+                                if (!total) total = "";
+                            } catch (error) {
+                                
+                            }
 
                             if (
                                 (quest.includes("Battle with") ||
@@ -2452,7 +2462,7 @@ async function getquests(token, channelid, tokentype) {
                                     quest.includes(
                                         "Receive a cookie from 1 friends"
                                     )) &&
-                                !global.etoken
+                                !global.etoken || total.includes("Locked")
                             ) {
                                 try {
                                     quest = cont[0].description
@@ -2464,6 +2474,14 @@ async function getquests(token, channelid, tokentype) {
                                     var progress2 = cont[0].description
                                         .split("/")[2]
                                         .split("]")[0];
+                                    try {
+                                        var total = cont[0].description
+                                            .split("2.")[1]
+                                            .split("\`")[5];
+                                        if (!total) total = "";
+                                    } catch (error) {
+                                        
+                                    }
                                 } catch (error) {
                                     if (tokentype == "Main Token")
                                         global.checkquest = false;
@@ -2480,7 +2498,7 @@ async function getquests(token, channelid, tokentype) {
                                         quest.includes(
                                             "Receive a cookie from 1 friends"
                                         )) &&
-                                    !global.etoken
+                                    !global.etoken || total.includes("Locked")
                                 ) {
                                     try {
                                         quest = cont[0].description
@@ -2492,24 +2510,33 @@ async function getquests(token, channelid, tokentype) {
                                         var progress2 = cont[0].description
                                             .split("/")[3]
                                             .split("]")[0];
+                                        try {
+                                            var total = cont[0].description
+                                                .split("1.")[1]
+                                                .split("\`")[5];
+                                            if (!total) total = "";
+                                        } catch (error) {
+                                
+                                        }
                                     } catch (error) {
                                         if (tokentype == "Main Token")
                                             global.checkquest = false;
                                         else global.extracheckquest = false;
                                     }
+                                    if (total.includes("Locked")) return;
                                 }
                             }
 
                             if (global.checkquest || global.extracheckquest) {
                                 if (tokentype == "Main Token") {
                                     socketio.emit("quest", {
-                                        quest: `${global.questtitle}`,
+                                        quest: `${quest}`,
                                         progress: `${progress1} / ${progress2}`,
                                         date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
                                     });
                                 } else {
                                     socketio.emit("extraquest", {
-                                        quest: `${global.extraquesttitle}`,
+                                        quest: `${quest}`,
                                         progress: `${progress1} / ${progress2}`,
                                         date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
                                     });
@@ -2532,12 +2559,13 @@ async function getquests(token, channelid, tokentype) {
                                         "xp from hunting and battling"
                                     )
                                 ) {
-                                    if (tokentype == "Main Token")
+                                    if (tokentype == "Main Token") {
                                         global.checkquest = false;
-                                    else global.extracheckquest = false;
-                                    if (tokentype == "Main Token")
                                         global.mainquest = true;
-                                    else global.extraquest = true;
+                                    } else {
+                                        global.extracheckquest = false;
+                                        global.extraquest = true;
+                                    }
                                     return xpquests(
                                         token,
                                         channelid,
@@ -2584,92 +2612,159 @@ async function getquests(token, channelid, tokentype) {
                                             "Have a friend curse you"
                                         )
                                     ) {
-                                        if (tokentype == "Main Token")
-                                            global.checkquest = false;
-                                        else global.extracheckquest = false;
                                         global.manualcurse = false;
-                                        return questcurseme(
-                                            extratoken,
-                                            maintokenuserid,
-                                            channelid,
-                                            parseInt(progress1),
-                                            parseInt(progress2),
-                                            tokentype,
-                                            quest
-                                        );
+                                        if (tokentype == "Main Token") {
+                                            global.checkquest = false;
+                                            return questcurseme(
+                                                extratoken,
+                                                maintokenuserid,
+                                                extraautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        } else {
+                                            global.extracheckquest = false;
+                                            return questcurseme(
+                                                maintoken,
+                                                extratokenuserid,
+                                                mainautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        }
                                     } else if (
                                         quest.includes(
                                             "Have a friend pray to you"
                                         )
                                     ) {
-                                        if (tokentype == "Main Token")
-                                            global.checkquest = false;
-                                        else global.extracheckquest = false; //coded by @mid0aria on github
                                         global.manualpray = false;
-                                        return questprayme(
-                                            extratoken,
-                                            maintokenuserid,
-                                            channelid,
-                                            parseInt(progress1),
-                                            parseInt(progress2),
-                                            tokentype,
-                                            quest
-                                        );
+                                        if (tokentype == "Main Token") {
+                                            global.checkquest = false;
+                                            return questprayme(
+                                                extratoken,
+                                                maintokenuserid,
+                                                extraautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        } else {
+                                            global.extracheckquest = false; //coded by @mid0aria on github
+                                            return questprayme(
+                                                maintoken,
+                                                extratokenuserid,
+                                                mainautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        }
                                     } else if (
                                         quest.includes("Battle with a friend")
                                     ) {
-                                        if (tokentype == "Main Token")
+                                        if (tokentype == "Main Token") {
                                             global.checkquest = false;
-                                        else global.extracheckquest = false;
-                                        return questbattlefriend(
-                                            token,
-                                            extratoken,
-                                            maintokenuserid,
-                                            channelid,
-                                            parseInt(progress1),
-                                            parseInt(progress2),
-                                            tokentype,
-                                            quest
-                                        );
+                                            return questbattlefriend(
+                                                maintoken,
+                                                extratoken,
+                                                maintokenuserid,
+                                                channelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        } else {
+                                            global.extracheckquest = false;
+                                            return questbattlefriend(
+                                                extratoken,
+                                                maintoken,
+                                                extratokenuserid,
+                                                extraautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        }
                                     } else if (
                                         quest.includes(
                                             "Receive a cookie from 1 friends"
-                                        ) &&
-                                        global.cookieactive
+                                        ) && (
+                                        (tokentype == "Main Token" && global.cookieactive) ||
+                                        (tokentype == "Extra Token" && global.extracookieactive)
+                                        )
                                     ) {
-                                        if (tokentype == "Main Token")
+                                        if (tokentype == "Main Token") {
                                             global.checkquest = false;
-                                        else global.extracheckquest = false;
-                                        return questcookiefriend(
-                                            extratoken,
-                                            maintokenuserid,
-                                            channelid,
-                                            parseInt(progress1),
-                                            parseInt(progress2),
-                                            tokentype,
-                                            quest
-                                        );
+                                            return questcookiefriend(
+                                                extratoken,
+                                                maintokenuserid,
+                                                extraautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        } else {
+                                            global.extracheckquest = false;
+                                            return questcookiefriend(
+                                                maintoken,
+                                                extratokenuserid,
+                                                mainautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        }
                                     } else if (
                                         quest.includes(
                                             "Have a friend use an action command"
                                         )
                                     ) {
-                                        if (tokentype == "Main Token")
+                                        if (tokentype == "Main Token") {
                                             global.checkquest = false;
-                                        else global.extracheckquest = false;
-                                        return questactionme(
-                                            extratoken,
-                                            maintokenuserid,
-                                            channelid,
-                                            parseInt(progress1),
-                                            parseInt(progress2),
-                                            tokentype,
-                                            quest
-                                        );
+                                            return questactionme(
+                                                extratoken,
+                                                maintokenuserid,
+                                                extraautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        } else {
+                                            global.extracheckquest = false;
+                                            return questactionme(
+                                                maintoken,
+                                                extratokenuserid,
+                                                mainautoquestchannelid,
+                                                parseInt(progress1),
+                                                parseInt(progress2),
+                                                tokentype,
+                                                quest
+                                            );
+                                        }
                                     }
                                 }
                                 //incase the grabbed quest not on the list above (can be auto completed)
-                                if (global.mainnullquest) {
+                                if (global.mainnullquest && tokentype == "Main Token") {
+                                    return autocompletequests(
+                                        token,
+                                        channelid,
+                                        parseInt(progress1),
+                                        parseInt(progress2),
+                                        tokentype
+                                    );
+                                }
+                                if (global.extranullquest && tokentype == "Extra Token") {
                                     return autocompletequests(
                                         token,
                                         channelid,
@@ -2923,10 +3018,14 @@ async function questcookiefriend(
     var socketp = pro1;
     var socketpro1 = socketp++;
     updatequestssocket(questtitle, socketpro1, pro2, tokentype);
-    global.cookieactive = false;
 
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        global.cookieactive = false;
+    } else {
+        global.extracheckquest = true;
+        global.extracookieactive = false;
+    }
     getquests(token, channelid, tokentype);
 }
 
