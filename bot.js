@@ -426,9 +426,11 @@ if (extratokencheck) {
                 global.etoken = true;
                 console.log(chalk.green("Extra Token ✅"));
                 console.log(`[Extra Token] User: ${bod.username}`);
-                socketio.emit("type", {
-                    type: "duo"
-                });
+                setTimeout(() => {
+                    socketio.emit("type", {
+                        type: "duo"
+                    });
+                }, 1600);
 
                 if (global.etoken) {
                     setTimeout(() => {
@@ -749,14 +751,20 @@ setTimeout(() => checkpray(), 16000);
 function checkpray() {
     if (global.manualpray) {
         if (settings.banbypass) {
-            bancheck(maintoken, mainchannelid);
-            dmbancheck(maintoken, owodmmainchannelid);
+            if (global.mainfirstrun) global.mainfirstrun = false;
+            else {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
         }
         pray(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             if (settings.banbypass) {
-                extrabancheck(extratoken, extrachannelid);
-                dmextrabancheck(extratoken, owodmextrachannelid);
+                if (global.extrafirstrun) global.extrafirstrun = false;
+                else {
+                    extrabancheck(extratoken, extrachannelid);
+                    dmextrabancheck(extratoken, owodmextrachannelid);
+                }
             }
             pray(extratoken, "Extra Token", extrachannelid);
         }
@@ -774,14 +782,20 @@ setTimeout(() => checkcurse(), 16000);
 function checkcurse() {
     if (global.manualcurse) {
         if (settings.banbypass) {
-            bancheck(maintoken, mainchannelid);
-            dmbancheck(maintoken, owodmmainchannelid);
+            if (global.mainfirstrun) global.mainfirstrun = false;
+            else {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
         }
         curse(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             if (settings.banbypass) {
-                extrabancheck(extratoken, extrachannelid);
-                dmextrabancheck(extratoken, owodmextrachannelid);
+                if (global.extrafirstrun) global.extrafirstrun = false;
+                else {
+                    extrabancheck(extratoken, extrachannelid);
+                    dmextrabancheck(extratoken, owodmextrachannelid);
+                }
             }
             curse(extratoken, "Extra Token", extrachannelid);
         }
