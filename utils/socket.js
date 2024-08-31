@@ -3,7 +3,7 @@ var io = socket.connect("http://localhost:1337");
 const chalk = require("chalk");
 
 console.clear();
-process.title = `Socket Client V0.0.3 / e.`;
+process.title = `Socket Client V0.0.4 / e.`;
 global.state = "";
 global.quest = "";
 global.questpr = "";
@@ -109,9 +109,9 @@ io.on("extrachecklist", (e) => {
 
 io.on("errors", (e) => {
     if (global.eyl === "Everything okay") {
-        global.eyl = e.error;
+        global.eyl = chalk.red(e.error);
     } else {
-        global.eyl = `${global.eyl}\n${e.error}`;
+        global.eyl = chalk.red(`${global.eyl}`) + chalk.white("\n║ ") + chalk.red(`${e.error}`);
     }
 });
 
@@ -155,7 +155,7 @@ setInterval(() => {
     if (global.eyl === "Everything okay") {
         eyl = chalk.yellow(global.eyl);
     } else {
-        eyl = chalk.red(global.eyl);
+        eyl = global.eyl;
     }
 
     if (global.type == "duo") global.sockettype = "Double Threaded Farm Bot!";
@@ -186,9 +186,7 @@ setInterval(() => {
 ╠═══════════════════════════════════════════════════════════════════════════════
 ║ > Errors❗ 
 ║ ${eyl}
-╚═══════════════════════════════════════════════════════════════════════════════
-
-`
+╚═══════════════════════════════════════════════════════════════════════════════`
         );
     } else {
         console.log(
@@ -214,9 +212,7 @@ setInterval(() => {
 ╠═══════════════════════════════════════════════════════════════════════════════
 ║ > Errors❗ 
 ║ ${eyl}
-╚═══════════════════════════════════════════════════════════════════════════════
-
-`
+╚═══════════════════════════════════════════════════════════════════════════════`
         );
     }
 }, 1000);
