@@ -1,7 +1,7 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
 global.love = "e<3"; // 💔
-var version = "1.0.8.3";
+var version = "1.0.8.4";
 var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
