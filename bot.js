@@ -427,7 +427,7 @@ if (extratokencheck) {
                 console.log(chalk.green("Extra Token ✅"));
                 console.log(`[Extra Token] User: ${bod.username}`);
                 socketio.emit("type", {
-                    type: "duo",
+                    type: "duo"
                 });
 
                 if (global.etoken) {
