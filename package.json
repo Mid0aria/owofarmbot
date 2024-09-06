@@ -36,12 +36,15 @@
         "setup": "npm i"
     },
     "dependencies": {
+        "adm-zip": "^0.5.16",
+        "axios": "^1.7.7",
         "chalk": "^4.1.2",
         "collect.js": "^4.36.1",
         "delay": "^5.0.0",
         "discord-rpc": "^4.0.1",
         "dotenv": "^16.4.5",
         "follow-redirects": "^1.15.6",
+        "fs-extra": "^11.2.0",
         "node-notifier": "^10.0.1",
         "request": "^2.88.2",
         "seedrandom": "^3.0.5",
