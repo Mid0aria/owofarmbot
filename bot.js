@@ -1370,7 +1370,7 @@ function checklist(token, tokentype, channelid) {
                         headers: {
                             authorization: token,
                         },
-                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
+                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=5`,
                     },
                     async function (error, response, body) {
                         if (error) {
