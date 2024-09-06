@@ -4,7 +4,7 @@
     "bot": {
         "banversion": "0.1.10",
         "updater": "0.0.3",
-        "note": "V1.0.8.6: Fixed questig problem, improve embeds message content reader (EOL)"
+        "note": "V1.0.8.6: Fixed questing problem, improve embeds message content reader (EOL)"
     },
     "description": "Discord OwO farm bot with CAPTCHA(BAN) protection",
     "main": "bot.js",
