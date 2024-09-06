@@ -1,8 +1,6 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
 global.love = "e<3"; // 💔
-var version = "1.0.8.4";
-var banversion = "0.1.10";
 //coded by @mid0aria on github
 const os = require("os");
 if (os.userInfo().username === "DESKTOP-3VVC3") {
@@ -25,6 +23,13 @@ for (let dep of Object.keys(packageJson.dependencies)) {
         cp.execSync(`npm i`);
     }
 }
+
+var version = packageJson.version;
+var banversion = packageJson.bot.banversion;
+
+const axios = require("axios");
+const admZip = require("adm-zip");
+const fse = require("fs-extra");
 const request = require("request");
 const chalk = require("chalk");
 const config = require("./config.json");
@@ -66,10 +71,161 @@ if (prefix === (null || undefined || "")) {
 global.checkquest = true;
 global.extracheckquest = true;
 
+//util
+const commandrandomizer = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const { logger } = require("./utils/logger");
+
+//anticrash
+process.on("unhandledRejection", (reason, p) => {
+    console.log(
+        chalk.blue(chalk.bold(`[antiCrash]`)),
+        chalk.white(`>>`),
+        chalk.magenta(`Unhandled Rejection/Catch`),
+        chalk.red(reason, p)
+    );
+});
+process.on("uncaughtException", (err, origin) => {
+    console.log(
+        chalk.blue(chalk.bold(`[antiCrash]`)),
+        chalk.white(`>>`),
+        chalk.magenta(`Unhandled Exception/Catch`),
+        chalk.red(err, origin)
+    );
+});
+process.on("uncaughtExceptionMonitor", (err, origin) => {
+    console.log(
+        chalk.blue(chalk.bold(`[antiCrash]`)),
+        chalk.white(`>>`),
+        chalk.magenta(`Uncaught Exception/Catch`),
+        chalk.red(err, origin)
+    );
+});
+
 //console.clear();
 process.title = `OwO Farm Bot 💗 Bot Version ${version} / BanBypass Version ${banversion} 💗`;
 
-checkversion();
+//Updater
+const gitUpdate = () => {
+    try {
+        cp.execSync("git stash");
+        cp.execSync("git pull --force");
+        logger.info("Updater", "Git", "Git pull successful.");
+        logger.info("Updater", "Git", "Resetting local changes...");
+        cp.execSync("git reset --hard");
+        process.exit(0);
+    } catch (error) {
+        logger.alert(
+            "Updater",
+            "Git",
+            `Error updating project from Git: ${error}`
+        );
+    }
+};
+let se = "d";
+
+const manualUpdate = async () => {
+    try {
+        const headers = {
+            "User-Agent":
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537",
+        };
+        const res = await axios.get(
+            `https://github.com/Mid0aria/owofarmbot/archive/master.zip`,
+            {
+                responseType: "arraybuffer",
+                headers,
+            }
+        );
+
+        const updatePath = path.resolve(__dirname, "updateCache.zip");
+        fs.writeFileSync(updatePath, res.data);
+
+        const zip = new admZip(updatePath);
+        const zipEntries = zip.getEntries();
+        zip.extractAllTo(os.tmpdir(), true);
+
+        const updateFolder = path.join(os.tmpdir(), zipEntries[0].entryName);
+        if (!fs.existsSync(updateFolder)) {
+            logger.alert(
+                "Updater",
+                "Zip",
+                "Failed To Extract Files! Please update on https://github.com/Mid0aria/owofarmbot/"
+            );
+        }
+
+        fse.copySync(updateFolder, process.cwd(), { overwrite: true });
+        logger.info("Updater", "Zip", "Project updated successfully.");
+
+        fs.unlinkSync(updatePath);
+        logger.info("Updater", "Zip", "Temporary zip file deleted.");
+        process.exit(0);
+    } catch (error) {
+        logger.alert(
+            "Updater",
+            "Zip",
+            `Error updating project from GitHub Repo: ${error}`
+        );
+    }
+};
+
+const checkUpdate = async () => {
+    console.log(
+        chalk.blue(chalk.bold(`Updater`)),
+        chalk.white(`>>`),
+        chalk.yellow(`Checking Update`)
+    );
+    try {
+        const headers = {
+            "User-Agent":
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537",
+        };
+        const response = await axios.get(
+            `https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/package.json`,
+            {
+                headers,
+            }
+        );
+        const ghVersion = response.data.version;
+        const version = packageJson.version;
+        if (ghVersion > version) {
+            console.log(
+                chalk.blue(chalk.bold("Updater")),
+                chalk.white(`>>`),
+                chalk.yellow("Please wait while the farm bot is updating...")
+            );
+            if (fs.existsSync(".git")) {
+                try {
+                    cp.execSync("git --version");
+                    logger.info("Git", "Updating with Git...");
+                    gitUpdate();
+                } catch (error) {
+                    console.log(
+                        chalk.blue(chalk.bold("Git")),
+                        chalk.white(`>>`),
+                        chalk.red(
+                            "Git is not installed on this device. Files will be updated with cache system"
+                        )
+                    );
+                    await manualUpdate();
+                }
+            } else {
+                await manualUpdate();
+            }
+        } else {
+            console.log(
+                chalk.blue(chalk.bold("Updater")),
+                chalk.white(`>>`),
+                chalk.yellow("No Update Found")
+            );
+        }
+    } catch (error) {
+        console.log(
+            chalk.blue(chalk.bold("Updater")),
+            chalk.white(`>>`),
+            chalk.red(`Failed To Check For Update: ${error}`)
+        );
+    }
+};
 
 if (config.windowssettings.controlcdetectec) {
     process.on("SIGINT", function () {
@@ -428,7 +584,7 @@ if (extratokencheck) {
                 console.log(`[Extra Token] User: ${bod.username}`);
                 setTimeout(() => {
                     socketio.emit("type", {
-                        type: "duo"
+                        type: "duo",
                     });
                 }, 1600);
 
@@ -472,7 +628,7 @@ function triggerhunt() {
         updateerrorsocket(
             "[Global] Cannot receive OwO response (Require manual check)!"
         );
-        setTimeout(() => process.exit(0), 1600);
+        setTimeout(() => process.exit(1), 1600);
     }
 
     if (settings.times.enable) {
@@ -870,83 +1026,6 @@ if (settings.gamble.slots.enable) {
 
 //----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
-function checkversion() {
-    var versi = path.join(__dirname, "/version.json");
-
-    if (fs.existsSync(versi)) {
-        console.log();
-    } else {
-        const versiun = https.get(
-            "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/version.json",
-            function (response) {
-                var versistream = fs.createWriteStream(versi);
-                response.pipe(versistream);
-                versistream.on("finish", () => {
-                    versistream.close();
-                });
-            }
-        );
-    }
-    setTimeout(() => {
-        request.get(
-            {
-                url: "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/version.json",
-            },
-            function (err, res, body) {
-                let bod = JSON.parse(body);
-
-                var apdater = path.join(__dirname, "/updater.js");
-                if (bod.updater === require("./version.json").updater) {
-                    console.log(
-                        chalk.yellow(
-                            `Updater Repo Version: ${
-                                bod.updater
-                            } / Updater Installed Version: ${
-                                require("./version.json").updater
-                            }`
-                        )
-                    );
-                } else {
-                    const boti = https.get(
-                        "https://raw.githubusercontent.com/Mid0aria/owofarmbot/main/updater.js",
-                        function (response) {
-                            var buotstream = fs.createWriteStream(apdater);
-                            response.pipe(buotstream);
-                            buotstream.on("finish", () => {
-                                buotstream.close();
-                                console.log("updater.js updated");
-                            });
-                        }
-                    );
-                }
-                if (bod.version === version) {
-                    console.log(
-                        chalk.yellow(
-                            `Repo Version: ${bod.version} / Installed Version: ${version}`
-                        )
-                    );
-                } else {
-                    console.clear();
-                    console.log(
-                        chalk.yellow(
-                            `Repo Version: ${bod.version} / Installed Version: ${version}`
-                        )
-                    );
-                    console.log(
-                        chalk.red(
-                            "Your farm bot is not up to date please run node updater.js"
-                        ) + chalk.yellow(`\nRelease note: ${bod.note}`)
-                    );
-                    updateerrorsocket(
-                        "Your farm bot is not up to date please run node updater.js"
-                    );
-                    process.exit(0);
-                }
-            }
-        );
-    }, 1500);
-}
-
 function nonce() {
     return "1098393848631590" + Math.floor(Math.random() * 9999);
 }
@@ -959,7 +1038,9 @@ function rantime() {
 
 function autoseed(token) {
     var seedrandom = require("seedrandom");
-    var rng = seedrandom.xor4096(`seedaccess-entropyverror-apiv10.${token}`);
+    var rng = seedrandom.xor4096(
+        `seedaccess-wumpuscenter-entropyverror-apiv11.${token}`
+    );
     return rng();
 }
 
@@ -1041,7 +1122,10 @@ function hunt(token, timehunt, tokentype, channelid) {
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
 
             json: {
-                content: `${prefix} hunt`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} ${commandrandomizer(["h", "hunt"])}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1074,7 +1158,10 @@ function battle(token, timebattle, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `${prefix} battle`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} ${commandrandomizer(["b", "battle"])}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1141,7 +1228,11 @@ function animals(token, tokentype, channelid, type) {
                 },
                 url: `https://discord.com/api/v9/channels/${channelid}/messages`,
                 json: {
-                    content: `owo ${type} ${animaltypes}`,
+                    content: `${commandrandomizer([
+                        "owo",
+                        prefix,
+                    ])} ${type} ${animaltypes}`,
+
                     nonce: nonce(),
                     tts: false,
                     flags: 0,
@@ -1166,9 +1257,9 @@ function animals(token, tokentype, channelid, type) {
 async function pray(token, tokentype, channelid) {
     let ct;
     if (tokentype === "Extra Token") {
-        ct = `${prefix} pray <@${maintokenuserid}>`;
+        ct = `${commandrandomizer(["owo", prefix])} pray <@${maintokenuserid}>`;
     } else {
-        ct = `${prefix} pray`;
+        ct = `${commandrandomizer(["owo", prefix])} pray`;
     }
 
     typing(token, channelid);
@@ -1204,9 +1295,12 @@ async function pray(token, tokentype, channelid) {
 
 async function curse(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
-        var ct = `${prefix} curse <@${maintokenuserid}>`;
+        var ct = `${commandrandomizer([
+            "owo",
+            prefix,
+        ])} curse <@${maintokenuserid}>`;
     } else {
-        var ct = `${prefix} curse `;
+        var ct = `${commandrandomizer(["owo", prefix])} curse `;
     }
     typing(token, channelid);
     request.post(
@@ -1248,7 +1342,10 @@ function checklist(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `${prefix} cl`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} ${commandrandomizer(["cl", "checklist"])}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1397,7 +1494,7 @@ function daily(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `${prefix} daily`,
+                content: `${commandrandomizer(["owo", prefix])} daily`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1429,7 +1526,10 @@ function cookie(token, tokentype, channelid) {
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             //not suggested to cookie to OwO because it will always send a captcha
             json: {
-                content: `${prefix} cookie <@408785106942164992>`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} cookie <@408785106942164992>`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1461,7 +1561,10 @@ function coinflip(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo coinflip ${currentBet}`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} ${commandrandomizer(["cf", "coinflip"])} ${currentBet}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1650,7 +1753,13 @@ function extra_coinflip(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo coinflip ${extra_currentBet}`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} ${commandrandomizer([
+                    "cf",
+                    "coinflip",
+                ])} ${extra_currentBet}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1750,7 +1859,9 @@ function slots(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo slots ${settings.gamble.slots.amount}`,
+                content: `${commandrandomizer(["owo", prefix])} slots ${
+                    settings.gamble.slots.amount
+                }`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1782,7 +1893,9 @@ function upgradeall(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo upgrade ${settings.upgradeautohunt.type} all`,
+                content: `${commandrandomizer(["owo", prefix])} upgrade ${
+                    settings.upgradeautohunt.type
+                } all`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1889,7 +2002,10 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `${prefix} inv`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} ${commandrandomizer(["inv", "inventory"])}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2272,7 +2388,7 @@ function gemuse(token, gem, channelid, tokentype) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo use ${gem}`,
+                content: `${commandrandomizer(["owo", prefix])} use ${gem}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2302,7 +2418,7 @@ function boxuse(token, box, channelid, tokentype) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo ${box}`,
+                content: `${commandrandomizer(["owo", prefix])} ${box}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2332,7 +2448,10 @@ function eventuse(token, eventbox, channelid, tokentype) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo use ${eventbox}`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} use ${eventbox}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2375,7 +2494,7 @@ async function getquests(token, channelid, tokentype) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `${prefix} quest`,
+                content: `${commandrandomizer(["owo", prefix])} quest`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2447,14 +2566,14 @@ async function getquests(token, channelid, tokentype) {
                             try {
                                 var total = cont[0].description
                                     .split("1.")[1]
-                                    .split("\`")[5];
+                                    .split("\\`")[5];
                                 if (!total) total = "";
                             } catch (error) {
-                                
+                                console.error(error);
                             }
 
                             if (
-                                (quest.includes("Battle with") ||
+                                ((quest.includes("Battle with") ||
                                     quest.includes("Have a friend curse you") ||
                                     quest.includes(
                                         "Have a friend pray to you"
@@ -2462,7 +2581,8 @@ async function getquests(token, channelid, tokentype) {
                                     quest.includes(
                                         "Receive a cookie from 1 friends"
                                     )) &&
-                                !global.etoken || total.includes("Locked")
+                                    !global.etoken) ||
+                                total.includes("Locked")
                             ) {
                                 try {
                                     quest = cont[0].description
@@ -2477,10 +2597,10 @@ async function getquests(token, channelid, tokentype) {
                                     try {
                                         var total = cont[0].description
                                             .split("2.")[1]
-                                            .split("\`")[5];
+                                            .split("\\`")[5];
                                         if (!total) total = "";
                                     } catch (error) {
-                                        
+                                        console.error(error);
                                     }
                                 } catch (error) {
                                     if (tokentype == "Main Token")
@@ -2488,7 +2608,7 @@ async function getquests(token, channelid, tokentype) {
                                     else global.extracheckquest = false;
                                 }
                                 if (
-                                    (quest.includes("Battle with") ||
+                                    ((quest.includes("Battle with") ||
                                         quest.includes(
                                             "Have a friend curse you"
                                         ) ||
@@ -2498,7 +2618,8 @@ async function getquests(token, channelid, tokentype) {
                                         quest.includes(
                                             "Receive a cookie from 1 friends"
                                         )) &&
-                                    !global.etoken || total.includes("Locked")
+                                        !global.etoken) ||
+                                    total.includes("Locked")
                                 ) {
                                     try {
                                         quest = cont[0].description
@@ -2513,10 +2634,10 @@ async function getquests(token, channelid, tokentype) {
                                         try {
                                             var total = cont[0].description
                                                 .split("1.")[1]
-                                                .split("\`")[5];
+                                                .split("\\`")[5];
                                             if (!total) total = "";
                                         } catch (error) {
-                                
+                                            console.error(error);
                                         }
                                     } catch (error) {
                                         if (tokentype == "Main Token")
@@ -2696,10 +2817,11 @@ async function getquests(token, channelid, tokentype) {
                                     } else if (
                                         quest.includes(
                                             "Receive a cookie from 1 friends"
-                                        ) && (
-                                        (tokentype == "Main Token" && global.cookieactive) ||
-                                        (tokentype == "Extra Token" && global.extracookieactive)
-                                        )
+                                        ) &&
+                                        ((tokentype == "Main Token" &&
+                                            global.cookieactive) ||
+                                            (tokentype == "Extra Token" &&
+                                                global.extracookieactive))
                                     ) {
                                         if (tokentype == "Main Token") {
                                             global.checkquest = false;
@@ -2755,7 +2877,10 @@ async function getquests(token, channelid, tokentype) {
                                     }
                                 }
                                 //incase the grabbed quest not on the list above (can be auto completed)
-                                if (global.mainnullquest && tokentype == "Main Token") {
+                                if (
+                                    global.mainnullquest &&
+                                    tokentype == "Main Token"
+                                ) {
                                     return autocompletequests(
                                         token,
                                         channelid,
@@ -2764,7 +2889,10 @@ async function getquests(token, channelid, tokentype) {
                                         tokentype
                                     );
                                 }
-                                if (global.extranullquest && tokentype == "Extra Token") {
+                                if (
+                                    global.extranullquest &&
+                                    tokentype == "Extra Token"
+                                ) {
                                     return autocompletequests(
                                         token,
                                         channelid,
@@ -2867,7 +2995,10 @@ async function questcurseme(
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo curse <@${userid}>`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} curse <@${userid}>`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2900,7 +3031,10 @@ async function questprayme(
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo pray <@${userid}>`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} pray <@${userid}>`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2934,7 +3068,10 @@ async function questbattlefriend(
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo battle <@${mainuserid}>`,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} battle <@${mainuserid}>`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2978,7 +3115,10 @@ async function questgamble(
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo cf 1`,
+                content: `owo${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} ${commandrandomizer(["cf", `coinflip`])} 1`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -3009,7 +3149,10 @@ async function questcookiefriend(
         },
         url: `https://discord.com/api/v9/channels/${channelid}/messages`,
         json: {
-            content: `owo cookie <@${userid}>`,
+            content: `${commandrandomizer([
+                "owo",
+                prefix,
+            ])} cookie <@${userid}>`,
             nonce: nonce(),
             tts: false,
             flags: 0,
@@ -3045,7 +3188,10 @@ async function questuseactioncommand(
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo cuddle <@408785106942164992> `,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} cuddle <@408785106942164992> `,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -3077,7 +3223,10 @@ async function questactionme(
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: `owo hug <@${userid}> `,
+                content: `${commandrandomizer([
+                    "owo",
+                    prefix,
+                ])} hug <@${userid}> `,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -3335,7 +3484,7 @@ function dmprotectprouwu(token, channelid, tokentype) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "hi bro",
+                content: "hello tiffani maybe u want taste my kok :)",
                 nonce: nonce(),
                 tts: false,
                 flags: 0,

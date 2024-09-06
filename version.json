@@ -1,5 +1,5 @@
 {
-    "version": "1.0.8.4",
+    "version": "1.0.8.5",
     "updater": "0.0.3",
-    "note": "V1.0.8.4: Update changes.json to update socket correctly (EOL)"
+    "note": "(PLEASE RE-DOWNLOAD FROM GITHUB, YOUR CURRENT UPDATER IS NOT WORKING!) V1.0.8.5: Added anticrash and commandrandomizer, version information passed to package.json (EOL)"
 }
