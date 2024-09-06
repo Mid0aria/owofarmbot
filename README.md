@@ -1,4 +1,4 @@
-[OwO Farm Bot Stable RELEASED!!!](https://github.com/mid0aria/owofarmbot_stable)<br>
+# [OwO Farm Bot Stable RELEASED!!! (Now working more stable with selfbot module)](https://github.com/mid0aria/owofarmbot_stable)<br>
 
 dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
 6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 💔
