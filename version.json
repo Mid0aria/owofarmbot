@@ -1,5 +1,5 @@
 {
-    "version": "1.0.8.5",
+    "version": "1.0.8.6",
     "updater": "0.0.3",
-    "note": "(PLEASE RE-DOWNLOAD FROM GITHUB, YOUR CURRENT UPDATER IS NOT WORKING!) V1.0.8.5: Added anticrash and commandrandomizer, version information passed to package.json (EOL)"
+    "note": "(PLEASE RE-DOWNLOAD FROM GITHUB IF VERSION BELOW V1.0.8.5, YOUR CURRENT UPDATER IS NOT WORKING!) V1.0.8.6: Fixed questing problem, improve embeds message content reader (EOL)"
 }

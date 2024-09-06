@@ -542,6 +542,7 @@ request.get(
             console.log(`[Main Token] User: ${bod.username}`);
 
             checklist(maintoken, "Main Token", mainchannelid);
+            setInterval(() => checklist(maintoken, "Main Token", mainchannelid), 9600000);
             global.mainfirstrun = true;
             if (settings.autoquest)
                 setTimeout(
@@ -591,6 +592,7 @@ if (extratokencheck) {
                 if (global.etoken) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
+                        setInterval(() => checklist(extratoken, "Extra Token", extrachannelid), 9600000);
                         global.extrafirstrun = true;
                         if (settings.autoquest)
                             setTimeout(
@@ -1368,104 +1370,120 @@ function checklist(token, tokentype, channelid) {
                         headers: {
                             authorization: token,
                         },
-                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=3`,
+                        url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=5`,
                     },
-                    function (error, response, body) {
+                    async function (error, response, body) {
                         if (error) {
                             console.error(error);
                         }
                         try {
                             var bod = JSON.parse(body);
                             if (!bod[0]) return;
-                            var cont = bod[0].embeds;
+                            var cont, temp = 0;
+                            var iserr = false;
+                            await forceembed();
+                            async function forceembed() {
+                                temp += 1;
+                                try {
+                                    for (let i = 0; i < 5; i ++) {
+                                        if (bod[i].embeds[0].author) {
+                                            if (bod[i].embeds[0].author.name.includes("Checklist")) {
+                                                cont = bod[i].embeds;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } catch (error) {
+                                    if (temp >= 3) return;
+                                    await delay(3000);
+                                    await forceembed();
+                                }
+                            }
                             var des = cont[0].description;
 
-                            if (cont[0].author.name.includes("Checklist")) {
-                                chalk.magenta(` [${tokentype}]`) +
-                                    chalk.yellow(" Getting Checklist 🔎");
-                                if (des.includes("☑️ 🎉")) {
-                                    updatechecklistsocket(
-                                        "all",
-                                        "✅",
-                                        tokentype
-                                    );
-                                    return "checklist completed";
-                                }
-                                if (des.includes("☑️ 💎")) {
-                                    updatechecklistsocket(
-                                        "lb",
-                                        "✅",
-                                        tokentype
-                                    );
-                                    if (tokentype == "Main Token")
-                                        global.mainhuntdaily = true;
-                                    else global.extrahuntdaily = true;
-                                }
-                                if (des.includes("☑️ ⚔")) {
-                                    updatechecklistsocket(
-                                        "crate",
-                                        "✅",
-                                        tokentype
-                                    );
-                                    if (tokentype == "Main Token")
-                                        global.mainbattledaily = true;
-                                    else global.extrabattledaily = true;
-                                }
-
-                                if (des.includes("⬛ 🎁")) {
-                                    daily(token, tokentype, channelid);
-                                } else {
-                                    updatechecklistsocket(
-                                        "daily",
-                                        "✅",
-                                        tokentype
-                                    );
-                                }
-                                if (des.includes("⬛ 🍪")) {
-                                    if (settings.cookie)
-                                        setTimeout(
-                                            () =>
-                                                cookie(
-                                                    token,
-                                                    tokentype,
-                                                    channelid
-                                                ),
-                                            61000
-                                        );
-                                    if (tokentype == "Main Token")
-                                        global.cookieactive = true;
-                                    else global.extracookieactive = true;
-                                } else {
-                                    updatechecklistsocket(
-                                        "cookie",
-                                        "✅",
-                                        tokentype
-                                    );
-                                    if (tokentype == "Main Token")
-                                        global.cookieactive = false;
-                                    else global.extracookieactive = false;
-                                }
-                                if (des.includes("⬛ 📝")) {
-                                    console.log(
-                                        chalk.magenta(`[${tokentype}] `) +
-                                            chalk.red(
-                                                "YOUR DAILY VOTE IS AVAILABLE!"
-                                            )
-                                    );
-                                } else {
-                                    updatechecklistsocket(
-                                        "vote",
-                                        "✅",
-                                        tokentype
-                                    );
-                                }
-                                if (!des.includes("⬛ 📜"))
-                                    updatechecklistsocket(
-                                        "quest",
-                                        "✅",
-                                        tokentype
-                                    );
+                            chalk.magenta(` [${tokentype}]`) +
+                                chalk.yellow(" Getting Checklist 🔎");
+                            if (des.includes("☑️ 🎉")) {
+                                updatechecklistsocket(
+                                    "all",
+                                    "✅",
+                                    tokentype
+                                );
+                                return "checklist completed";
                             }
+                            if (des.includes("☑️ 💎")) {
+                                updatechecklistsocket(
+                                    "lb",
+                                    "✅",
+                                    tokentype
+                                );
+                                if (tokentype == "Main Token")
+                                    global.mainhuntdaily = true;
+                                else global.extrahuntdaily = true;
+                            }
+                            if (des.includes("☑️ ⚔")) {
+                                updatechecklistsocket(
+                                    "crate",
+                                    "✅",
+                                    tokentype
+                                );
+                                if (tokentype == "Main Token")
+                                    global.mainbattledaily = true;
+                                else global.extrabattledaily = true;
+                            }
+                             if (des.includes("⬛ 🎁")) {
+                                daily(token, tokentype, channelid);
+                            } else {
+                                updatechecklistsocket(
+                                    "daily",
+                                    "✅",
+                                    tokentype
+                                );
+                            }
+                            if (des.includes("⬛ 🍪")) {
+                                if (settings.cookie)
+                                    setTimeout(
+                                        () =>
+                                            cookie(
+                                                token,
+                                                tokentype,
+                                                channelid
+                                            ),
+                                        61000
+                                    );
+                                if (tokentype == "Main Token")
+                                    global.cookieactive = true;
+                                else global.extracookieactive = true;
+                            } else {
+                                updatechecklistsocket(
+                                    "cookie",
+                                    "✅",
+                                    tokentype
+                                );
+                                if (tokentype == "Main Token")
+                                    global.cookieactive = false;
+                                else global.extracookieactive = false;
+                            }
+                            if (des.includes("⬛ 📝")) {
+                                console.log(
+                                    chalk.magenta(`[${tokentype}] `) +
+                                        chalk.red(
+                                            "YOUR DAILY VOTE IS AVAILABLE!"
+                                        )
+                                );
+                            } else {
+                                updatechecklistsocket(
+                                    "vote",
+                                    "✅",
+                                    tokentype
+                                );
+                            }
+                            if (!des.includes("⬛ 📜"))
+                                updatechecklistsocket(
+                                    "quest",
+                                    "✅",
+                                    tokentype
+                                );
                         } catch (error) {
                             updateerrorsocket(
                                 "Unable to get Checklist (RESTART BOT!)"
@@ -1974,7 +1992,7 @@ function checkinv(token, channelid, tokentype) {
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
                             ) +
                                 chalk.magenta(` [${tokentype}]`) +
-                                chalk.yellow(" inventory checking 🔍 (type-1)")
+                                chalk.yellow(" inventory getting 🔍 (type-1)")
                             //cod ed by @mid0aria on github
                         );
                     }
@@ -2519,18 +2537,23 @@ async function getquests(token, channelid, tokentype) {
                     try {
                         var bod = JSON.parse(body);
                         if (!bod[0]) return;
-                        var cont;
-                        for (let i = 0; i < 5; i++) {
+                        var cont, temp = 0;
+                        await forceembed();
+                        async function forceembed() {
+                            temp += 1;
                             try {
-                                if (
-                                    bod[i].embeds[0].author.name.includes(
-                                        "Quest Log"
-                                    )
-                                )
-                                    cont = bod[i].embeds;
-                                break; //make sure it will exit to avoid get old quest list
+                                for (let i = 0; i < 5; i ++) {
+                                    if (bod[i].embeds[0].author) {
+                                        if (bod[i].embeds[0].author.name.includes("Quest Log")) {
+                                            cont = bod[i].embeds;
+                                            break;
+                                        }
+                                    }
+                                }
                             } catch (error) {
-                                //console.error(error);
+                                if (temp >= 3) return;
+                                await delay(3000);
+                                await forceembed();
                             }
                         }
                         console.log(
@@ -2549,9 +2572,11 @@ async function getquests(token, channelid, tokentype) {
                             if (tokentype == "Main Token") {
                                 global.mainquest = true;
                                 global.checkquest = false;
+                                updatequestsocket("No quest found", "All completed", "Locked", tokentype);
                             } else {
                                 global.extraquest = true;
                                 global.extracheckquest = false;
+                                updatequestsocket("No quest found", "All completed", "Locked", tokentype);
                             }
                         } else {
                             var quest = cont[0].description
@@ -2566,10 +2591,10 @@ async function getquests(token, channelid, tokentype) {
                             try {
                                 var total = cont[0].description
                                     .split("1.")[1]
-                                    .split("\\`")[5];
+                                    .split("\`")[5];
                                 if (!total) total = "";
                             } catch (error) {
-                                console.error(error);
+
                             }
 
                             if (
@@ -2597,10 +2622,10 @@ async function getquests(token, channelid, tokentype) {
                                     try {
                                         var total = cont[0].description
                                             .split("2.")[1]
-                                            .split("\\`")[5];
+                                            .split("\`")[5];
                                         if (!total) total = "";
                                     } catch (error) {
-                                        console.error(error);
+
                                     }
                                 } catch (error) {
                                     if (tokentype == "Main Token")
@@ -2634,10 +2659,10 @@ async function getquests(token, channelid, tokentype) {
                                         try {
                                             var total = cont[0].description
                                                 .split("1.")[1]
-                                                .split("\\`")[5];
+                                                .split("\`")[5];
                                             if (!total) total = "";
                                         } catch (error) {
-                                            console.error(error);
+
                                         }
                                     } catch (error) {
                                         if (tokentype == "Main Token")
@@ -2965,18 +2990,26 @@ async function questsayowo(
             await delay(2000);
         }
     }
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
-    getquests(token, channelid, tokentype);
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
 }
 
 async function xpquests(token, channelid, tokentype) {
     await delay(540000);
-    if (tokentype == "Main Token") global.checkquest = false;
-    else global.extracheckquest = false;
-    if (tokentype == "Main Token") global.mainquest = true;
-    else global.extraquest = true;
-    getquests(token, channelid, tokentype);
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        global.mainquest = true
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        global.extraquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
 }
 
 async function questcurseme(
@@ -3009,10 +3042,14 @@ async function questcurseme(
         updatequestssocket(questtitle, socketpro1, pro2, tokentype);
         await delay(302000);
     }
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
     if (settings.curse) global.manualcurse = true;
-    getquests(token, channelid, tokentype);
 }
 
 async function questprayme(
@@ -3045,10 +3082,14 @@ async function questprayme(
         updatequestssocket(questtitle, socketpro1, pro2, tokentype);
         await delay(302000);
     }
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
     if (settings.pray) global.manualpray = true;
-    getquests(token, channelid, tokentype);
 }
 
 async function questbattlefriend(
@@ -3095,9 +3136,13 @@ async function questbattlefriend(
         updatequestssocket(questtitle, socketpro1, pro2, tokentype);
         await delay(15000);
     }
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
-    getquests(maintoken, channelid, tokentype);
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
 }
 
 async function questgamble(
@@ -3129,9 +3174,13 @@ async function questgamble(
         updatequestssocket(questtitle, socketpro1, pro2, tokentype);
         await delay(16000);
     }
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
-    getquests(token, channelid, tokentype);
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
 }
 
 async function questcookiefriend(
@@ -3165,16 +3214,16 @@ async function questcookiefriend(
     if (tokentype == "Main Token") {
         global.checkquest = true;
         global.cookieactive = false;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
     } else {
         global.extracheckquest = true;
         global.extracookieactive = false;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
     }
-    getquests(token, channelid, tokentype);
 }
 
 async function questuseactioncommand(
     token,
-    userid,
     channelid,
     pro1,
     pro2,
@@ -3202,9 +3251,13 @@ async function questuseactioncommand(
         updatequestssocket(questtitle, socketpro1, pro2, tokentype);
         await delay(7800);
     }
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
-    getquests(token, channelid, tokentype);
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
 }
 
 async function questactionme(
@@ -3236,9 +3289,13 @@ async function questactionme(
         updatequestssocket(questtitle, socketpro1, pro2, tokentype);
         await delay(8000);
     }
-    if (tokentype == "Main Token") global.checkquest = true;
-    else global.extracheckquest = true;
-    getquests(token, channelid, tokentype);
+    if (tokentype == "Main Token") {
+        global.checkquest = true;
+        getquests(maintoken, mainautoquestchannelid, tokentype);
+    } else {
+        global.extracheckquest = true;
+        getquests(extratoken, extraautoquestchannelid, tokentype);
+    }
 }
 
 //----------------------------------------------------BanCheck + Similar Bypass----------------------------------------------------//
