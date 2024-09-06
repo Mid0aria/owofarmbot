@@ -1,10 +1,10 @@
 {
     "name": "owofarmbot",
-    "version": "1.0.8.5",
+    "version": "1.0.8.6",
     "bot": {
         "banversion": "0.1.10",
         "updater": "0.0.3",
-        "note": "V1.0.8.5: Added anticrash and commandrandomizer, version information passed to package.json, updater system changed (EOL)"
+        "note": "V1.0.8.6: Fixed questig problem, improve embeds message content reader (EOL)"
     },
     "description": "Discord OwO farm bot with CAPTCHA(BAN) protection",
     "main": "bot.js",
