@@ -102,28 +102,51 @@ process.on("uncaughtExceptionMonitor", (err, origin) => {
 });
 
 //anti anticrash handler
-setTimeout(() => { 
-    setInterval(() => {
-        global.mainhuntac -= 1000;
-        global.mainbattleac -= 1000;
-        if (global.etoken) {
-            global.extrahuntac -= 1000;
-            global.extrabattleac -= 1000;
-        }
-        doublechecking();
-    }, 1000);
-}, 61000); //timer start at 61s is a believe that noone will set their time above 61s
+global.checked = false;
 
-function doublechecking() { 
+antianticrash();
+
+function antianticrash() {
+    setTimeout(() => { 
+        check = setInterval(() => {
+            global.mainhuntac -= 1000;
+            global.mainbattleac -= 1000;
+            if (global.etoken) {
+                global.extrahuntac -= 1000;
+                global.extrabattleac -= 1000;
+            }
+            doublechecking();
+            if (global.checked) {
+                clearInterval(check);
+                global.checked = false;
+                antianticrash();
+            }
+        }, 1000);
+    }, 61000); //timer start at 61s is a believe that noone will set their time above 61s
+}
+
+async function doublechecking() { 
     if ((!mainctrl.stop_hunt_after_daily || !mainctrl.stop_hunt_after_quest) &&
-        global.mainhuntac < 0) triggerhunt();
+        global.mainhuntac < 0) {
+        triggerhunt();
+        global.checked = true;
+    }
     if ((!mainctrl.stop_battle_after_daily || !mainctrl.stop_battle_after_quest) &&
-        global.mainbattleac < 0) triggerbattle();
+        global.mainbattleac < 0) {
+        triggerbattle();
+        global.checked = true;
+    }
     if (global.etoken) {
         if ((!extractrl.stop_hunt_after_daily || !extractrl.stop_hunt_after_quest) &&
-            global.extrahuntac < 0) triggerextrahunt();
+            global.extrahuntac < 0) {
+            triggerextrahunt();
+            global.checked = true;
+        }
         if ((!extractrl.stop_battle_after_daily || !extractrl.stop_battle_after_quest) &&
-            global.extrabattleac < 0) triggerextrabattle();
+            global.extrabattleac < 0) {
+            triggerextrabattle();
+            global.checked = true;
+        }
     }
 }
 
