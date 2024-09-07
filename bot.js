@@ -227,6 +227,8 @@ const checkUpdate = async () => {
     }
 };
 
+checkUpdate();
+
 if (config.windowssettings.controlcdetectec) {
     process.on("SIGINT", function () {
         console.log(chalk.yellow("CTRL + C detected..."));
@@ -2572,11 +2574,11 @@ async function getquests(token, channelid, tokentype) {
                             if (tokentype == "Main Token") {
                                 global.mainquest = true;
                                 global.checkquest = false;
-                                updatequestsocket("No quest found", "All completed", "Locked", tokentype);
+                                updatequestssocket("No quest found", "All completed", "Locked", tokentype);
                             } else {
                                 global.extraquest = true;
                                 global.extracheckquest = false;
-                                updatequestsocket("No quest found", "All completed", "Locked", tokentype);
+                                updatequestssocket("No quest found", "All completed", "Locked", tokentype);
                             }
                         } else {
                             var quest = cont[0].description
