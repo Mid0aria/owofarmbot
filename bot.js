@@ -101,6 +101,55 @@ process.on("uncaughtExceptionMonitor", (err, origin) => {
     );
 });
 
+//anti anticrash handler
+global.checked = false;
+
+antianticrash();
+
+function antianticrash() {
+    setTimeout(() => { 
+        check = setInterval(() => {
+            global.mainhuntac -= 1000;
+            global.mainbattleac -= 1000;
+            if (global.etoken) {
+                global.extrahuntac -= 1000;
+                global.extrabattleac -= 1000;
+            }
+            doublechecking();
+            if (global.checked) {
+                clearInterval(check);
+                global.checked = false;
+                antianticrash();
+            }
+        }, 1000);
+    }, 61000); //timer start at 61s is a believe that noone will set their time above 61s
+}
+
+async function doublechecking() { 
+    if ((!mainctrl.stop_hunt_after_daily || !mainctrl.stop_hunt_after_quest) &&
+        global.mainhuntac < 0) {
+        triggerhunt();
+        global.checked = true;
+    }
+    if ((!mainctrl.stop_battle_after_daily || !mainctrl.stop_battle_after_quest) &&
+        global.mainbattleac < 0) {
+        triggerbattle();
+        global.checked = true;
+    }
+    if (global.etoken) {
+        if ((!extractrl.stop_hunt_after_daily || !extractrl.stop_hunt_after_quest) &&
+            global.extrahuntac < 0) {
+            triggerextrahunt();
+            global.checked = true;
+        }
+        if ((!extractrl.stop_battle_after_daily || !extractrl.stop_battle_after_quest) &&
+            global.extrabattleac < 0) {
+            triggerextrabattle();
+            global.checked = true;
+        }
+    }
+}
+
 //console.clear();
 process.title = `OwO Farm Bot 💗 Bot Version ${version} / BanBypass Version ${banversion} 💗`;
 
@@ -226,6 +275,8 @@ const checkUpdate = async () => {
         );
     }
 };
+
+checkUpdate();
 
 if (config.windowssettings.controlcdetectec) {
     process.on("SIGINT", function () {
@@ -542,7 +593,7 @@ request.get(
             console.log(`[Main Token] User: ${bod.username}`);
 
             checklist(maintoken, "Main Token", mainchannelid);
-            setInterval(() => checklist(maintoken, "Main Token", mainchannelid), 9600000);
+            setInterval(() => checklist(maintoken, "Main Token", mainchannelid), 960000);
             global.mainfirstrun = true;
             if (settings.autoquest)
                 setTimeout(
@@ -592,7 +643,7 @@ if (extratokencheck) {
                 if (global.etoken) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
-                        setInterval(() => checklist(extratoken, "Extra Token", extrachannelid), 9600000);
+                        setInterval(() => checklist(extratoken, "Extra Token", extrachannelid), 960000);
                         global.extrafirstrun = true;
                         if (settings.autoquest)
                             setTimeout(
@@ -640,10 +691,12 @@ function triggerhunt() {
             Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
                 smaller_timehunt
         );
+        global.mainhuntac = bigger_timehunt + 16000;
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
+        global.mainhuntac = 16000;
     }
 
     if (mainctrl.stop_hunt_after_quest && global.mainhuntdaily) {
@@ -705,10 +758,12 @@ function triggerbattle() {
             Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
                 smaller_timebattle
         );
+        global.mainbattleac = bigger_timebattle + 16000;
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
+        global.mainbattleac = 16000;
     }
 
     if (mainctrl.stop_battle_after_quest && global.mainbattledaily) {
@@ -763,10 +818,12 @@ function triggerextrahunt() {
             Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
                 smaller_timehunt
         );
+        global.extrahuntac = bigger_timehunt + 16000;
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
+        global.extrahuntac = 16000;
     }
 
     if (extractrl.stop_hunt_after_quest && global.extrahuntdaily) {
@@ -828,10 +885,12 @@ function triggerextrabattle() {
             Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
                 smaller_timebattle
         );
+        global.extrabattleac = bigger_timebattle + 16000;
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) timehunt = timehunt + 2000;
         var timebattle = timehunt + 1000;
+        global.extrabattleac = 16000;
     }
 
     if (extractrl.stop_battle_after_quest && global.extrabattledaily) {
@@ -2572,11 +2631,11 @@ async function getquests(token, channelid, tokentype) {
                             if (tokentype == "Main Token") {
                                 global.mainquest = true;
                                 global.checkquest = false;
-                                updatequestsocket("No quest found", "All completed", "Locked", tokentype);
+                                updatequestssocket("No quest found", "All completed", "Locked", tokentype);
                             } else {
                                 global.extraquest = true;
                                 global.extracheckquest = false;
-                                updatequestsocket("No quest found", "All completed", "Locked", tokentype);
+                                updatequestssocket("No quest found", "All completed", "Locked", tokentype);
                             }
                         } else {
                             var quest = cont[0].description

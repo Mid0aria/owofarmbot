@@ -1,11 +1,12 @@
 # [OwO Farm Bot Stable RELEASED!!! (Now working more stable with selfbot module)](https://github.com/mid0aria/owofarmbot_stable)<br>
 
+
+aHR0cHM6Ly9yZW50cnkub3JnL3N1a2FwbHVtYmFnYXNp / https://open.spotify.com/track/1QqCaHOm1VCcTFYbMyiXVr</br>
 dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
-6 28 15 26 15<br> {/\_\_/}</br>( • . •)</br>/ > 💔
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.8.6(OPEN SOURCE)(EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.8.7(OPEN SOURCE)(EOL)</h1>
 <p align="center">
 
 [![Total Views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6)](https://github.com/Mid0aria/owofarmbot)
