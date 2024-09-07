@@ -593,7 +593,7 @@ request.get(
             console.log(`[Main Token] User: ${bod.username}`);
 
             checklist(maintoken, "Main Token", mainchannelid);
-            setInterval(() => checklist(maintoken, "Main Token", mainchannelid), 9600000);
+            setInterval(() => checklist(maintoken, "Main Token", mainchannelid), 960000);
             global.mainfirstrun = true;
             if (settings.autoquest)
                 setTimeout(
@@ -643,7 +643,7 @@ if (extratokencheck) {
                 if (global.etoken) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
-                        setInterval(() => checklist(extratoken, "Extra Token", extrachannelid), 9600000);
+                        setInterval(() => checklist(extratoken, "Extra Token", extrachannelid), 960000);
                         global.extrafirstrun = true;
                         if (settings.autoquest)
                             setTimeout(
