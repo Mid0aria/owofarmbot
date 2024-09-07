@@ -1,5 +1,5 @@
 {
-    "version": "1.0.8.6",
+    "version": "1.0.8.7",
     "updater": "0.0.3",
-    "note": "(PLEASE RE-DOWNLOAD FROM GITHUB IF VERSION BELOW V1.0.8.5, YOUR CURRENT UPDATER IS NOT WORKING!) V1.0.8.6: Fixed questing problem, improve embeds message content reader (EOL)"
+    "note": "(PLEASE RE-DOWNLOAD FROM GITHUB IF VERSION IS V1.0.8.5, V1.0.8.6, YOUR CURRENT UPDATER IS NOT WORKING!) V1.0.8.7: Fixed questing problem, make updater work (EOL)"
 }
