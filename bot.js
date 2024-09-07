@@ -104,17 +104,17 @@ process.on("uncaughtExceptionMonitor", (err, origin) => {
 //anti anticrash handler
 setTimeout(() => { 
     setInterval(() => {
-        global.mainhuntac -= 1600;
-        global.mainbattleac -= 1600;
+        global.mainhuntac -= 1000;
+        global.mainbattleac -= 1000;
         if (global.etoken) {
-            global.extrahuntac -= 1600;
-            global.extrabattleac -= 1600;
+            global.extrahuntac -= 1000;
+            global.extrabattleac -= 1000;
         }
         doublechecking();
-    }, 1600);
+    }, 1000);
 }, 61000); //timer start at 61s is a believe that noone will set their time above 61s
 
-function doublechecking() {
+function doublechecking() { 
     if ((!mainctrl.stop_hunt_after_daily || !mainctrl.stop_hunt_after_quest) &&
         global.mainhuntac < 0) triggerhunt();
     if ((!mainctrl.stop_battle_after_daily || !mainctrl.stop_battle_after_quest) &&
