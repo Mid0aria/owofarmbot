@@ -102,50 +102,57 @@ process.on("uncaughtExceptionMonitor", (err, origin) => {
 });
 
 //anti anticrash handler
-global.checked = false;
-
 antianticrash();
+
+global.holdmainhunt = true;
+global.holdmainbattle = true;
+global.holdextrahunt = true;
+global.holdextrabattle = true;
 
 function antianticrash() {
     setTimeout(() => { 
         check = setInterval(() => {
-            global.mainhuntac -= 1000;
-            global.mainbattleac -= 1000;
+            if (global.holmainhunt) global.mainhuntac -= 1000;
+            if (global.holdmainbattle) global.mainbattleac -= 1000;
             if (global.etoken) {
-                global.extrahuntac -= 1000;
-                global.extrabattleac -= 1000;
+                if (global.holdextrahunt) global.extrahuntac -= 1000;
+                if (global.holdextrabattle) global.extrabattleac -= 1000;
             }
             doublechecking();
-            if (global.checked) {
-                clearInterval(check);
-                global.checked = false;
-                antianticrash();
-            }
+            if (
+                !global.holdmainhunt &&
+                !global.holdmainbattle &&
+                !global.holdextrahunt &&
+                !global.holdextrabattle
+            ) clearInterval(check);
         }, 1000);
     }, 61000); //timer start at 61s is a believe that noone will set their time above 61s
 }
 
-async function doublechecking() { 
-    if ((!mainctrl.stop_hunt_after_daily || !mainctrl.stop_hunt_after_quest) &&
-        global.mainhuntac < 0) {
-        triggerhunt();
-        global.checked = true;
+function doublechecking() { //this func still have a chance to duplicate calling hunt or battle func
+    if (global.mainhuntac < 0) {
+        if ((mainctrl.stop_hunt_after_daily || mainctrl.stop_hunt_after_quest) &&
+            global.mainhuntpaused) global.holdmainhunt = false;
+        else triggerhunt();
     }
-    if ((!mainctrl.stop_battle_after_daily || !mainctrl.stop_battle_after_quest) &&
-        global.mainbattleac < 0) {
-        triggerbattle();
-        global.checked = true;
+    
+    if (global.mainbattleac < 0) {
+        if ((mainctrl.stop_battle_after_daily || mainctrl.stop_battle_after_quest) &&
+            global.mainbattlepaused) global.holdmainbattle = false;
+        else triggerbattle();
     }
+    
     if (global.etoken) {
-        if ((!extractrl.stop_hunt_after_daily || !extractrl.stop_hunt_after_quest) &&
-            global.extrahuntac < 0) {
-            triggerextrahunt();
-            global.checked = true;
+        if (global.extrahuntac < 0) {
+            if ((extractrl.stop_hunt_after_daily || extractrl.stop_hunt_after_quest) &&
+                global.extrahuntpaused) global.holdextrahunt = false;
+            else triggerextrahunt();
         }
-        if ((!extractrl.stop_battle_after_daily || !extractrl.stop_battle_after_quest) &&
-            global.extrabattleac < 0) {
-            triggerextrabattle();
-            global.checked = true;
+        
+        if (global.extrabattleac < 0) {
+            if ((extractrl.stop_battle_after_daily || extractrl.stop_battle_after_quest) &&
+                global.extrabattlepaused) global.holdextrabattle = false;
+            else triggerextrabattle();
         }
     }
 }
@@ -493,10 +500,13 @@ const extractrl = settings.manualcontroller.extra;
 global.mainhuntdaily = false;
 global.mainbattledaily = false;
 global.mainhuntpaused = false;
+global.mainbattlepaused = false;
 global.mainquest = false;
+
 global.extrahuntdaily = false;
 global.extrabattledaily = false;
 global.extrahuntpaused = false;
+global.extrabattlepaused = false;
 global.extraquest = false;
 
 const mainrarity = mainctrl.maximum_gem_rarity;
@@ -564,6 +574,52 @@ if (respwarnvalue < 6 && notrespwarn) {
 var mainwarning = 0;
 var extrawarning = 0;
 
+//first run check thanks to windows 11
+const firstrunPath = path.join(__dirname, 'firstrun');
+
+if (fs.existsSync(firstrunPath)) notifycheck();
+
+function notifycheck() {
+    notifier.notify({
+        title: `Welcome`,
+        message: `Happy farming`,
+        icon: `./utils/i.png`,
+        sound: false,
+        wait: true,
+        appID: "OwO Farm Bot",
+    }, async function (error, response) {
+        if (error) {
+            console.log(chalk.red("Notify error!  Attemting self fix..."));
+            setTimeout(() => {
+                updateerrorsocket("[Global] Notify error!", "global");
+            }, 1600);
+            cp.exec("cd utils && start register.bat", () => {
+            fs.unlinkSync(firstrunPath);
+            console.log(chalk.yellow("Self fix completed!"));
+            });
+            await delay(3000);
+            notifier.notify({
+                title: `Notify work!`,
+                message: `Notify problem was fixed correctly`,
+                icon: `./utils/i.png`,
+                sound: false,
+                wait: true,
+                appID: "OwO Farm Bot",
+            }, function (error, response) {
+                if (error) {
+                    setTimeout(() => {
+                        updateerrorsocket("[Global] Notify error! Cannot be fixed. Please use change to promt mode in config!",
+                                          "global");
+                    }, 1600);
+                    setTimeout(() => {
+                        process.exit(1);
+                    }, 6100);
+                }
+            });
+        }
+    });
+}
+
 //----------------------------------------------------Check Main Token----------------------------------------------------//
 request.get(
     {
@@ -583,7 +639,7 @@ request.get(
                 chalk.red(`Main Token / ${String(bod.message)} (TOKEN WRONG!)`)
             );
             updateerrorsocket(
-                `Main Token / ${String(bod.message)} (TOKEN WRONG!)`
+                `Main Token / ${String(bod.message)} (TOKEN WRONG!)`, "global"
             );
             setTimeout(() => {
                 process.exit(0);
@@ -679,9 +735,9 @@ function triggerhunt() {
         );
         warninguser("Main Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!"
+            "[Global] Cannot receive OwO response (Require manual check)!", "global"
         );
-        setTimeout(() => process.exit(1), 1600);
+        setTimeout(() => process.exit(0), 1600);
     }
 
     if (settings.times.enable) {
@@ -746,7 +802,7 @@ function triggerbattle() {
         );
         warninguser("Main Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!"
+            "[Global] Cannot receive OwO response (Require manual check)!", "global"
         );
         setTimeout(() => process.exit(0), 1600);
     }
@@ -773,6 +829,7 @@ function triggerbattle() {
                     chalk.white("Quest completed.\n") +
                     chalk.red("STOPPED BATTLING ON [Main Token]")
             );
+            global.mainbattlepaused = true;
             return;
         }
     } else if (mainctrl.stop_battle_after_daily) {
@@ -782,6 +839,7 @@ function triggerbattle() {
                     chalk.white("Daily battle completed.\n") +
                     chalk.red("STOPPED BATTLING ON [Main Token]")
             );
+            global.mainbattlepaused = true;
             return;
         }
     }
@@ -806,7 +864,7 @@ function triggerextrahunt() {
         );
         warninguser("Extra Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!"
+            "[Global] Cannot receive OwO response (Require manual check)!", "global"
         );
         setTimeout(() => process.exit(0), 1600);
     }
@@ -873,7 +931,7 @@ function triggerextrabattle() {
         );
         warninguser("Extra Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!"
+            "[Global] Cannot receive OwO response (Require manual check)!", "global"
         );
         setTimeout(() => process.exit(0), 1600);
     }
@@ -900,6 +958,7 @@ function triggerextrabattle() {
                     chalk.white("Quest completed.\n") +
                     chalk.red("STOPPED BATTLING ON [Extra Token]")
             );
+            global.extrabattlepaused = true;
             return;
         }
     } else if (extractrl.stop_battle_after_daily) {
@@ -909,6 +968,7 @@ function triggerextrabattle() {
                     chalk.white("Daily battle completed.\n") +
                     chalk.red("STOPPED BATTLING ON [Extra Token]")
             );
+            global.extrabattlepaused = true;
             return;
         }
     }
@@ -1138,37 +1198,46 @@ async function typing(token, channelid) {
 
 async function updatequestssocket(questtitle, p1, p2, tokentype) {
     if (tokentype == "Main Token") {
-        socketio.emit("quest", {
-            quest: `${questtitle}`,
-            progress: `${p1} / ${p2}`,
-            date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-        });
+        setTimeout(() => {
+            socketio.emit("quest", {
+                quest: `${questtitle}`,
+                progress: `${p1} / ${p2}`,
+                date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+            });
+        }, 1600);
     } else {
-        socketio.emit("extraquest", {
-            quest: `${questtitle}`,
-            progress: `${p1} / ${p2}`,
-            date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-        });
+        setTimeout(() => {
+            socketio.emit("extraquest", {
+                quest: `${questtitle}`,
+                progress: `${p1} / ${p2}`,
+                date: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+            });
+        }, 1600);
     }
 }
 
 async function updatechecklistsocket(i, e, tokentype) {
     if (tokentype == "Main Token") {
-        socketio.emit("checklist", {
-            name: i,
-            status: e,
-        });
+        setTimeout(() => {
+            socketio.emit("checklist", {
+                name: i,
+                status: e,
+            });
+        }, 1600);
     } else {
-        socketio.emit("extrachecklist", {
-            name: i,
-            status: e,
-        });
+        setTimeout(() => {
+            socketio.emit("extrachecklist", {
+                name: i,
+                status: e,
+            });
+        }, 1600);
     }
 }
 
-async function updateerrorsocket(eyl) {
+async function updateerrorsocket(eyl, n) {
     socketio.emit("errors", {
         error: eyl,
+        name: n,
     });
 }
 
@@ -1543,10 +1612,22 @@ function checklist(token, tokentype, channelid) {
                                     "✅",
                                     tokentype
                                 );
+                            
+                            if (tokentype == "Main Token") {
+                                updateerrorsocket(
+                                    "clear", "maincl"
+                                );
+                            } else updateerrorsocket(
+                                    "clear", "extracl"
+                                );
                         } catch (error) {
-                            updateerrorsocket(
-                                "Unable to get Checklist (RESTART BOT!)"
-                            );
+                            if (tokentype == "Main Token") {
+                                updateerrorsocket(
+                                    "Unable to get Checklist (RESTART BOT!)", "maincl"
+                                );
+                            } else updateerrorsocket(
+                                    "Unable to get Checklist (RESTART BOT!)", "extracl"
+                                );
                             console.log(
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -2987,8 +3068,16 @@ async function getquests(token, channelid, tokentype) {
                                 }
                             }
                         }
+
+                        if (tokentype == "Main Token") {
+                            updateerrorsocket(
+                                "clear", "mainq"
+                            );
+                        } else updateerrorsocket("clear", "extraq");
                     } catch (error) {
-                        updateerrorsocket("Unable to check Quest");
+                        if (tokentype == "Main Token") {
+                            updateerrorsocket("Unable to check Quest", "mainq");
+                        } else updateerrorsocket ("Unable to check Quest", "extraq");
                         console.log(
                             chalk.red(
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -2997,10 +3086,11 @@ async function getquests(token, channelid, tokentype) {
                                 chalk.red("Unable to check quest❗") +
                                 chalk.white("\nRechecking after 61 secs...")
                         );
-                        setTimeout(
-                            () => updateerrorsocket("Rechecking Quest..."),
-                            55000
-                        );
+                        setTimeout(() => {
+                            if (tokentype == "Main Token") {
+                                updateerrorsocket("Rechecking Quest...", "mainq");
+                            } else updateerrorsocket ("Rechecking Quest...", "extraq");
+                        }, 55000);
                         setTimeout(
                             () => getquests(token, channelid, tokentype),
                             61000
@@ -3395,7 +3485,7 @@ function bancheck(token, channelid) {
                 );
 
                 warninguser("Main Token", true);
-                updateerrorsocket("(Main Token) Solve Captcha!");
+                updateerrorsocket("(Main Token) Solve Captcha!", "captcha");
                 setTimeout(() => {
                     process.exit(0);
                 }, 1600);
@@ -3452,7 +3542,7 @@ function extrabancheck(token, channelid) {
                 );
 
                 warninguser("Extra Token", true);
-                updateerrorsocket("(Extra Token) Solve Captcha!");
+                updateerrorsocket("(Extra Token) Solve Captcha!", "captcha");
                 setTimeout(() => {
                     process.exit(0);
                 }, 1600);
@@ -3510,7 +3600,7 @@ function dmbancheck(token, channelid) {
                             chalk.red(" DM Captcha! ❌")
                     );
                     warninguser("Main Token", true);
-                    updateerrorsocket("(Main Token) Solve DM Captcha!");
+                    updateerrorsocket("(Main Token) Solve DM Captcha!", "captcha");
                     setTimeout(() => {
                         process.exit(0);
                     }, 1600);
@@ -3568,7 +3658,7 @@ function dmextrabancheck(token, channelid) {
                             chalk.red(" DM Captcha! ❌")
                     );
                     warninguser("Extra Token", true);
-                    updateerrorsocket("(Extra Token) Solve DM Captcha!");
+                    updateerrorsocket("(Extra Token) Solve DM Captcha!", "captcha");
                     setTimeout(() => {
                         process.exit(0);
                     }, 1600);
@@ -3621,46 +3711,48 @@ function dmprotectprouwu(token, channelid, tokentype) {
 }
 
 function elaina2(token, channelid, phrasesFilePath) {
-    // Read the JSON
-    fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
-        if (err) {
-            console.error(err);
-        }
-
-        // Parse the JSON data
-        try {
-            const phrasesObject = JSON.parse(data);
-            const phrases = phrasesObject.phrases;
-
-            if (!phrases || !phrases.length) {
-                console.log("Phrases array is undefined or empty.");
-                return;
+    if (settings.randommesaage) {
+        // Read the JSON
+        fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
+            if (err) {
+                console.error(err);
             }
-
-            let result = Math.floor(Math.random() * phrases.length);
-
-            var ilu = phrases[result];
-            //E <3
-            typing(token, channelid);
-            request.post({
-                headers: {
-                    authorization: token,
-                },
-                url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-
-                json: {
-                    content: ilu,
-                    nonce: nonce(),
-                    tts: false,
-                    flags: 0,
-                },
-            });
-        } catch (error) {
-            if (error) {
-                console.error(error);
+    
+            // Parse the JSON data
+            try {
+                const phrasesObject = JSON.parse(data);
+                const phrases = phrasesObject.phrases;
+    
+                if (!phrases || !phrases.length) {
+                    console.log("Phrases array is undefined or empty.");
+                    return;
+                }
+    
+                let result = Math.floor(Math.random() * phrases.length);
+    
+                var ilu = phrases[result];
+                //E <3
+                typing(token, channelid);
+                request.post({
+                    headers: {
+                        authorization: token,
+                    },
+                    url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+    
+                    json: {
+                        content: ilu,
+                        nonce: nonce(),
+                        tts: false,
+                        flags: 0,
+                    },
+                });
+            } catch (error) {
+                if (error) {
+                    console.error(error);
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function warninguser(tokentype, iscaptcha) {
