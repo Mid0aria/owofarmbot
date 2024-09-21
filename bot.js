@@ -594,7 +594,6 @@ function notifycheck() {
                 updateerrorsocket("[Global] Notify error!", "global");
             }, 1600);
             cp.exec("cd utils && start register.bat", () => {
-            fs.unlinkSync(firstrunPath);
             console.log(chalk.yellow("Self fix completed!"));
             });
             await delay(3000);
@@ -608,7 +607,7 @@ function notifycheck() {
             }, function (error, response) {
                 if (error) {
                     setTimeout(() => {
-                        updateerrorsocket("[Global] Notify error! Cannot be fixed. Please use change to promt mode in config!",
+                        updateerrorsocket("[Global] Notify error! Cannot be fixed. Please change to promt mode in config!",
                                           "global");
                     }, 1600);
                     setTimeout(() => {
@@ -618,6 +617,7 @@ function notifycheck() {
             });
         }
     });
+    fs.unlinkSync(firstrunPath); // make sure to remove the file...
 }
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
