@@ -140,6 +140,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
         "cookie": "", true or false, auto send cookie to OwO on startup or not
         "extratoken": "", true or false
         "autoquest": "", true or false
+        "randommessage": "", true or false, auto send random message during farm or not
         "inventory": {
             "inventorycheck": "", true or false
             "gemcheck": "", true or false
@@ -177,8 +178,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
                 "default_amount"= , Enter the amount you want to start from
                 "max_amount": 250000, Enter the amount where the bot will not bet more than that
                 "multipler": , Enter a number by which the lost amount will be multipled by
-                "enable": "", true or false
-                "amount": "1"
+                "enable": "" true or false
             },
             "slots": {
                 "enable": "", true or false
