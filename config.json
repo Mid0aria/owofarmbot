@@ -46,6 +46,7 @@
         "cookie": false,
         "autoquest": false,
         "extratoken": false,
+        "randommessage": true,
         "inventory": {
             "inventorycheck": true,
             "gemcheck": true,
@@ -83,8 +84,7 @@
                 "default_amount": 1000,
                 "max_amount": 150000,
                 "multipler": 3,
-                "enable": false,
-                "amount": "1"
+                "enable": false
             },
             "slots": {
                 "enable": false,
