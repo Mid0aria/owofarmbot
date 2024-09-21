@@ -1538,6 +1538,13 @@ function checklist(token, tokentype, channelid) {
                                     "✅",
                                     tokentype
                                 );
+                                if (tokentype == "Main Token") {
+                                    global.mainhuntdaily = true;
+                                    global.mainbattledaily = true;
+                                } else {
+                                    global.extrahuntdaily = true;
+                                    global.extrabattledaily = true;
+                                }
                                 return "checklist completed";
                             }
                             if (des.includes("☑️ 💎")) {
