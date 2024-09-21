@@ -618,6 +618,7 @@ function notifycheck() {
         }
     });
     fs.unlinkSync(firstrunPath); // make sure to remove the file...
+    console.log("If you didn't see any notify at this first time running, notify will not work on this machine.\nPlease change to promt mode.\nAlso make sure you are using Windows");
 }
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
