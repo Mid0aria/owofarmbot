@@ -3,7 +3,7 @@ var io = socket.connect("http://localhost:1337");
 const chalk = require("chalk");
 
 console.clear();
-process.title = `Socket Client V0.0.4 / e.`;
+process.title = `Socket Client V0.0.5 / e.`;
 global.state = "";
 global.quest = "";
 global.questpr = "";
@@ -27,8 +27,6 @@ global.extrachecklistcookie = `❌`;
 global.extrachecklistquest = `❌`;
 global.extrachecklistlb = `❌`;
 global.extrachecklistcrate = `❌`;
-
-global.eyl = "Everything okay";
 
 io.on("type", (t) => {
     global.type = t.type;
@@ -107,11 +105,32 @@ io.on("extrachecklist", (e) => {
     }
 });
 
+global.mainclerr = "";
+global.extraclerr = "";
+global.mainquesterr = "";
+global.extraquesterr = "";
+global.globalerr = "";
+global.captchaerr = "";
+
 io.on("errors", (e) => {
-    if (global.eyl === "Everything okay") {
-        global.eyl = chalk.red(e.error);
+    if (e.error == "clear") {
+        if (e.name == "maincl") global.mainclerr = "";
+        if (e.name == "extracl") global.extraclerr = "";
+        if (e.name == "mainq") global.mainquesterr = "";
+        if (e.name == "extraq") global.extraquesterr = "";
     } else {
-        global.eyl = chalk.red(`${global.eyl}`) + chalk.white("\n║ ") + chalk.red(`${e.error}`);
+        if (e.name == "maincl") 
+            global.mainclerr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
+        if (e.name == "extracl") 
+            global.extraclerr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
+        if (e.name == "mainq") 
+            global.mainquesterr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
+        if (e.name == "extraq") 
+            global.extraquesterr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
+        if (e.name == "global")
+            global.globalerr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
+        if (e.name == "captcha")
+            global.captchaerr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
     }
 });
 
@@ -151,11 +170,21 @@ setInterval(() => {
     let eqpr = chalk.green("Progress: ") + chalk.yellow(global.extraquestpr);
 
     let tms = global.times;
-    let eyl;
-    if (global.eyl === "Everything okay") {
-        eyl = chalk.yellow(global.eyl);
-    } else {
-        eyl = global.eyl;
+    
+    let eyl = chalk.white("\n║ ") + chalk.yellow("Everything okey");
+    if (global.mainclerr != "" ||
+        global.extraclerr != "" ||
+        global.mainquesterr != "" ||
+        global.extraquesterr != "") {
+            eyl = global.mainclerr + global.extraclerr + global.mainquesterr + global.extraquesterr;
+        } else eyl = chalk.white("\n║ ") + chalk.yellow("Everything okey");
+    
+    if (global.globalerr != "" || global.captchaerr != "") {
+        global.mainclerr = "";
+        global.extraclerr = "";
+        global.mainquesterr = "";
+        global.extraquesterr = "";
+        eyl = global.globalerr + global.captchaerr;
     }
 
     if (global.type == "duo") global.sockettype = "Double Threaded Farm Bot!";
@@ -184,8 +213,7 @@ setInterval(() => {
 ║ > ⏱️ Times
 ║ ${tms}
 ╠═══════════════════════════════════════════════════════════════════════════════
-║ > Errors❗ 
-║ ${eyl}
+║ > Errors❗ ${eyl}
 ╚═══════════════════════════════════════════════════════════════════════════════`
         );
     } else {
@@ -210,8 +238,7 @@ setInterval(() => {
 ║ > ⏱️ Times
 ║ ${tms}
 ╠═══════════════════════════════════════════════════════════════════════════════
-║ > Errors❗ 
-║ ${eyl}
+║ > Errors❗ ${eyl}
 ╚═══════════════════════════════════════════════════════════════════════════════`
         );
     }
