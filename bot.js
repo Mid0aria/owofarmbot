@@ -112,7 +112,7 @@ global.holdextrabattle = true;
 function antianticrash() {
     setTimeout(() => { 
         check = setInterval(() => {
-            if (global.holmainhunt) global.mainhuntac -= 1000;
+            if (global.holdmainhunt) global.mainhuntac -= 1000;
             if (global.holdmainbattle) global.mainbattleac -= 1000;
             if (global.etoken) {
                 if (global.holdextrahunt) global.extrahuntac -= 1000;
