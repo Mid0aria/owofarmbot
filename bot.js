@@ -3057,9 +3057,8 @@ async function getquests(token, channelid, tokentype) {
                                     return autocompletequests(
                                         token,
                                         channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2),
-                                        tokentype
+                                        tokentype,
+                                        quest
                                     );
                                 }
                                 if (
@@ -3069,9 +3068,8 @@ async function getquests(token, channelid, tokentype) {
                                     return autocompletequests(
                                         token,
                                         channelid,
-                                        parseInt(progress1),
-                                        parseInt(progress2),
-                                        tokentype
+                                        tokentype,
+                                        quest
                                     );
                                 }
                             }
@@ -3112,7 +3110,8 @@ async function getquests(token, channelid, tokentype) {
     );
 }
 
-async function autocompletequests(token, channelid, tokentype) {
+async function autocompletequests(token, channelid, tokentype, questtitle) {
+    updatequestssocket(questtitle, "Auto complete quest", "Recheck after 610 secs", tokentype);
     await delay(610000);
     getquests(token, channelid, tokentype);
 }
