@@ -1723,10 +1723,10 @@ function cookie(token, tokentype, channelid) {
     );
 }
 
-var currentBet = defaultBet;
-var extracurrentBet = defaultBet;
 const defaultBet = settings.gamble.coinflip.default_amount;
 const maxBet = settings.gamble.coinflip.max_amount;
+var currentBet = defaultBet;
+var extracurrentBet = defaultBet;
 
 function coinflip(token, tokentype, channelid) {
     typing(token, channelid);
