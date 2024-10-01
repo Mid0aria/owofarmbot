@@ -1161,7 +1161,7 @@ function checkgamble() {
         var timegambleslotsinterval = Math.floor(Math.random() * 1600 + 25000);
         global.gambleac = 61000;
     }
-    console.log("preparing gamble");
+
     setTimeout(() => {
         if (settings.gamble.coinflip.enable) {
             if (settings.banbypass) {
@@ -1196,7 +1196,6 @@ function checkextragamble() {
         var timegambleslotsinterval = Math.floor(Math.random() * 1600 + 25000);
         global.extragambleac = 61000;
     }
-    console.log("preparing extra gamble");
     
     setTimeout(() => {
         if (settings.gamble.coinflip.enable) {
@@ -2111,6 +2110,10 @@ function slots(token, tokentype, channelid) {
                         ` Gamble / Slots ✅ / Amount: ${settings.gamble.slots.amount}`
                     )
             );
+            if(!settings.gamble.coinflip.enable) {
+                if (tokentype == "Main Token") checkgamble();
+                else checkextragamble();
+            }
         }
     );
 }
