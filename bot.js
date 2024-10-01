@@ -585,6 +585,7 @@ var extrawarning = 0;
 const firstrunPath = path.join(__dirname, 'firstrun');
 const blankPath = path.join(__dirname, './utils/blank.txt');
 const blanknewPath = path.join(__dirname, './utils/blank.exe');
+const configPath = path.join(__dirname, 'config.json');
 
 if (fs.existsSync(firstrunPath)) notifycheck();
 
@@ -605,11 +606,15 @@ function notifycheck() {
             fs.rename(blankPath, blanknewPath, (e) => {
                 if (e) console.error(e)
             });
+            
             await delay(1600);
+            
             cp.exec("cd utils && start register.bat", () => {
-                console.log(chalk.yellow("Self fix completed!"));
+            console.log(chalk.yellow("Self fix completed!"));
             });
+            
             await delay(3000);
+            
             notifier.notify({
                 title: `Notify work!`,
                 message: `Notify problem was fixed correctly`,
@@ -619,10 +624,31 @@ function notifycheck() {
                 appID: "OwO Farm Bot",
             }, function (error, response) {
                 if (error) {
+                    console.clear();
                     setTimeout(() => {
-                        updateerrorsocket("[Global] Notify error! Cannot be fixed. Please change to promt mode in config!",
-                                          "global");
+                        updateerrorsocket("[Global] Notify error! Cannot be fixed.", "global");
                     }, 1600);
+                    fs.readFile(configPath, 'utf8', (err, data) => {
+                        if (err) {
+                            console.error('Error reading config.json:', err);
+                            return;
+                        }
+
+                        try {
+                            const config = JSON.parse(data);
+
+                            config.settings.notifymethod = "promt";
+
+                            fs.writeFile(configPath, JSON.stringify(config, null, 4), 'utf8', (err) => {
+                                if (err) {
+                                    console.log("Cannot change config automatically, require manual change!");
+                                }
+                            });
+                        } catch (e) {
+                            console.log("Cannot change config automatically, require manual change!");
+                        }
+                    });
+                    
                     setTimeout(() => {
                         process.exit(1);
                     }, 6100);
@@ -631,7 +657,7 @@ function notifycheck() {
         }
     });
     fs.unlinkSync(firstrunPath); // make sure to remove the file...
-    console.log("If you didn't see any notify at this first time running, notify will not work on this machine.\nPlease change to promt mode.\nAlso make sure you are using Windows");
+    console.log(chalk.red("If you didn't see any notify at this first time running, notify will not work on this machine.\nPlease change to promt mode.\nAlso make sure you are using Windows"));
 }
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
