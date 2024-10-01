@@ -114,16 +114,19 @@ function antianticrash() {
         check = setInterval(() => {
             if (global.holdmainhunt) global.mainhuntac -= 1000;
             if (global.holdmainbattle) global.mainbattleac -= 1000;
+            if (global.gambling) global.gambleac -= 1000;
             if (global.etoken) {
                 if (global.holdextrahunt) global.extrahuntac -= 1000;
                 if (global.holdextrabattle) global.extrabattleac -= 1000;
+                if (global.gambling) global.extragambleac -= 1000;
             }
             doublechecking();
             if (
                 !global.holdmainhunt &&
                 !global.holdmainbattle &&
                 !global.holdextrahunt &&
-                !global.holdextrabattle
+                !global.holdextrabattle &&
+                !global.gambling
             ) clearInterval(check);
         }, 1000);
     }, 61000); //timer start at 61s is a believe that noone will set their time above 61s
@@ -141,6 +144,8 @@ function doublechecking() { //this func still have a chance to duplicate calling
             global.mainbattlepaused) global.holdmainbattle = false;
         else triggerbattle();
     }
+
+    if (global.gambleac < 0 && global.gambling) checkgamble();
     
     if (global.etoken) {
         if (global.extrahuntac < 0) {
@@ -154,6 +159,8 @@ function doublechecking() { //this func still have a chance to duplicate calling
                 global.extrabattlepaused) global.holdextrabattle = false;
             else triggerextrabattle();
         }
+
+        if (global.extragambleac < 0 && global.gambling) checkextragamble();
     }
 }
 
@@ -1109,49 +1116,82 @@ if (settings.upgradeautohunt.enable) {
 }
 
 //--------------------------------GAMBLE-------------------------------------------------//
+if(settings.gamble.coinflip.enable || settings.gamble.slots.enable)
+    global.gambling = true;
 
-if (settings.times.intervals.gamble.enable) {
-    var timegamblecoinflipinterval =
-        settings.times.intervals.gamble.coinflip.time;
-    var timegambleslotsinterval = settings.times.intervals.gamble.slots.time;
-} else {
-    var timegamblecoinflipinterval = 25000;
-    var timegambleslotsinterval = 25000;
-}
-if (settings.gamble.coinflip.enable) {
-    setInterval(() => {
-        if (settings.banbypass) {
-            bancheck(maintoken, mainchannelid);
-            dmbancheck(maintoken, owodmmainchannelid);
-        }
-        coinflip(maintoken, "Main Token", maingamblechannelid);
-        if (global.etoken) {
+checkgamble();
+if (global.etoken) checkextragamble();
+
+function checkgamble() {
+    if (settings.times.intervals.gamble.enable) {
+        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 +
+            settings.times.intervals.gamble.coinflip.time);
+        var timegambleslotsinterval = Math.floor(Math.random() * 1600 +
+            settings.times.intervals.gamble.slots.time);
+        global.gambleac = Math.max(timegamblecoinflipinterval,
+            timegambleslotsinterval) * 2,4;
+    } else {
+        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 + 25000);
+        var timegambleslotsinterval = Math.floor(Math.random() * 1600 + 25000);
+        global.gambleac = 61000;
+    }
+    console.log("preparing gamble");
+    setTimeout(() => {
+        if (settings.gamble.coinflip.enable) {
             if (settings.banbypass) {
-                extrabancheck(extratoken, extrachannelid);
+                bancheck(maintoken, maingamblechannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
+            coinflip(maintoken, "Main Token", maingamblechannelid);
+        }
+    }, timegamblecoinflipinterval);
+    
+    setTimeout(() => {
+        if (settings.gamble.slots.enable) {
+            if (settings.banbypass) {
+                bancheck(maintoken, maingamblechannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
+            slots(maintoken, "Main Token", maingamblechannelid);
+        }
+    }, timegambleslotsinterval);
+}
+
+function checkextragamble() {
+    if (settings.times.intervals.gamble.enable) {
+        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 +
+            settings.times.intervals.gamble.coinflip.time);
+        var timegambleslotsinterval = Math.floor(Math.random() * 1600 +
+            settings.times.intervals.gamble.slots.time);
+        global.extragambleac = Math.max(timegamblecoinflipinterval,
+            timegambleslotsinterval) * 2,4;
+    } else {
+        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 + 25000);
+        var timegambleslotsinterval = Math.floor(Math.random() * 1600 + 25000);
+        global.extragambleac = 61000;
+    }
+    console.log("preparing extra gamble");
+    
+    setTimeout(() => {
+        if (settings.gamble.coinflip.enable) {
+            if (settings.banbypass) {
+                extrabancheck(extratoken, extragamblechannelid);
                 dmextrabancheck(extratoken, owodmextrachannelid);
             }
             extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
         }
     }, timegamblecoinflipinterval);
-}
-
-if (settings.gamble.slots.enable) {
-    setInterval(() => {
-        if (settings.banbypass) {
-            bancheck(maintoken, mainchannelid);
-            dmbancheck(maintoken, owodmmainchannelid);
-        }
-        slots(maintoken, "Main Token", maingamblechannelid);
-        if (global.etoken) {
+    
+    setTimeout(() => {
+        if (settings.gamble.slots.enable) {
             if (settings.banbypass) {
-                extrabancheck(extratoken, extrachannelid);
+                extrabancheck(extratoken, extragamblechannelid);
                 dmextrabancheck(extratoken, owodmextrachannelid);
             }
             slots(extratoken, "Extra Token", extragamblechannelid);
         }
     }, timegambleslotsinterval);
 }
-
 //----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
 function nonce() {
@@ -1728,6 +1768,29 @@ const maxBet = settings.gamble.coinflip.max_amount;
 var currentBet = defaultBet;
 var extracurrentBet = defaultBet;
 
+async function request_get(token, channelid) {
+    let limit = 1;
+    if (settings.gamble.coinflip.enable && settings.gamble.slots.enable) limit += 3;
+    if (maingamblechannelid == extragamblechannelid) limit += 4;
+    if (maingamblechannelid == mainchannelid) limit += 4;
+    if (maingamblechannelid == mainautoquestchannelid) limit += 4;
+
+    return new Promise((resolve, reject) => {
+        request.get(
+            {
+                headers: {
+                    authorization: token,
+                },
+                url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=${limit}`,
+            },
+            function (error, response, body) {
+                if (error) return reject(error);
+                resolve(body);
+            }
+        );
+    });
+}
+
 function coinflip(token, tokentype, channelid) {
     typing(token, channelid);
     request.post(
@@ -1753,107 +1816,108 @@ function coinflip(token, tokentype, channelid) {
                 }
             }
 
-            await delay(6000);
+            await delay(6100);
 
-            request.get(
-                {
-                    headers: {
-                        authorization: token,
-                    },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=10`,
-                },
-                async function (error, response, body) {
-                    if (error) {
-                        if (error) {
-                            console.error(error);
+            try {
+                var cont;
+                var rechecked = 0;
+                
+                async function checkcf() {
+                    let body;
+                    try {
+                        body = await request_get(token, channelid);
+                    } catch (error) {
+                        console.error(error);
+                        return true;
+                    }
+                    const bod = JSON.parse(body);
+                    if (!bod[0]) return true;
+                    
+                    await delay(1600);
+                    
+                    for (let i = 0; i < 10; i++) {
+                        try {
+                            if (bod[i].content.includes(`and chose **heads**`)) {//dont break this line
+                                cont = bod[i].content;
+                                break;
+                            }
+                        } catch (error) {
                         }
                     }
-
-                    try {
-                        const bod = JSON.parse(body);
-                        if (!bod[0]) return;
-                        var cont;
-                        var rechecked = false;
-                        checkcf();
-                        async function checkcf() {
-                            for (let i = 0; i < 10; i++) {
-                                try {
-                                    if (bod[i].content.includes(`and chose **heads**\nThe coin spins...`)) {//dont break this line
-                                        cont = bod[i].content;
-                                        break;
-                                    }
-                                } catch (error) {
-                                }
-                            }
-                            
-                            if (!cont) {
-                                if (!rechecked) {
-                                    rechecked = true;
-                                    console.log(
-                                        chalk.red(
-                                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                            chalk.magenta(
-                                                ` [${tokentype}]`
-                                            ) +
-                                            chalk.yellow(
-                                                ` Could not get the response, retrying...`
-                                            )
-                                        )
-                                    );
-                                    await delay(1600);
-                                    checkcf();
-                                } else {
-                                    console.log(
-                                        chalk.red(
-                                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                            chalk.magenta(
-                                                ` [${tokentype}]`
-                                            ) +
-                                            chalk.yellow(
-                                                ` Could not get the response, next betting ${defaultBet}...`
-                                            )
-                                        )
-                                    );
-                                    currentBet = defaultBet;
-                                    return;
-                                }
-                            }
-                        }
-
-                        if (cont.includes("and you lost it all... :c")) {
-                            let lost = currentBet;
-                            currentBet *= settings.gamble.coinflip.multipler;
-                            if (Number.isNaN(currentBet)) currentBet = currentBet; //is this make sense?
-                            else currentBet = Math.round(currentBet);
+                    
+                    if (!cont || (cont && 
+                        (!cont.includes("and you lost it all... :c") && !cont.includes(" and you won"))
+                        )) {
+                        if (rechecked < 3) {
+                            rechecked += 1;
                             console.log(
                                 chalk.red(
-                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                                ) +
-                                    chalk.magenta(` [${tokentype}]`) +
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+                                    chalk.magenta(
+                                        ` [${tokentype}]`
+                                    ) +
                                     chalk.yellow(
-                                        ` Lost ${lost} in coinflip, next betting ${currentBet}`
+                                        ` Could not get the response, retrying...`
                                     )
+                                )
                             );
-                            if (currentBet > maxBet) currentBet = defaultBet;
-                        } else if (cont.includes(" and you won")) {
+                            await delay(3200);
+                            return await checkcf();
+                        } else {
                             console.log(
                                 chalk.red(
-                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                                ) +
-                                    chalk.magenta(` [${tokentype}]`) +
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+                                    chalk.magenta(
+                                        ` [${tokentype}]`
+                                    ) +
                                     chalk.yellow(
-                                        ` You have won ${currentBet} in coinflip`
+                                        ` Could not get the response, next betting ${defaultBet}...`
                                     )
+                                )
                             );
                             currentBet = defaultBet;
+                            await delay(1600);
+                            return true;
                         }
-                    } catch (e) {
-                        //console.error(e);
-                    } finally {
-                        // Cleanup or additional operations
                     }
+                    return false;
                 }
-            );
+                
+                const stop = await checkcf();
+                if (stop) return checkgamble();
+
+                if (cont.includes("and you lost it all... :c")) {
+                    let lost = currentBet;
+                    currentBet *= settings.gamble.coinflip.multipler;
+                    if (Number.isNaN(currentBet)) currentBet = currentBet; //is this make sense?
+                    else currentBet = Math.round(currentBet);
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(` [${tokentype}]`) +
+                            chalk.yellow(
+                                ` Lost ${lost} in coinflip, next betting ${currentBet}`
+                            )
+                    );
+                    if (currentBet > maxBet) currentBet = defaultBet;
+                    checkgamble();
+                } else if (cont.includes(" and you won")) {
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(` [${tokentype}]`) +
+                            chalk.yellow(
+                                ` You have won ${currentBet} in coinflip`
+                            )
+                    );
+                    currentBet = defaultBet;
+                    checkgamble();
+                }
+            } catch (e) {
+                console.error(e);
+            }
         }
     );
 }
@@ -1885,107 +1949,108 @@ function extra_coinflip(token, tokentype, channelid) {
                 }
             }
 
-            await delay(6000);
+            await delay(6100);
+            
+            try {
+                var cont;
+                var rechecked = 0;
 
-            request.get(
-                {
-                    headers: {
-                        authorization: token,
-                    },
-                    url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=10`,
-                },
-                async function (error, response, body) {
-                    if (error) {
-                        if (error) {
-                            console.error(error);
+                async function checkcf() {
+                    let body;
+                    try {
+                        body = await request_get(token, channelid);
+                    } catch (error) {
+                        console.error(error);
+                        return true;
+                    }
+                    const bod = JSON.parse(body);
+                    if (!bod[0]) return true;
+                    
+                    await delay(1600);
+                    
+                    for (let i = 0; i < 10; i++) {
+                        try {
+                            if (bod[i].content.includes(`and chose **tails**`)) {//dont break this line
+                                cont = bod[i].content;
+                                break;
+                            }
+                        } catch (error) {
                         }
                     }
-
-                    try {
-                        const bod = JSON.parse(body);
-                        if (!bod[0]) return;
-                        var cont;
-                        var rechecked = false;
-                        checkcf();
-                        async function checkcf() {
-                            for (let i = 0; i < 10; i++) {
-                                try {
-                                    if (bod[i].content.includes(`and chose **tails**\nThe coin spins...`)) {//dont break this line
-                                        cont = bod[i].content;
-                                        break;
-                                    }
-                                } catch (error) {
-                                }
-                            }
-                            
-                            if (!cont) {
-                                if(!rechecked) {
-                                    rechecked = true;
-                                    console.log(
-                                        chalk.red(
-                                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                            chalk.magenta(
-                                                ` [${tokentype}]`
-                                            ) +
-                                            chalk.yellow(
-                                                ` Could not get the response, retrying...`
-                                            )
-                                        )
-                                    );
-                                    await delay(1600);
-                                    checkcf();
-                                } else {
-                                    console.log(
-                                        chalk.red(
-                                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                            chalk.magenta(
-                                                ` [${tokentype}]`
-                                            ) +
-                                            chalk.yellow(
-                                                ` Could not get the response, next betting ${defaultBet}...`
-                                            )
-                                        )
-                                    );
-                                    extracurrentBet = defaultBet;
-                                    return;
-                                }
-                            }
-                        }
-
-                        if (cont.includes("and you lost it all... :c")) {
-                            let exlost = extracurrentBet;
-                            extracurrentBet *= settings.gamble.coinflip.multipler;
-                            if (Number.isNaN(extracurrentBet)) extracurrentBet = extracurrentBet;
-                            else extracurrentBet = Math.round(extracurrentBet);
+                    
+                    if (!cont || (cont && 
+                        (!cont.includes("and you lost it all... :c") && !cont.includes(" and you won"))
+                        )) {
+                        if(rechecked < 3) {
+                            rechecked += 1;
                             console.log(
                                 chalk.red(
-                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                                ) +
-                                    chalk.magenta(` [${tokentype}]`) +
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+                                    chalk.magenta(
+                                        ` [${tokentype}]`
+                                    ) +
                                     chalk.yellow(
-                                        ` Lost ${exlost} in coinflip, next betting ${extracurrentBet}`
+                                        ` Could not get the response, retrying...`
                                     )
+                                )
                             );
-                            if (extracurrentBet > maxBet) extracurrentBet = defaultBet;
-                        } else if (cont.includes(" and you won")) {
+                            await delay(6100);
+                            return await checkcf();
+                        } else {
                             console.log(
                                 chalk.red(
-                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                                ) +
-                                    chalk.magenta(` [${tokentype}]`) +
+                                    `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
+                                    chalk.magenta(
+                                        ` [${tokentype}]`
+                                    ) +
                                     chalk.yellow(
-                                        ` You have won ${extracurrentBet} in coinflip`
+                                        ` Could not get the response, next betting ${defaultBet}...`
                                     )
+                                )
                             );
                             extracurrentBet = defaultBet;
+                            await delay(1600);
+                            return true;
                         }
-                    } catch (e) {
-                        //console.error(e);
-                    } finally {
-                        // Cleanup or additional operations
                     }
+                    return false;
                 }
-            );
+                
+                const stop = await checkcf();
+                if (stop) return checkextragamble();
+
+                if (cont.includes("and you lost it all... :c")) {
+                    let exlost = extracurrentBet;
+                    extracurrentBet *= settings.gamble.coinflip.multipler;
+                    if (Number.isNaN(extracurrentBet)) extracurrentBet = extracurrentBet;
+                    else extracurrentBet = Math.round(extracurrentBet);
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(` [${tokentype}]`) +
+                            chalk.yellow(
+                                ` Lost ${exlost} in coinflip, next betting ${extracurrentBet}`
+                            )
+                    );
+                    if (extracurrentBet > maxBet) extracurrentBet = defaultBet;
+                    checkextragamble();
+                } else if (cont.includes(" and you won")) {
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(` [${tokentype}]`) +
+                            chalk.yellow(
+                                ` You have won ${extracurrentBet} in coinflip`
+                            )
+                    );
+                    extracurrentBet = defaultBet;
+                    checkextragamble();
+                }
+            } catch (e) {
+                console.error(e);
+            }
         }
     );
 }
