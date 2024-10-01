@@ -1778,7 +1778,7 @@ function coinflip(token, tokentype, channelid) {
                         async function checkcf() {
                             for (let i = 0; i < 10; i++) {
                                 try {
-                                    if (bod[i].content.includes(`${currentBet}** and chose **heads**\nThe coin spins...`)) {//dont break this line
+                                    if (bod[i].content.includes(`and chose **heads**\nThe coin spins...`)) {//dont break this line
                                         cont = bod[i].content;
                                         break;
                                     }
@@ -1910,7 +1910,7 @@ function extra_coinflip(token, tokentype, channelid) {
                         async function checkcf() {
                             for (let i = 0; i < 10; i++) {
                                 try {
-                                    if (bod[i].content.includes(`${extracurrentBet}** and chose **tails**\nThe coin spins...`)) {//dont break this line
+                                    if (bod[i].content.includes(`and chose **tails**\nThe coin spins...`)) {//dont break this line
                                         cont = bod[i].content;
                                         break;
                                     }
