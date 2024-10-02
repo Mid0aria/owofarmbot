@@ -1799,6 +1799,7 @@ async function request_get(token, channelid) {
     if (maingamblechannelid == extragamblechannelid) limit += 4;
     if (maingamblechannelid == mainchannelid) limit += 4;
     if (maingamblechannelid == mainautoquestchannelid) limit += 4;
+    if (settings.randommessage) limit += 3;
 
     return new Promise((resolve, reject) => {
         request.get(
