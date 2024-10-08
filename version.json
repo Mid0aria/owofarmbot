@@ -1,5 +1,5 @@
 {
-    "version": "1.0.8.7",
+    "version": "1.0.8.8",
     "updater": "0.0.3",
-    "note": "(PLEASE RE-DOWNLOAD FROM GITHUB IF VERSION IS V1.0.8.5, V1.0.8.6, YOUR CURRENT UPDATER IS NOT WORKING!) V1.0.8.7: Fixed questing problem, make updater work (EOL)"
+    "note": "(PLEASE RE-DOWNLOAD FROM GITHUB IF VERSION IS V1.0.8.5, V1.0.8.6, YOUR CURRENT UPDATER IS NOT WORKING!) V1.0.8.8: Attemt to fix notify problem on Windows 11 and some changes this is too long (EOL)"
 }

@@ -6,7 +6,7 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you made a video about the farmbot, please upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.8.7(OPEN SOURCE)(EOL)</h1>
+<h1 align="center">OwO Farm Bot V1.0.8.8(OPEN SOURCE)(EOL)</h1>
 <p align="center">
 
 [![Total Views](https://hits.sh/github.com/Mid0aria/owofarmbot.svg?view=today-total&label=Repo%20Today/Total%20Views&color=770ca1&labelColor=007ec6)](https://github.com/Mid0aria/owofarmbot)
@@ -140,6 +140,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
         "cookie": "", true or false, auto send cookie to OwO on startup or not
         "extratoken": "", true or false
         "autoquest": "", true or false
+        "randommessage": "", true or false, auto send random message during farm or not
         "inventory": {
             "inventorycheck": "", true or false
             "gemcheck": "", true or false
@@ -177,8 +178,7 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
                 "default_amount"= , Enter the amount you want to start from
                 "max_amount": 250000, Enter the amount where the bot will not bet more than that
                 "multipler": , Enter a number by which the lost amount will be multipled by
-                "enable": "", true or false
-                "amount": "1"
+                "enable": "" true or false
             },
             "slots": {
                 "enable": "", true or false
