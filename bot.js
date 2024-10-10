@@ -1,6 +1,16 @@
+/**
+ ** LA LA LA LA LA LA LA (4256 lines in one file)
+ *TODO: Convert all console.log's to logger.js
+ *? currentBet = currentBet :D?
+ *? extracurrentBet = extracurrentBet :D?
+ *
+ *! yksnin anısını sikeyim tşk.
+ ** https://open.spotify.com/track/3BE9ioRvDO7FbwkAX7xFv4
+ */
+
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
-global.love = "e<3"; // 💔
+global.love = "Arteria pulmonales";
 //coded by @mid0aria on github
 const os = require("os");
 if (os.userInfo().username === "DESKTOP-3VVC3") {
@@ -110,7 +120,8 @@ global.holdextrahunt = true;
 global.holdextrabattle = true;
 
 function antianticrash() {
-    setTimeout(() => { 
+    let check;
+    setTimeout(() => {
         check = setInterval(() => {
             if (global.holdmainhunt) global.mainhuntac -= 1000;
             if (global.holdmainbattle) global.mainbattleac -= 1000;
@@ -127,36 +138,54 @@ function antianticrash() {
                 !global.holdextrahunt &&
                 !global.holdextrabattle &&
                 !global.gambling
-            ) clearInterval(check);
+            )
+                clearInterval(check);
         }, 1000);
     }, 61000); //timer start at 61s is a believe that noone will set their time above 61s
 }
 
-function doublechecking() { //this func still have a chance to duplicate calling hunt or battle func
+function doublechecking() {
+    //this func still have a chance to duplicate calling hunt or battle func
     if (global.mainhuntac < 0) {
-        if ((mainctrl.stop_hunt_after_daily || mainctrl.stop_hunt_after_quest) &&
-            global.mainhuntpaused) global.holdmainhunt = false;
+        if (
+            (mainctrl.stop_hunt_after_daily ||
+                mainctrl.stop_hunt_after_quest) &&
+            global.mainhuntpaused
+        )
+            global.holdmainhunt = false;
         else triggerhunt();
     }
-    
+
     if (global.mainbattleac < 0) {
-        if ((mainctrl.stop_battle_after_daily || mainctrl.stop_battle_after_quest) &&
-            global.mainbattlepaused) global.holdmainbattle = false;
+        if (
+            (mainctrl.stop_battle_after_daily ||
+                mainctrl.stop_battle_after_quest) &&
+            global.mainbattlepaused
+        )
+            global.holdmainbattle = false;
         else triggerbattle();
     }
 
     if (global.gambleac < 0 && global.gambling) checkgamble();
-    
+
     if (global.etoken) {
         if (global.extrahuntac < 0) {
-            if ((extractrl.stop_hunt_after_daily || extractrl.stop_hunt_after_quest) &&
-                global.extrahuntpaused) global.holdextrahunt = false;
+            if (
+                (extractrl.stop_hunt_after_daily ||
+                    extractrl.stop_hunt_after_quest) &&
+                global.extrahuntpaused
+            )
+                global.holdextrahunt = false;
             else triggerextrahunt();
         }
-        
+
         if (global.extrabattleac < 0) {
-            if ((extractrl.stop_battle_after_daily || extractrl.stop_battle_after_quest) &&
-                global.extrabattlepaused) global.holdextrabattle = false;
+            if (
+                (extractrl.stop_battle_after_daily ||
+                    extractrl.stop_battle_after_quest) &&
+                global.extrabattlepaused
+            )
+                global.holdextrabattle = false;
             else triggerextrabattle();
         }
 
@@ -184,7 +213,6 @@ const gitUpdate = () => {
         );
     }
 };
-let se = "d";
 
 const manualUpdate = async () => {
     try {
@@ -449,8 +477,6 @@ if (extratokencheck) {
     }
 }
 
-//E <3
-
 DiscordRPC.register(rpcclientid);
 
 if (settings.discordrpc) {
@@ -582,82 +608,107 @@ var mainwarning = 0;
 var extrawarning = 0;
 
 //first run check thanks to windows 11
-const firstrunPath = path.join(__dirname, 'firstrun');
-const blankPath = path.join(__dirname, './utils/blank.txt');
-const blanknewPath = path.join(__dirname, './utils/blank.exe');
-const configPath = path.join(__dirname, 'config.json');
+const firstrunPath = path.join(__dirname, "firstrun");
+const blankPath = path.join(__dirname, "./utils/blank.txt");
+const blanknewPath = path.join(__dirname, "./utils/blank.exe");
+const configPath = path.join(__dirname, "config.json");
 
 if (fs.existsSync(firstrunPath)) notifycheck();
 
 function notifycheck() {
-    notifier.notify({
-        title: `Welcome`,
-        message: `Happy farming`,
-        icon: `./utils/i.png`,
-        sound: false,
-        wait: true,
-        appID: "OwO Farm Bot",
-    }, async function (error, response) {
-        if (error) {
-            console.log(chalk.red("Notify error!  Attemting self fix..."));
-            setTimeout(() => {
-                updateerrorsocket("[Global] Notify error!", "global");
-            }, 1600);
-            fs.rename(blankPath, blanknewPath, (e) => {
-                if (e) console.error(e)
-            });
-            
-            await delay(1600);
-            
-            cp.exec("cd utils && start register.bat", () => {
-            console.log(chalk.yellow("Self fix completed!"));
-            });
-            
-            await delay(3000);
-            
-            notifier.notify({
-                title: `Notify work!`,
-                message: `Notify problem was fixed correctly`,
-                icon: `./utils/i.png`,
-                sound: false,
-                wait: true,
-                appID: "OwO Farm Bot",
-            }, function (error, response) {
-                if (error) {
-                    console.clear();
-                    setTimeout(() => {
-                        updateerrorsocket("[Global] Notify error! Cannot be fixed.", "global");
-                    }, 1600);
-                    fs.readFile(configPath, 'utf8', (err, data) => {
-                        if (err) {
-                            console.error('Error reading config.json:', err);
-                            return;
-                        }
+    notifier.notify(
+        {
+            title: `Welcome`,
+            message: `Happy farming`,
+            icon: `./utils/i.png`,
+            sound: false,
+            wait: true,
+            appID: "OwO Farm Bot",
+        },
+        async function (error, response) {
+            if (error) {
+                console.log(chalk.red("Notify error!  Attemting self fix..."));
+                setTimeout(() => {
+                    updateerrorsocket("[Global] Notify error!", "global");
+                }, 1600);
+                fs.rename(blankPath, blanknewPath, (e) => {
+                    if (e) console.error(e);
+                });
 
-                        try {
-                            const config = JSON.parse(data);
+                await delay(1600);
 
-                            config.settings.notifymethod = "promt";
+                cp.exec("cd utils && start register.bat", () => {
+                    console.log(chalk.yellow("Self fix completed!"));
+                });
 
-                            fs.writeFile(configPath, JSON.stringify(config, null, 4), 'utf8', (err) => {
+                await delay(3000);
+
+                notifier.notify(
+                    {
+                        title: `Notify work!`,
+                        message: `Notify problem was fixed correctly`,
+                        icon: `./utils/i.png`,
+                        sound: false,
+                        wait: true,
+                        appID: "OwO Farm Bot",
+                    },
+                    function (error, response) {
+                        if (error) {
+                            console.clear();
+                            setTimeout(() => {
+                                updateerrorsocket(
+                                    "[Global] Notify error! Cannot be fixed.",
+                                    "global"
+                                );
+                            }, 1600);
+                            fs.readFile(configPath, "utf8", (err, data) => {
                                 if (err) {
-                                    console.log("Cannot change config automatically, require manual change!");
+                                    console.error(
+                                        "Error reading config.json:",
+                                        err
+                                    );
+                                    return;
+                                }
+
+                                try {
+                                    const config = JSON.parse(data);
+
+                                    config.settings.notifymethod = "promt";
+
+                                    fs.writeFile(
+                                        configPath,
+                                        JSON.stringify(config, null, 4),
+                                        "utf8",
+                                        (err) => {
+                                            if (err) {
+                                                console.log(
+                                                    "Cannot change config automatically, require manual change!"
+                                                );
+                                            }
+                                        }
+                                    );
+                                } catch (e) {
+                                    console.log(
+                                        "Cannot change config automatically, require manual change!"
+                                    );
                                 }
                             });
-                        } catch (e) {
-                            console.log("Cannot change config automatically, require manual change!");
+
+                            setTimeout(() => {
+                                process.exit(1);
+                            }, 6100);
                         }
-                    });
-                    
-                    setTimeout(() => {
-                        process.exit(1);
-                    }, 6100);
-                }
-            });
+                    }
+                );
+            }
         }
-    });
+    );
     fs.unlinkSync(firstrunPath); // make sure to remove the file...
-    console.log(chalk.red("If you didn't see any notify at this first time running, notify will not work on this machine.\nPlease change to promt mode.\nAlso make sure you are using Windows"));
+    console.log(
+        chalk.red(
+            "If you didn't see any notify at this first time running, notify will not work on this machine.\nPlease change to promt mode.\nAlso make sure you are using Windows"
+        )
+    );
 }
 
 //----------------------------------------------------Check Main Token----------------------------------------------------//
@@ -679,7 +730,8 @@ request.get(
                 chalk.red(`Main Token / ${String(bod.message)} (TOKEN WRONG!)`)
             );
             updateerrorsocket(
-                `Main Token / ${String(bod.message)} (TOKEN WRONG!)`, "global"
+                `Main Token / ${String(bod.message)} (TOKEN WRONG!)`,
+                "global"
             );
             setTimeout(() => {
                 process.exit(0);
@@ -689,7 +741,10 @@ request.get(
             console.log(`[Main Token] User: ${bod.username}`);
 
             checklist(maintoken, "Main Token", mainchannelid);
-            setInterval(() => checklist(maintoken, "Main Token", mainchannelid), 960000);
+            setInterval(
+                () => checklist(maintoken, "Main Token", mainchannelid),
+                960000
+            );
             global.mainfirstrun = true;
             if (settings.autoquest)
                 setTimeout(
@@ -739,7 +794,15 @@ if (extratokencheck) {
                 if (global.etoken) {
                     setTimeout(() => {
                         checklist(extratoken, "Extra Token", extrachannelid);
-                        setInterval(() => checklist(extratoken, "Extra Token", extrachannelid), 960000);
+                        setInterval(
+                            () =>
+                                checklist(
+                                    extratoken,
+                                    "Extra Token",
+                                    extrachannelid
+                                ),
+                            960000
+                        );
                         global.extrafirstrun = true;
                         if (settings.autoquest)
                             setTimeout(
@@ -775,7 +838,8 @@ function triggerhunt() {
         );
         warninguser("Main Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!", "global"
+            "[Global] Cannot receive OwO response (Require manual check)!",
+            "global"
         );
         setTimeout(() => process.exit(0), 1600);
     }
@@ -842,7 +906,8 @@ function triggerbattle() {
         );
         warninguser("Main Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!", "global"
+            "[Global] Cannot receive OwO response (Require manual check)!",
+            "global"
         );
         setTimeout(() => process.exit(0), 1600);
     }
@@ -904,7 +969,8 @@ function triggerextrahunt() {
         );
         warninguser("Extra Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!", "global"
+            "[Global] Cannot receive OwO response (Require manual check)!",
+            "global"
         );
         setTimeout(() => process.exit(0), 1600);
     }
@@ -971,7 +1037,8 @@ function triggerextrabattle() {
         );
         warninguser("Extra Token", false);
         updateerrorsocket(
-            "[Global] Cannot receive OwO response (Require manual check)!", "global"
+            "[Global] Cannot receive OwO response (Require manual check)!",
+            "global"
         );
         setTimeout(() => process.exit(0), 1600);
     }
@@ -1142,7 +1209,7 @@ if (settings.upgradeautohunt.enable) {
 }
 
 //--------------------------------GAMBLE-------------------------------------------------//
-if(settings.gamble.coinflip.enable || settings.gamble.slots.enable)
+if (settings.gamble.coinflip.enable || settings.gamble.slots.enable)
     global.gambling = true;
 
 checkgamble();
@@ -1150,14 +1217,19 @@ if (global.etoken) checkextragamble();
 
 function checkgamble() {
     if (settings.times.intervals.gamble.enable) {
-        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 +
-            settings.times.intervals.gamble.coinflip.time);
-        var timegambleslotsinterval = Math.floor(Math.random() * 1600 +
-            settings.times.intervals.gamble.slots.time);
-        global.gambleac = Math.max(timegamblecoinflipinterval,
-            timegambleslotsinterval) * 2,4;
+        var timegamblecoinflipinterval = Math.floor(
+            Math.random() * 1600 + settings.times.intervals.gamble.coinflip.time
+        );
+        var timegambleslotsinterval = Math.floor(
+            Math.random() * 1600 + settings.times.intervals.gamble.slots.time
+        );
+        (global.gambleac =
+            Math.max(timegamblecoinflipinterval, timegambleslotsinterval) * 2),
+            4;
     } else {
-        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 + 25000);
+        var timegamblecoinflipinterval = Math.floor(
+            Math.random() * 1600 + 25000
+        );
         var timegambleslotsinterval = Math.floor(Math.random() * 1600 + 25000);
         global.gambleac = 61000;
     }
@@ -1171,7 +1243,7 @@ function checkgamble() {
             coinflip(maintoken, "Main Token", maingamblechannelid);
         }
     }, timegamblecoinflipinterval);
-    
+
     setTimeout(() => {
         if (settings.gamble.slots.enable) {
             if (settings.banbypass) {
@@ -1185,18 +1257,23 @@ function checkgamble() {
 
 function checkextragamble() {
     if (settings.times.intervals.gamble.enable) {
-        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 +
-            settings.times.intervals.gamble.coinflip.time);
-        var timegambleslotsinterval = Math.floor(Math.random() * 1600 +
-            settings.times.intervals.gamble.slots.time);
-        global.extragambleac = Math.max(timegamblecoinflipinterval,
-            timegambleslotsinterval) * 2,4;
+        var timegamblecoinflipinterval = Math.floor(
+            Math.random() * 1600 + settings.times.intervals.gamble.coinflip.time
+        );
+        var timegambleslotsinterval = Math.floor(
+            Math.random() * 1600 + settings.times.intervals.gamble.slots.time
+        );
+        (global.extragambleac =
+            Math.max(timegamblecoinflipinterval, timegambleslotsinterval) * 2),
+            4;
     } else {
-        var timegamblecoinflipinterval = Math.floor(Math.random() * 1600 + 25000);
+        var timegamblecoinflipinterval = Math.floor(
+            Math.random() * 1600 + 25000
+        );
         var timegambleslotsinterval = Math.floor(Math.random() * 1600 + 25000);
         global.extragambleac = 61000;
     }
-    
+
     setTimeout(() => {
         if (settings.gamble.coinflip.enable) {
             if (settings.banbypass) {
@@ -1206,7 +1283,7 @@ function checkextragamble() {
             extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
         }
     }, timegamblecoinflipinterval);
-    
+
     setTimeout(() => {
         if (settings.gamble.slots.enable) {
             if (settings.banbypass) {
@@ -1579,15 +1656,22 @@ function checklist(token, tokentype, channelid) {
                         try {
                             var bod = JSON.parse(body);
                             if (!bod[0]) return;
-                            var cont, temp = 0;
+                            var cont,
+                                temp = 0;
                             var iserr = false;
                             await forceembed();
                             async function forceembed() {
                                 temp += 1;
                                 try {
-                                    for (let i = 0; i < 5; i ++) {
+                                    for (let i = 0; i < 5; i++) {
                                         if (bod[i].embeds[0].author) {
-                                            if (bod[i].embeds[0].author.name.includes("Checklist")) {
+                                            if (
+                                                bod[
+                                                    i
+                                                ].embeds[0].author.name.includes(
+                                                    "Checklist"
+                                                )
+                                            ) {
                                                 cont = bod[i].embeds;
                                                 break;
                                             }
@@ -1604,11 +1688,7 @@ function checklist(token, tokentype, channelid) {
                             chalk.magenta(` [${tokentype}]`) +
                                 chalk.yellow(" Getting Checklist 🔎");
                             if (des.includes("☑️ 🎉")) {
-                                updatechecklistsocket(
-                                    "all",
-                                    "✅",
-                                    tokentype
-                                );
+                                updatechecklistsocket("all", "✅", tokentype);
                                 if (tokentype == "Main Token") {
                                     global.mainhuntdaily = true;
                                     global.mainbattledaily = true;
@@ -1619,43 +1699,27 @@ function checklist(token, tokentype, channelid) {
                                 return "checklist completed";
                             }
                             if (des.includes("☑️ 💎")) {
-                                updatechecklistsocket(
-                                    "lb",
-                                    "✅",
-                                    tokentype
-                                );
+                                updatechecklistsocket("lb", "✅", tokentype);
                                 if (tokentype == "Main Token")
                                     global.mainhuntdaily = true;
                                 else global.extrahuntdaily = true;
                             }
                             if (des.includes("☑️ ⚔")) {
-                                updatechecklistsocket(
-                                    "crate",
-                                    "✅",
-                                    tokentype
-                                );
+                                updatechecklistsocket("crate", "✅", tokentype);
                                 if (tokentype == "Main Token")
                                     global.mainbattledaily = true;
                                 else global.extrabattledaily = true;
                             }
-                             if (des.includes("⬛ 🎁")) {
+                            if (des.includes("⬛ 🎁")) {
                                 daily(token, tokentype, channelid);
                             } else {
-                                updatechecklistsocket(
-                                    "daily",
-                                    "✅",
-                                    tokentype
-                                );
+                                updatechecklistsocket("daily", "✅", tokentype);
                             }
                             if (des.includes("⬛ 🍪")) {
                                 if (settings.cookie)
                                     setTimeout(
                                         () =>
-                                            cookie(
-                                                token,
-                                                tokentype,
-                                                channelid
-                                            ),
+                                            cookie(token, tokentype, channelid),
                                         61000
                                     );
                                 if (tokentype == "Main Token")
@@ -1679,33 +1743,24 @@ function checklist(token, tokentype, channelid) {
                                         )
                                 );
                             } else {
-                                updatechecklistsocket(
-                                    "vote",
-                                    "✅",
-                                    tokentype
-                                );
+                                updatechecklistsocket("vote", "✅", tokentype);
                             }
                             if (!des.includes("⬛ 📜"))
-                                updatechecklistsocket(
-                                    "quest",
-                                    "✅",
-                                    tokentype
-                                );
-                            
+                                updatechecklistsocket("quest", "✅", tokentype);
+
                             if (tokentype == "Main Token") {
-                                updateerrorsocket(
-                                    "clear", "maincl"
-                                );
-                            } else updateerrorsocket(
-                                    "clear", "extracl"
-                                );
+                                updateerrorsocket("clear", "maincl");
+                            } else updateerrorsocket("clear", "extracl");
                         } catch (error) {
                             if (tokentype == "Main Token") {
                                 updateerrorsocket(
-                                    "Unable to get Checklist (RESTART BOT!)", "maincl"
+                                    "Unable to get Checklist (RESTART BOT!)",
+                                    "maincl"
                                 );
-                            } else updateerrorsocket(
-                                    "Unable to get Checklist (RESTART BOT!)", "extracl"
+                            } else
+                                updateerrorsocket(
+                                    "Unable to get Checklist (RESTART BOT!)",
+                                    "extracl"
                                 );
                             console.log(
                                 chalk.red(
@@ -1795,7 +1850,8 @@ var extracurrentBet = defaultBet;
 
 async function request_get(token, channelid) {
     let limit = 1;
-    if (settings.gamble.coinflip.enable && settings.gamble.slots.enable) limit += 3;
+    if (settings.gamble.coinflip.enable && settings.gamble.slots.enable)
+        limit += 3;
     if (maingamblechannelid == extragamblechannelid) limit += 4;
     if (maingamblechannelid == mainchannelid) limit += 4;
     if (maingamblechannelid == mainautoquestchannelid) limit += 4;
@@ -1847,7 +1903,7 @@ function coinflip(token, tokentype, channelid) {
             try {
                 var cont;
                 var rechecked = 0;
-                
+
                 async function checkcf() {
                     let body;
                     try {
@@ -1858,33 +1914,38 @@ function coinflip(token, tokentype, channelid) {
                     }
                     const bod = JSON.parse(body);
                     if (!bod[0]) return true;
-                    
+
                     await delay(1600);
-                    
+
                     for (let i = 0; i < 10; i++) {
                         try {
-                            if (bod[i].content.includes(`and chose **heads**`)) {//dont break this line
+                            if (
+                                bod[i].content.includes(`and chose **heads**`)
+                            ) {
+                                //dont break this line
                                 cont = bod[i].content;
                                 break;
                             }
                         } catch (error) {
+                            logger.error("Farm", "CoinFlip", error);
                         }
                     }
-                    
-                    if (!cont || (cont && 
-                        (!cont.includes("and you lost it all... :c") && !cont.includes(" and you won"))
-                        )) {
+
+                    if (
+                        !cont ||
+                        (cont &&
+                            !cont.includes("and you lost it all... :c") &&
+                            !cont.includes(" and you won"))
+                    ) {
                         if (rechecked < 3) {
                             rechecked += 1;
                             console.log(
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                    chalk.magenta(
-                                        ` [${tokentype}]`
-                                    ) +
-                                    chalk.yellow(
-                                        ` Could not get the response, retrying...`
-                                    )
+                                        chalk.magenta(` [${tokentype}]`) +
+                                        chalk.yellow(
+                                            ` Could not get the response, retrying...`
+                                        )
                                 )
                             );
                             await delay(3200);
@@ -1893,12 +1954,10 @@ function coinflip(token, tokentype, channelid) {
                             console.log(
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                    chalk.magenta(
-                                        ` [${tokentype}]`
-                                    ) +
-                                    chalk.yellow(
-                                        ` Could not get the response, next betting ${defaultBet}...`
-                                    )
+                                        chalk.magenta(` [${tokentype}]`) +
+                                        chalk.yellow(
+                                            ` Could not get the response, next betting ${defaultBet}...`
+                                        )
                                 )
                             );
                             currentBet = defaultBet;
@@ -1908,15 +1967,21 @@ function coinflip(token, tokentype, channelid) {
                     }
                     return false;
                 }
-                
+
                 const stop = await checkcf();
                 if (stop) return checkgamble();
 
                 if (cont.includes("and you lost it all... :c")) {
                     let lost = currentBet;
                     currentBet *= settings.gamble.coinflip.multipler;
-                    if (Number.isNaN(currentBet)) currentBet = currentBet; //is this make sense?
-                    else currentBet = Math.round(currentBet);
+                    /**
+                     * * currentBet = currentBet :D?
+                     */
+                    /*if (Number.isNaN(currentBet)) {
+                        currentBet = currentBet; //is this make sense?
+                    } else {*/
+                    currentBet = Math.round(currentBet);
+                    // }
                     console.log(
                         chalk.red(
                             `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -1961,8 +2026,9 @@ function extra_coinflip(token, tokentype, channelid) {
                     "owo",
                     prefix,
                 ])} ${commandrandomizer([
-                    "cf", 
-                    "coinflip"])} ${extracurrentBet} ${commandrandomizer(["tail", "t"])}`,
+                    "cf",
+                    "coinflip",
+                ])} ${extracurrentBet} ${commandrandomizer(["tail", "t"])}`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1976,7 +2042,7 @@ function extra_coinflip(token, tokentype, channelid) {
             }
 
             await delay(6100);
-            
+
             try {
                 var cont;
                 var rechecked = 0;
@@ -1991,33 +2057,38 @@ function extra_coinflip(token, tokentype, channelid) {
                     }
                     const bod = JSON.parse(body);
                     if (!bod[0]) return true;
-                    
+
                     await delay(1600);
-                    
+
                     for (let i = 0; i < 10; i++) {
                         try {
-                            if (bod[i].content.includes(`and chose **tails**`)) {//dont break this line
+                            if (
+                                bod[i].content.includes(`and chose **tails**`)
+                            ) {
+                                //dont break this line
                                 cont = bod[i].content;
                                 break;
                             }
                         } catch (error) {
+                            logger.error("Farm", "Extra-CoinFlip", error);
                         }
                     }
-                    
-                    if (!cont || (cont && 
-                        (!cont.includes("and you lost it all... :c") && !cont.includes(" and you won"))
-                        )) {
-                        if(rechecked < 3) {
+
+                    if (
+                        !cont ||
+                        (cont &&
+                            !cont.includes("and you lost it all... :c") &&
+                            !cont.includes(" and you won"))
+                    ) {
+                        if (rechecked < 3) {
                             rechecked += 1;
                             console.log(
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                    chalk.magenta(
-                                        ` [${tokentype}]`
-                                    ) +
-                                    chalk.yellow(
-                                        ` Could not get the response, retrying...`
-                                    )
+                                        chalk.magenta(` [${tokentype}]`) +
+                                        chalk.yellow(
+                                            ` Could not get the response, retrying...`
+                                        )
                                 )
                             );
                             await delay(6100);
@@ -2026,12 +2097,10 @@ function extra_coinflip(token, tokentype, channelid) {
                             console.log(
                                 chalk.red(
                                     `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` +
-                                    chalk.magenta(
-                                        ` [${tokentype}]`
-                                    ) +
-                                    chalk.yellow(
-                                        ` Could not get the response, next betting ${defaultBet}...`
-                                    )
+                                        chalk.magenta(` [${tokentype}]`) +
+                                        chalk.yellow(
+                                            ` Could not get the response, next betting ${defaultBet}...`
+                                        )
                                 )
                             );
                             extracurrentBet = defaultBet;
@@ -2041,15 +2110,21 @@ function extra_coinflip(token, tokentype, channelid) {
                     }
                     return false;
                 }
-                
+
                 const stop = await checkcf();
                 if (stop) return checkextragamble();
 
                 if (cont.includes("and you lost it all... :c")) {
                     let exlost = extracurrentBet;
                     extracurrentBet *= settings.gamble.coinflip.multipler;
-                    if (Number.isNaN(extracurrentBet)) extracurrentBet = extracurrentBet;
-                    else extracurrentBet = Math.round(extracurrentBet);
+                    /**
+                     * * extracurrentBet = extracurrentBet :D?
+                     */
+                    /*if (Number.isNaN(extracurrentBet)) {
+                        extracurrentBet = extracurrentBet;
+                    } else {*/
+                    extracurrentBet = Math.round(extracurrentBet);
+                    // }
                     console.log(
                         chalk.red(
                             `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -2111,7 +2186,7 @@ function slots(token, tokentype, channelid) {
                         ` Gamble / Slots ✅ / Amount: ${settings.gamble.slots.amount}`
                     )
             );
-            if(!settings.gamble.coinflip.enable) {
+            if (!settings.gamble.coinflip.enable) {
                 if (tokentype == "Main Token") checkgamble();
                 else checkextragamble();
             }
@@ -2124,7 +2199,7 @@ function upgradeall(token, tokentype, channelid) {
     request.post(
         {
             headers: {
-                authorization: token, //E <3
+                authorization: token,
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
@@ -2589,7 +2664,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
                         // valentines day
                         setTimeout(() => {
                             eventuse(token, "18", channelid, tokentype);
-                        }, 2000); //E <3
+                        }, 2000);
                     }
                     if (cont.includes("`019`")) {
                         // anniversary day
@@ -2754,14 +2829,21 @@ async function getquests(token, channelid, tokentype) {
                     try {
                         var bod = JSON.parse(body);
                         if (!bod[0]) return;
-                        var cont, temp = 0;
+                        var cont,
+                            temp = 0;
                         await forceembed();
                         async function forceembed() {
                             temp += 1;
                             try {
-                                for (let i = 0; i < 5; i ++) {
+                                for (let i = 0; i < 5; i++) {
                                     if (bod[i].embeds[0].author) {
-                                        if (bod[i].embeds[0].author.name.includes("Quest Log")) {
+                                        if (
+                                            bod[
+                                                i
+                                            ].embeds[0].author.name.includes(
+                                                "Quest Log"
+                                            )
+                                        ) {
                                             cont = bod[i].embeds;
                                             break;
                                         }
@@ -2789,11 +2871,21 @@ async function getquests(token, channelid, tokentype) {
                             if (tokentype == "Main Token") {
                                 global.mainquest = true;
                                 global.checkquest = false;
-                                updatequestssocket("No quest found", "All completed", "Locked", tokentype);
+                                updatequestssocket(
+                                    "No quest found",
+                                    "All completed",
+                                    "Locked",
+                                    tokentype
+                                );
                             } else {
                                 global.extraquest = true;
                                 global.extracheckquest = false;
-                                updatequestssocket("No quest found", "All completed", "Locked", tokentype);
+                                updatequestssocket(
+                                    "No quest found",
+                                    "All completed",
+                                    "Locked",
+                                    tokentype
+                                );
                             }
                         } else {
                             var quest = cont[0].description
@@ -2808,10 +2900,10 @@ async function getquests(token, channelid, tokentype) {
                             try {
                                 var total = cont[0].description
                                     .split("1.")[1]
-                                    .split("\`")[5];
+                                    .split("`")[5];
                                 if (!total) total = "";
                             } catch (error) {
-
+                                logger.error("Farm", "Get Quests", error);
                             }
 
                             if (
@@ -2839,10 +2931,14 @@ async function getquests(token, channelid, tokentype) {
                                     try {
                                         var total = cont[0].description
                                             .split("2.")[1]
-                                            .split("\`")[5];
+                                            .split("`")[5];
                                         if (!total) total = "";
                                     } catch (error) {
-
+                                        logger.error(
+                                            "Farm",
+                                            "Get Quests",
+                                            error
+                                        );
                                     }
                                 } catch (error) {
                                     if (tokentype == "Main Token")
@@ -2876,10 +2972,14 @@ async function getquests(token, channelid, tokentype) {
                                         try {
                                             var total = cont[0].description
                                                 .split("1.")[1]
-                                                .split("\`")[5];
+                                                .split("`")[5];
                                             if (!total) total = "";
                                         } catch (error) {
-
+                                            logger.error(
+                                                "Farm",
+                                                "Get Quests",
+                                                error
+                                            );
                                         }
                                     } catch (error) {
                                         if (tokentype == "Main Token")
@@ -3145,14 +3245,16 @@ async function getquests(token, channelid, tokentype) {
                         }
 
                         if (tokentype == "Main Token") {
-                            updateerrorsocket(
-                                "clear", "mainq"
-                            );
+                            updateerrorsocket("clear", "mainq");
                         } else updateerrorsocket("clear", "extraq");
                     } catch (error) {
                         if (tokentype == "Main Token") {
                             updateerrorsocket("Unable to check Quest", "mainq");
-                        } else updateerrorsocket ("Unable to check Quest", "extraq");
+                        } else
+                            updateerrorsocket(
+                                "Unable to check Quest",
+                                "extraq"
+                            );
                         console.log(
                             chalk.red(
                                 `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -3163,8 +3265,15 @@ async function getquests(token, channelid, tokentype) {
                         );
                         setTimeout(() => {
                             if (tokentype == "Main Token") {
-                                updateerrorsocket("Rechecking Quest...", "mainq");
-                            } else updateerrorsocket ("Rechecking Quest...", "extraq");
+                                updateerrorsocket(
+                                    "Rechecking Quest...",
+                                    "mainq"
+                                );
+                            } else
+                                updateerrorsocket(
+                                    "Rechecking Quest...",
+                                    "extraq"
+                                );
                         }, 55000);
                         setTimeout(
                             () => getquests(token, channelid, tokentype),
@@ -3180,7 +3289,12 @@ async function getquests(token, channelid, tokentype) {
 }
 
 async function autocompletequests(token, channelid, tokentype, questtitle) {
-    updatequestssocket(questtitle, "Auto complete quest", "Recheck after 610 secs", tokentype);
+    updatequestssocket(
+        questtitle,
+        "Auto complete quest",
+        "Recheck after 610 secs",
+        tokentype
+    );
     await delay(610000);
     getquests(token, channelid, tokentype);
 }
@@ -3210,8 +3324,8 @@ async function questsayowo(
         var socketpro1 = socketp++;
         updatequestssocket(questtitle, socketpro1, pro2, tokentype);
         await delay(32500);
-        for (let sayowoelaina = 0; sayowoelaina < 4; sayowoelaina++) {
-            elaina2(token, channelid);
+        for (let sayowogamz = 0; sayowogamz < 4; sayowogamz++) {
+            gamz2(token, channelid);
             await delay(2000);
         }
     }
@@ -3228,7 +3342,7 @@ async function xpquests(token, channelid, tokentype) {
     await delay(540000);
     if (tokentype == "Main Token") {
         global.checkquest = true;
-        global.mainquest = true
+        global.mainquest = true;
         getquests(maintoken, mainautoquestchannelid, tokentype);
     } else {
         global.extracheckquest = true;
@@ -3567,7 +3681,7 @@ function bancheck(token, channelid) {
                 }, 1600);
             } else {
                 global.mainbanc = true;
-                elaina2(token, channelid);
+                gamz2(token, channelid);
                 console.log(
                     chalk.red(
                         `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -3624,7 +3738,7 @@ function extrabancheck(token, channelid) {
                 }, 1600);
             } else {
                 global.extrabanc = true;
-                elaina2(token, channelid);
+                gamz2(token, channelid);
                 console.log(
                     chalk.red(
                         `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -3676,7 +3790,10 @@ function dmbancheck(token, channelid) {
                             chalk.red(" DM Captcha! ❌")
                     );
                     warninguser("Main Token", true);
-                    updateerrorsocket("(Main Token) Solve DM Captcha!", "captcha");
+                    updateerrorsocket(
+                        "(Main Token) Solve DM Captcha!",
+                        "captcha"
+                    );
                     setTimeout(() => {
                         process.exit(0);
                     }, 1600);
@@ -3734,7 +3851,10 @@ function dmextrabancheck(token, channelid) {
                             chalk.red(" DM Captcha! ❌")
                     );
                     warninguser("Extra Token", true);
-                    updateerrorsocket("(Extra Token) Solve DM Captcha!", "captcha");
+                    updateerrorsocket(
+                        "(Extra Token) Solve DM Captcha!",
+                        "captcha"
+                    );
                     setTimeout(() => {
                         process.exit(0);
                     }, 1600);
@@ -3786,35 +3906,35 @@ function dmprotectprouwu(token, channelid, tokentype) {
     );
 }
 
-function elaina2(token, channelid, phrasesFilePath) {
-    if (settings.randommesaage) {
+function gamz2(token, channelid, phrasesFilePath) {
+    if (settings.randommessage) {
         // Read the JSON
         fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
             if (err) {
                 console.error(err);
             }
-    
+
             // Parse the JSON data
             try {
                 const phrasesObject = JSON.parse(data);
                 const phrases = phrasesObject.phrases;
-    
+
                 if (!phrases || !phrases.length) {
                     console.log("Phrases array is undefined or empty.");
                     return;
                 }
-    
+
                 let result = Math.floor(Math.random() * phrases.length);
-    
+
                 var ilu = phrases[result];
-                //E <3
+
                 typing(token, channelid);
                 request.post({
                     headers: {
                         authorization: token,
                     },
                     url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-    
+
                     json: {
                         content: ilu,
                         nonce: nonce(),

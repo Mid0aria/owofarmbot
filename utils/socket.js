@@ -45,7 +45,6 @@ io.on("efa", (data) => {
     console.log(chalk.red(data.msg));
 });
 */
-//6 28 15 26 15
 
 io.on("quest", (data) => {
     global.quest = data.quest;
@@ -119,14 +118,15 @@ io.on("errors", (e) => {
         if (e.name == "mainq") global.mainquesterr = "";
         if (e.name == "extraq") global.extraquesterr = "";
     } else {
-        if (e.name == "maincl") 
+        if (e.name == "maincl")
             global.mainclerr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
-        if (e.name == "extracl") 
+        if (e.name == "extracl")
             global.extraclerr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
-        if (e.name == "mainq") 
+        if (e.name == "mainq")
             global.mainquesterr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
-        if (e.name == "extraq") 
-            global.extraquesterr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
+        if (e.name == "extraq")
+            global.extraquesterr =
+                chalk.white("\n║ ") + chalk.red(`${e.error}`);
         if (e.name == "global")
             global.globalerr = chalk.white("\n║ ") + chalk.red(`${e.error}`);
         if (e.name == "captcha")
@@ -143,26 +143,26 @@ setInterval(() => {
         `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
     );
     let state = global.state;
-    let cd = global.checklistdaily;
-    let cv = global.checklistvote;
-    let cc = global.checklistcookie;
-    let cq = global.checklistquest;
-    let cl = global.checklistlb;
-    let gc = global.checklistcrate;
-    let qst =
+    let checklist_daily = global.checklistdaily;
+    let checklist_vote = global.checklistvote;
+    let checklist_cookie = global.checklistcookie;
+    let checklist_quest = global.checklistquest;
+    let checklist_lootbox = global.checklistlb;
+    let checklist_crate = global.checklistcrate;
+    let quest_time =
         chalk.red("[Main] ") +
         chalk.blue("Start time: ") +
         chalk.red(global.questdate);
     let qq = chalk.yellow("Quest: ") + chalk.magenta(`${global.quest}`);
     let qpr = chalk.green("Progress: ") + chalk.yellow(global.questpr);
 
-    let ecd = global.extrachecklistdaily;
-    let ecv = global.extrachecklistvote;
-    let ecc = global.extrachecklistcookie;
-    let ecq = global.extrachecklistquest;
-    let ecl = global.extrachecklistlb;
-    let egc = global.extrachecklistcrate;
-    let eqst =
+    let extrachecklist_daily = global.extrachecklistdaily;
+    let extrachecklist_vote = global.extrachecklistvote;
+    let extrachecklist_cookie = global.extrachecklistcookie;
+    let extrachecklist_quest = global.extrachecklistquest;
+    let extrachecklist_lootbox = global.extrachecklistlb;
+    let extrachecklist_crate = global.extrachecklistcrate;
+    let extraquest_time =
         chalk.red("[Extra] ") +
         chalk.blue("Start time: ") +
         chalk.red(global.extraquestdate);
@@ -170,21 +170,27 @@ setInterval(() => {
     let eqpr = chalk.green("Progress: ") + chalk.yellow(global.extraquestpr);
 
     let tms = global.times;
-    
-    let eyl = chalk.white("\n║ ") + chalk.yellow("Everything okey");
-    if (global.mainclerr != "" ||
+
+    let gamz = chalk.white("\n║ ") + chalk.yellow("Everything okey");
+    if (
+        global.mainclerr != "" ||
         global.extraclerr != "" ||
         global.mainquesterr != "" ||
-        global.extraquesterr != "") {
-            eyl = global.mainclerr + global.extraclerr + global.mainquesterr + global.extraquesterr;
-        } else eyl = chalk.white("\n║ ") + chalk.yellow("Everything okey");
-    
+        global.extraquesterr != ""
+    ) {
+        gamz =
+            global.mainclerr +
+            global.extraclerr +
+            global.mainquesterr +
+            global.extraquesterr;
+    } else gamz = chalk.white("\n║ ") + chalk.yellow("Everything okey");
+
     if (global.globalerr != "" || global.captchaerr != "") {
         global.mainclerr = "";
         global.extraclerr = "";
         global.mainquesterr = "";
         global.extraquesterr = "";
-        eyl = global.globalerr + global.captchaerr;
+        gamz = global.globalerr + global.captchaerr;
     }
 
     if (global.type == "duo") global.sockettype = "Double Threaded Farm Bot!";
@@ -202,18 +208,18 @@ setInterval(() => {
 ║ > Checklist📜          ║ > Quest🔎
 ║                        ║   
 ╠════╦══════════════╦════╬══════════════════════════════════════════════════════
-║Main║              ║Ext.║ ${qst} 
-║ ${cd} ║ Daily        ║ ${ecd} ║ ${qq}
-║ ${cv} ║ Vote         ║ ${ecv} ║ ${qpr}
-║ ${cc} ║ Cookie       ║ ${ecc} ╠══════════════════════════════════════════════════════
-║ ${cq} ║ Quest        ║ ${ecq} ║ ${eqst}
-║ ${cl} ║ LootBox      ║ ${ecl} ║ ${eqq}
-║ ${gc} ║ Crate        ║ ${egc} ║ ${eqpr}
+║Main║              ║Ext.║ ${quest_time} 
+║ ${checklist_daily} ║ Daily        ║ ${extrachecklist_daily} ║ ${qq}
+║ ${checklist_vote} ║ Vote         ║ ${extrachecklist_vote} ║ ${qpr}
+║ ${checklist_cookie} ║ Cookie       ║ ${extrachecklist_cookie} ╠══════════════════════════════════════════════════════
+║ ${checklist_quest} ║ Quest        ║ ${extrachecklist_quest} ║ ${extraquest_time}
+║ ${checklist_lootbox} ║ LootBox      ║ ${extrachecklist_lootbox} ║ ${eqq}
+║ ${checklist_crate} ║ Crate        ║ ${extrachecklist_crate} ║ ${eqpr}
 ╠════╩══════════════╩════╩══════════════════════════════════════════════════════
 ║ > ⏱️ Times
 ║ ${tms}
 ╠═══════════════════════════════════════════════════════════════════════════════
-║ > Errors❗ ${eyl}
+║ > Errors❗ ${gamz}
 ╚═══════════════════════════════════════════════════════════════════════════════`
         );
     } else {
@@ -228,17 +234,17 @@ setInterval(() => {
 ║ > Checklist📜          ║ > Quest🔎
 ║                        ║   
 ╠════╦═══════════════════╬══════════════════════════════════════════════════════
-║ ${cd} ║ Daily             ║ ${qst} 
-║ ${cv} ║ Vote              ║ 
-║ ${cc} ║ Cookie            ║ ${qq}
-║ ${cq} ║ Quest             ║
-║ ${cl} ║ LootBox           ║ ${qpr}
-║ ${gc} ║ Crate             ║
+║ ${checklist_daily} ║ Daily             ║ ${quest_time} 
+║ ${checklist_vote} ║ Vote              ║ 
+║ ${checklist_cookie} ║ Cookie            ║ ${qq}
+║ ${checklist_quest} ║ Quest             ║
+║ ${checklist_lootbox} ║ LootBox           ║ ${qpr}
+║ ${checklist_crate} ║ Crate             ║
 ╠════╩═══════════════════╩══════════════════════════════════════════════════════
 ║ > ⏱️ Times
 ║ ${tms}
 ╠═══════════════════════════════════════════════════════════════════════════════
-║ > Errors❗ ${eyl}
+║ > Errors❗ ${gamz}
 ╚═══════════════════════════════════════════════════════════════════════════════`
         );
     }

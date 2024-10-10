@@ -3,8 +3,9 @@ let logger = [];
 
 logger.info = (type, module, result = "") => {
     console.log(
+        chalk.green("[+]"),
         chalk.white(
-            `[${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}]`
+            `(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})`
         ),
         chalk.blue(chalk.bold(type)),
         chalk.white(`>`),
@@ -16,8 +17,9 @@ logger.info = (type, module, result = "") => {
 
 logger.warn = (type, module, result = "") => {
     console.log(
+        chalk.yellow("[?]"),
         chalk.white(
-            `[${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}]`
+            `(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})`
         ),
         chalk.blue(chalk.bold(type)),
         chalk.white(`>`),
@@ -29,8 +31,23 @@ logger.warn = (type, module, result = "") => {
 
 logger.alert = (type, module, result = "") => {
     console.log(
+        chalk.red("[-]"),
         chalk.white(
-            `[${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}]`
+            `(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})`
+        ),
+        chalk.blue(chalk.bold(type)),
+        chalk.white(`>`),
+        chalk.magenta(module),
+        chalk.white(`>`),
+        chalk.red(result)
+    );
+};
+
+logger.error = (type, module, result = "") => {
+    console.log(
+        chalk.red("[!]"),
+        chalk.white(
+            `(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})`
         ),
         chalk.blue(chalk.bold(type)),
         chalk.white(`>`),
