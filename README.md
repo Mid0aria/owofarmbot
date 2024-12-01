@@ -1,6 +1,5 @@
 # [OwO Farm Bot Stable RELEASED!!! (Now working more stable with selfbot module)](https://github.com/mid0aria/owofarmbot_stable)<br>
 
-
 aHR0cHM6Ly9yZW50cnkub3JnL3N1a2FwbHVtYmFnYXNp / https://open.spotify.com/track/1QqCaHOm1VCcTFYbMyiXVr</br>
 dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM= </br>
 
@@ -25,7 +24,9 @@ If you made a video about the farmbot, please upload it to YouTube with the hash
 -   [Windows / Linux](#windows--linux) - Official
 -   [Android / iOS (Termux)](#android--ios-termux) - Official
 
-To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), go to [`#🤖・bot-commands`](https://discord.com/channels/1202294695091507230/1203705738770256032), and send `s!key`. The official bot will directly message you with the key.
+If you need the help, join the Discord server [here](https://discord.gg/WzYXVbXt6C)
+
+<!-- To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), go to [`#🤖・bot-commands`](https://discord.com/channels/1202294695091507230/1203705738770256032), and send `s!key`. The official bot will directly message you with the key. -->
 
 </p>
 
@@ -92,7 +93,6 @@ To get auth key, join the Discord server [here](https://discord.gg/WzYXVbXt6C), 
 
 ```
 {
-    "midoservices_authkey": "", / Enter ur midoservices auth key. If you don't have one, join the discord server and get one now.
     "windowssettings": { "controlcdetect": false },
     "settings": {
         "times": {
